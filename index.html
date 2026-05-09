@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -33,7 +32,6 @@
             color: var(--text-main);
             overflow-x: hidden;
             min-height: 100vh;
-            /* Subtelne, nowoczesne tło (mesh gradient) */
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.04) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(112, 0, 255, 0.04) 0%, transparent 50%);
@@ -51,39 +49,61 @@
             border-radius: 24px;
         }
 
-        /* --- LOADER --- */
-        #loader { 
-            position: fixed; inset: 0; background: #000; z-index: 9999; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.8s ease;
+        /* --- LOGO W LEWYM ROGU --- */
+        .top-logo {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 9999;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: fadeInLogo 2s ease forwards 1s;
         }
-        .spinner {
-            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--accent); border-radius: 50%;
-            animation: spin 1s linear infinite; margin-bottom: 30px;
+        .top-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
-        .loader-text { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; letter-spacing: 6px; text-transform: uppercase; color: #fff;}
-        .loader-text span { color: var(--accent); }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeInLogo { to { opacity: 1; } }
 
-        /* --- KINOWE INTRO --- */
-        #intro { position: fixed; inset: 0; background: #000; z-index: 9000; display: none; overflow: hidden; }
-        .intro-slide { position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; }
-        .intro-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(1.2); animation: kenBurns 4s linear forwards; }
+        /* --- KINOWE INTRO (STARTOWE) --- */
+        #intro { 
+            position: fixed; inset: 0; background: #000; z-index: 9000; overflow: hidden; 
+        }
+        .intro-slide { 
+            position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; 
+        }
+        .intro-slide::after {
+            content: ''; position: absolute; inset: 0;
+            /* Głęboka winieta maskująca niedoskonałości krawędzi i pikselozę */
+            background: radial-gradient(circle at center, transparent 30%, #000 100%);
+            z-index: 1;
+        }
+        .intro-slide img { 
+            width: 100%; height: 100%; 
+            /* Lepsze skalowanie obrazu bez zniekształceń */
+            object-fit: cover; object-position: center; 
+            filter: brightness(0.5) contrast(1.1) saturate(1.2); 
+            animation: kenBurns 4s linear forwards; 
+        }
         .intro-text {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-family: 'Outfit'; font-size: 4vw; font-weight: 300; text-align: center; letter-spacing: 8px;
-            text-transform: uppercase; opacity: 0; width: 100%; animation: textReveal 4s ease-in-out forwards;
+            font-family: 'Outfit'; font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; text-align: center; 
+            letter-spacing: 8px; text-transform: uppercase; opacity: 0; width: 100%; 
+            animation: textReveal 4s ease-in-out forwards;
+            z-index: 2; text-shadow: 0 5px 20px #000;
         }
-        #skip-btn {
-            position: absolute; bottom: 40px; right: 40px; z-index: 9001; background: transparent;
-            color: rgba(255,255,255,0.5); border: none; font-family: 'Inter'; font-size: 0.85rem;
-            letter-spacing: 2px; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: var(--transition);
-        }
-        #skip-btn:hover { color: #fff; gap: 15px; }
 
         @keyframes fadeSlide { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
-        @keyframes kenBurns { 0% { transform: scale(1.05); } 100% { transform: scale(1.15); } }
+        @keyframes kenBurns { 0% { transform: scale(1.02); } 100% { transform: scale(1.12); } }
         @keyframes textReveal { 0% { opacity: 0; filter: blur(10px); } 20% { opacity: 1; filter: blur(0); } 80% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); } }
 
         /* --- GŁÓWNA STRONA --- */
@@ -93,7 +113,7 @@
         .nav-dock {
             position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
             z-index: 1000; padding: 10px; border-radius: 100px; display: flex; gap: 10px;
-            background: rgba(10, 10, 10, 0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: rgba(10, 10, 10, 0.7); box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .nav-btn {
             background: transparent; border: none; color: var(--text-muted); cursor: pointer;
@@ -115,13 +135,21 @@
         .tab.active { display: block; }
         @keyframes slideFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- SEKCJY --- */
-        .hero-section { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -2px; }
-        .hero-title span { color: var(--accent); text-shadow: 0 0 40px var(--accent-glow); }
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; font-weight: 300; line-height: 1.6; }
+        /* --- SEKCJY START --- */
+        .hero-section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-logo {
+            width: clamp(150px, 30vw, 250px);
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.2));
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        
+        .hero-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-title span { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; font-weight: 300; line-height: 1.7; }
 
-        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header { text-align: center; margin-bottom: 50px; margin-top: 40px; }
         .section-header h2 { font-size: 2.5rem; font-weight: 600; letter-spacing: 2px; }
         .section-header p { color: var(--accent); font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
 
@@ -129,21 +157,26 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .gallery-item {
             position: relative; border-radius: 20px; overflow: hidden; cursor: pointer;
-            aspect-ratio: 16/10; group; transition: var(--transition);
+            aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a;
         }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .gallery-item img { 
+            width: 100%; height: 100%; 
+            /* Zapobieganie pikselozie - wyśrodkowane i przycięte */
+            object-fit: cover; object-position: center; 
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
         .gallery-overlay {
-            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 50%);
             display: flex; align-items: flex-end; padding: 25px; opacity: 0; transition: var(--transition);
         }
-        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-color: rgba(0, 229, 255, 0.3); }
+        .gallery-item:hover img { transform: scale(1.06); filter: brightness(1.1); }
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-title { font-family: 'Outfit'; font-size: 1.2rem; font-weight: 600; color: #fff; transform: translateY(10px); transition: 0.4s; }
         .gallery-item:hover .gallery-title { transform: translateY(0); }
 
         /* --- LINKI --- */
-        .links-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .links-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .link-card {
             display: flex; align-items: center; gap: 20px; padding: 25px; text-decoration: none;
             color: var(--text-main); transition: var(--transition);
@@ -156,51 +189,48 @@
         .link-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
         .link-info p { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         
-        .link-card:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
+        .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
         .link-card:hover .link-icon { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
         
         .link-card.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-        .badge { font-size: 0.7rem; background: var(--accent); color: #000; padding: 2px 8px; border-radius: 20px; font-weight: 600; margin-left: 10px; }
+        .badge { font-size: 0.7rem; background: var(--accent); color: #000; padding: 2px 8px; border-radius: 20px; font-weight: 800; margin-left: 10px; }
 
         /* --- INFO BOX --- */
         .info-container { max-width: 800px; margin: 0 auto; padding: 50px; text-align: center; }
-        .info-text { font-size: 1.1rem; line-height: 1.8; color: #ccc; margin-bottom: 30px; }
+        .info-text { font-size: 1.1rem; line-height: 1.8; color: #d0d0d0; margin-bottom: 40px; }
         .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid var(--glass-border); padding-top: 30px; }
-        .stat-item h4 { font-size: 2rem; color: var(--accent); margin-bottom: 5px; }
-        .stat-item p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-item h4 { font-size: 2.5rem; font-family: 'Outfit'; font-weight: 800; color: var(--accent); margin-bottom: 5px; }
+        .stat-item p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
         /* --- LIGHTBOX --- */
         #lightbox {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
             z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.4s ease;
         }
-        #lightbox img { max-width: 90%; max-height: 85vh; border-radius: 12px; transform: scale(0.95); transition: 0.4s ease; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        #lightbox img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 12px; transform: scale(0.95); transition: 0.4s ease; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         #lightbox.show { opacity: 1; }
         #lightbox.show img { transform: scale(1); }
-        .close-lb { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2rem; cursor: pointer; background: rgba(255,255,255,0.1); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .close-lb { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2rem; cursor: pointer; background: rgba(255,255,255,0.1); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 2001; }
         .close-lb:hover { background: var(--accent); color: #000; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
+            .top-logo { top: 15px; left: 15px; width: 45px; height: 45px; }
             .nav-dock { bottom: 20px; width: 90%; justify-content: space-around; }
             .info-container { padding: 30px 20px; }
-            .stat-grid { grid-template-columns: 1fr; }
-            .intro-text { font-size: 8vw; }
+            .stat-grid { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LOADER -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <div class="loader-text">Projekt<span>Pomorze</span></div>
+    <!-- LOGO W LEWYM GÓRNYM ROGU -->
+    <div class="top-logo glass">
+        <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo">
     </div>
 
-    <!-- KINOWE INTRO -->
+    <!-- KINOWE INTRO (Bez loadera, ładuje się od razu) -->
     <div id="intro">
-        <button id="skip-btn" onclick="skipIntro()">Pomiń <i class="fas fa-chevron-right"></i></button>
-        
         <div class="intro-slide" style="animation-delay: 0s;">
             <img src="assets/plik/las.png" alt="Las">
             <div class="intro-text" style="animation-delay: 0s;">Poczuj klimat</div>
@@ -237,7 +267,10 @@
             <!-- START -->
             <div id="home" class="tab active">
                 <div class="hero-section">
-                    <h1 class="hero-title">Projekt<br><span>Pomorze</span></h1>
+                    <!-- Dodane Logo na środku ekranu -->
+                    <img src="assets/plik/Projekt%20Pomorze.png" alt="Projekt Pomorze Logo" class="hero-logo">
+                    
+                    <h1 class="hero-title">Projekt <span>Pomorze</span></h1>
                     <p class="hero-subtitle">Eksploruj realistyczne trasy, gęste lasy i malownicze miejscowości inspirowane prawdziwymi terenami Pomorza. Zupełnie nowy standard jazdy w świecie Roblox.</p>
                 </div>
             </div>
@@ -249,14 +282,21 @@
                     <h2>Odkryj Świat Gry</h2>
                 </div>
                 <div class="gallery-grid">
-                    <!-- Używamy oryginalnych ścieżek -->
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/czarnoszki.png')">
                         <img src="assets/plik/czarnoszki.png" alt="Czarnoszki">
                         <div class="gallery-overlay"><div class="gallery-title">Czarnoszki</div></div>
                     </div>
+                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/czarnoszki1.png')">
+                        <img src="assets/plik/czarnoszki1.png" alt="Czarnoszki 1">
+                        <div class="gallery-overlay"><div class="gallery-title">Czarnoszki 1</div></div>
+                    </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/kiełpin.png')">
                         <img src="assets/plik/kiełpin.png" alt="Kiełpin">
                         <div class="gallery-overlay"><div class="gallery-title">Kiełpin</div></div>
+                    </div>
+                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/kiełpin1.png')">
+                        <img src="assets/plik/kiełpin1.png" alt="Kiełpin 1">
+                        <div class="gallery-overlay"><div class="gallery-title">Kiełpin 1</div></div>
                     </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/krery.png')">
                         <img src="assets/plik/krery.png" alt="Krery">
@@ -269,6 +309,10 @@
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/rychnowy.png')">
                         <img src="assets/plik/rychnowy.png" alt="Rychnowy">
                         <div class="gallery-overlay"><div class="gallery-title">Rychnowy</div></div>
+                    </div>
+                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/wyjazd%20krzy%C5%BCanki.png')">
+                        <img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd Krzyżanki">
+                        <div class="gallery-overlay"><div class="gallery-title">Wyjazd Krzyżanki</div></div>
                     </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/zagórki.png')">
                         <img src="assets/plik/zagórki.png" alt="Zagórki">
@@ -346,32 +390,11 @@
 
     <!-- SKRYPTY -->
     <script>
-        let introTimeout;
-
-        // --- START ŁADOWANIA ---
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    startIntro();
-                }, 800);
-            }, 1000); // Minimalny czas pokazania ładnego loadera
+        // --- LOGIKA STARTOWA (Brak loadera, od razu intro) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Intro trwa ok 11 sekund (3 slajdy po 4 sekundy z nachodzeniem)
+            setTimeout(showApp, 11000);
         });
-
-        // --- KINOWE INTRO ---
-        function startIntro() {
-            const intro = document.getElementById('intro');
-            intro.style.display = 'block';
-            // Intro trwa ok 11 sekund (3 slajdy)
-            introTimeout = setTimeout(showApp, 11000);
-        }
-
-        function skipIntro() {
-            clearTimeout(introTimeout);
-            showApp();
-        }
 
         function showApp() {
             const intro = document.getElementById('intro');
@@ -388,19 +411,15 @@
 
         // --- ZARZĄDZANIE ZAKŁADKAMI ---
         function openTab(tabId, btn) {
-            // Ukryj wszystkie zakładki
             document.querySelectorAll('.tab').forEach(t => {
                 t.style.display = 'none';
                 t.classList.remove('active');
             });
-            // Zresetuj przyciski
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            // Pokaż wybraną
             const activeTab = document.getElementById(tabId);
             activeTab.style.display = 'block';
-            // Wymuszenie reflow dla animacji
-            void activeTab.offsetWidth; 
+            void activeTab.offsetWidth; // Wymuszenie reflow dla animacji
             activeTab.classList.add('active');
             
             btn.classList.add('active');
@@ -412,7 +431,6 @@
             const lb = document.getElementById('lightbox');
             document.getElementById('lightbox-img').src = src;
             lb.style.display = 'flex';
-            // Wymuszenie reflow
             void lb.offsetWidth;
             lb.classList.add('show');
             document.body.style.overflow = 'hidden';
