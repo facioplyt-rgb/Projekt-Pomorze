@@ -28,7 +28,6 @@
             background-color: var(--bg);
             color: var(--text);
             overflow-x: hidden;
-            /* Delikatny gradient tła */
             background: radial-gradient(circle at top right, #0a162b 0%, #020205 60%);
             min-height: 100vh;
         }
@@ -39,6 +38,7 @@
             display: none; background: rgba(10, 11, 17, 0.8);
             padding: 4px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(15px); box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            transition: opacity 1s ease;
         }
         .header-logo-img { width: 70px; height: 70px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .header-logo-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -47,15 +47,64 @@
         #loader { 
             position: fixed; inset: 0; background: #000; z-index: 9999; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        .loader-logo { font-size: 2rem; font-weight: 800; letter-spacing: 4px; margin-bottom: 20px; text-transform: uppercase;}
+        .loader-logo { font-size: 2.5rem; font-weight: 800; letter-spacing: 4px; margin-bottom: 20px; text-transform: uppercase;}
         .loader-logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
-        .bar-container { width: 220px; height: 4px; background: #1a1a1a; border-radius: 10px; overflow: hidden; }
+        .bar-container { width: 250px; height: 4px; background: #1a1a1a; border-radius: 10px; overflow: hidden; }
         #progress { width: 0%; height: 100%; background: var(--gradient); box-shadow: 0 0 15px var(--accent); transition: 0.1s; }
 
-        /* --- NAWIGACJA (NOWOCZESNA) --- */
-        #app { display: none; opacity: 0; transition: opacity 1s ease; }
+        /* --- KINOWE INTRO --- */
+        #intro {
+            position: fixed; inset: 0; background: #000; z-index: 9000;
+            display: none; overflow: hidden;
+        }
+        .intro-slide {
+            position: absolute; inset: 0; opacity: 0;
+            /* Czas trwania jednego slajdu i animacja przenikania */
+            animation: slideInOut 4s ease-in-out forwards;
+        }
+        .intro-slide img {
+            width: 100%; height: 100%; object-fit: cover;
+            transform: scale(1); filter: brightness(0.6);
+            /* Kinowy efekt przybliżania (Ken Burns) */
+            animation: slowZoom 4s linear forwards;
+        }
+        .intro-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 3.5rem; font-weight: 800; text-align: center; letter-spacing: 2px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.9), 0 0 15px rgba(0, 212, 255, 0.5);
+            opacity: 0; width: 90%;
+            animation: textInOut 4s ease-in-out forwards;
+        }
+        #skip-btn {
+            position: absolute; bottom: 40px; right: 40px; z-index: 9001;
+            background: rgba(0,0,0,0.4); color: #ccc; border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 25px; border-radius: 30px; cursor: pointer; font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem; letter-spacing: 1px; backdrop-filter: blur(5px); transition: 0.3s;
+            display: flex; align-items: center; gap: 8px; text-transform: uppercase;
+        }
+        #skip-btn:hover { background: rgba(0,0,0,0.8); border-color: var(--accent); color: var(--text); }
+
+        @keyframes slideInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        @keyframes textInOut {
+            0% { opacity: 0; transform: translate(-50%, -30%); }
+            20% { opacity: 1; transform: translate(-50%, -50%); }
+            80% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -70%); }
+        }
+
+        /* --- NAWIGACJA --- */
+        #app { display: none; opacity: 0; transition: opacity 1.5s ease; }
         .nav-container {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;
         }
@@ -78,8 +127,8 @@
         /* --- CONTENT --- */
         .content { max-width: 1100px; margin: 120px auto 40px auto; padding: 20px; text-align: center; }
         .tab { display: none; }
-        .tab.active { display: block; animation: slideUp 0.6s ease forwards; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .tab.active { display: block; animation: slideUp 0.8s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- TYPOGRAFIA I OPISY --- */
         .giant-title { font-size: 4.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; line-height: 1.1; }
@@ -121,12 +170,14 @@
         .close-btn { position: absolute; top: 25px; right: 30px; color: #fff; font-size: 35px; cursor: pointer; transition: 0.3s; }
         .close-btn:hover { color: var(--accent); transform: scale(1.1); }
 
-        /* --- MEDIA QUERIES (Responsywność) --- */
+        /* --- MEDIA QUERIES --- */
         @media (max-width: 768px) {
             .giant-title { font-size: 3rem; }
+            .intro-text { font-size: 2rem; }
             .header-logo-container { top: 10px; left: 10px; }
             .header-logo-img { width: 50px; height: 50px; }
-            .nav-container { top: auto; bottom: 20px; } /* Nawigacja na dole dla wygody na tel */
+            .nav-container { top: auto; bottom: 20px; }
+            #skip-btn { bottom: 90px; right: 20px; } /* Wyżej na mobile, żeby nie zasłaniać palcem */
         }
     </style>
 </head>
@@ -142,6 +193,29 @@
     <div id="loader">
         <div class="loader-logo">PROJEKT<span>POMORZE</span></div>
         <div class="bar-container"><div id="progress"></div></div>
+    </div>
+
+    <!-- KINOWE INTRO -->
+    <div id="intro">
+        <button id="skip-btn" onclick="skipIntro()">Pomiń intro <span class="material-icons">fast_forward</span></button>
+        
+        <!-- Slajd 1 -->
+        <div class="intro-slide" style="animation-delay: 0s;">
+            <img src="assets/plik/czarnoszki.png" alt="Intro 1">
+            <div class="intro-text" style="animation-delay: 0s;">Odkryj malownicze tereny...</div>
+        </div>
+        
+        <!-- Slajd 2 -->
+        <div class="intro-slide" style="animation-delay: 3.5s;">
+            <img src="assets/plik/las.png" alt="Intro 2">
+            <div class="intro-text" style="animation-delay: 3.5s;">Poczuj klimat Pomorza...</div>
+        </div>
+
+        <!-- Slajd 3 -->
+        <div class="intro-slide" style="animation-delay: 7s;">
+            <img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Intro 3">
+            <div class="intro-text" style="animation-delay: 7s;">Przygotuj się na jazdę!</div>
+        </div>
     </div>
 
     <!-- LIGHTBOX -->
@@ -162,13 +236,11 @@
         </nav>
 
         <main class="content">
-            <!-- HOME -->
             <div id="home" class="tab active">
                 <h1 class="giant-title">PROJEKT <span>POMORZE</span></h1>
                 <p class="home-description">Gra która może odmienić Twoje spojrzenie na gry typu car driving...</p>
             </div>
 
-            <!-- GALERIA -->
             <div id="galeria" class="tab">
                 <h2 style="letter-spacing: 2px; margin-bottom: 30px;">GALERIA</h2>
                 <div class="gallery">
@@ -184,39 +256,30 @@
                 </div>
             </div>
 
-            <!-- LINKI -->
             <div id="linki" class="tab">
                 <h2 style="letter-spacing: 2px; margin-bottom: 30px;">LINKI I SOCIAL MEDIA</h2>
                 <div class="links-grid">
                     <a href="https://discord.gg/Hq8jvUM9D6" target="_blank" class="link-card">
-                        <i class="fab fa-discord"></i>
-                        <span>Discord</span>
+                        <i class="fab fa-discord"></i><span>Discord</span>
                     </a>
                     <a href="https://www.roblox.com/communities/35769328/Facio-Studios#!/about" target="_blank" class="link-card">
-                        <i class="fas fa-users"></i>
-                        <span>Roblox Grupa</span>
+                        <i class="fas fa-users"></i><span>Roblox Grupa</span>
                     </a>
                     <div class="link-card disabled">
-                        <i class="fas fa-lock"></i>
-                        <span>Roblox Gra</span>
-                        <div class="lock-tag">Wkrótce</div>
+                        <i class="fas fa-lock"></i><span>Roblox Gra</span><div class="lock-tag">Wkrótce</div>
                     </div>
                     <a href="https://www.tiktok.com/@widze.ze.ktos.lubi.wdupe" target="_blank" class="link-card">
-                        <i class="fab fa-tiktok"></i>
-                        <span>TikTok</span>
+                        <i class="fab fa-tiktok"></i><span>TikTok</span>
                     </a>
                     <a href="https://www.youtube.com/@FacioYT1000" target="_blank" class="link-card">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
+                        <i class="fab fa-youtube"></i><span>YouTube</span>
                     </a>
                     <a href="https://trello.com/b/jBpRzDJW/projekt-pomorze" target="_blank" class="link-card">
-                        <i class="fab fa-trello"></i>
-                        <span>Trello</span>
+                        <i class="fab fa-trello"></i><span>Trello</span>
                     </a>
                 </div>
             </div>
 
-            <!-- INFO -->
             <div id="info" class="tab">
                 <h2 style="letter-spacing: 2px;">INFORMACJE O PROJEKCIE</h2>
                 <div class="info-box">
@@ -228,7 +291,9 @@
 
     <!-- SKRYPTY -->
     <script>
-        // System ładowania
+        let introTimeout; // Globalna zmienna do zarządzania czasem intro
+
+        // --- SYSTEM ŁADOWANIA ---
         let p = 0;
         const load = setInterval(() => {
             p += Math.floor(Math.random() * 15) + 2;
@@ -240,16 +305,52 @@
                     loader.style.opacity = '0';
                     setTimeout(() => {
                         loader.style.display = 'none';
-                        document.getElementById('app').style.display = 'block';
-                        document.getElementById('corner-logo').style.display = 'block';
-                        setTimeout(() => document.getElementById('app').style.opacity = '1', 50);
-                    }, 600); // Czas na płynne zniknięcie
+                        startIntro(); // Po zniknięciu loadera, odpal intro
+                    }, 800);
                 }, 400);
             }
             document.getElementById('progress').style.width = p + '%';
         }, 50);
 
-        // Zarządzanie zakładkami
+        // --- KINOWE INTRO ---
+        function startIntro() {
+            const intro = document.getElementById('intro');
+            intro.style.display = 'block';
+            
+            // Całkowity czas trwania 3 slajdów (po 3.5 sekundy opóźnienia, ostatni trwa 4 sekundy)
+            // = 11 sekund totalnie
+            introTimeout = setTimeout(showApp, 11000);
+        }
+
+        // Funkcja pomijająca intro
+        function skipIntro() {
+            clearTimeout(introTimeout); // Zatrzymujemy timer
+            showApp();
+        }
+
+        // --- POKAŻ GŁÓWNĄ APLIKACJĘ ---
+        function showApp() {
+            const intro = document.getElementById('intro');
+            intro.style.transition = 'opacity 1s ease';
+            intro.style.opacity = '0';
+            
+            setTimeout(() => {
+                intro.style.display = 'none';
+                
+                const app = document.getElementById('app');
+                const logo = document.getElementById('corner-logo');
+                
+                app.style.display = 'block';
+                logo.style.display = 'block';
+                
+                setTimeout(() => {
+                    app.style.opacity = '1';
+                    logo.style.opacity = '1';
+                }, 50);
+            }, 1000); // Czas na zniknięcie intro
+        }
+
+        // --- ZARZĄDZANIE ZAKŁADKAMI ---
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -257,11 +358,10 @@
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
             
-            // Lekki scroll na górę po zmianie zakładki na telefonach
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Lightbox dla galerii
+        // --- LIGHTBOX DLA GALERII ---
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
