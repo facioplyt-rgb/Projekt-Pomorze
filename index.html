@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -40,7 +41,7 @@
 
         h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
 
-        /* --- EFEKT SZKŁA (GLASSMORPHISM) --- */
+        /* --- EFEKT SZKŁA --- */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -51,46 +52,24 @@
 
         /* --- LOGO W LEWYM ROGU --- */
         .top-logo {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            z-index: 9999;
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            opacity: 0;
-            animation: fadeInLogo 2s ease forwards 1s;
+            position: fixed; top: 25px; left: 25px; z-index: 9999;
+            width: 60px; height: 60px; border-radius: 16px;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0; animation: fadeInLogo 2s ease forwards 1s;
         }
-        .top-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        .top-logo img { width: 100%; height: 100%; object-fit: contain; }
         @keyframes fadeInLogo { to { opacity: 1; } }
 
-        /* --- KINOWE INTRO (STARTOWE) --- */
-        #intro { 
-            position: fixed; inset: 0; background: #000; z-index: 9000; overflow: hidden; 
-        }
-        .intro-slide { 
-            position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; 
-        }
+        /* --- KINOWE INTRO --- */
+        #intro { position: fixed; inset: 0; background: #000; z-index: 9000; overflow: hidden; }
+        .intro-slide { position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; }
         .intro-slide::after {
             content: ''; position: absolute; inset: 0;
-            /* Głęboka winieta maskująca niedoskonałości krawędzi i pikselozę */
-            background: radial-gradient(circle at center, transparent 30%, #000 100%);
-            z-index: 1;
+            background: radial-gradient(circle at center, transparent 30%, #000 100%); z-index: 1;
         }
         .intro-slide img { 
-            width: 100%; height: 100%; 
-            /* Lepsze skalowanie obrazu bez zniekształceń */
-            object-fit: cover; object-position: center; 
+            width: 100%; height: 100%; object-fit: cover; object-position: center; 
             filter: brightness(0.5) contrast(1.1) saturate(1.2); 
             animation: kenBurns 4s linear forwards; 
         }
@@ -98,8 +77,7 @@
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-family: 'Outfit'; font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; text-align: center; 
             letter-spacing: 8px; text-transform: uppercase; opacity: 0; width: 100%; 
-            animation: textReveal 4s ease-in-out forwards;
-            z-index: 2; text-shadow: 0 5px 20px #000;
+            animation: textReveal 4s ease-in-out forwards; z-index: 2; text-shadow: 0 5px 20px #000;
         }
 
         @keyframes fadeSlide { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
@@ -107,13 +85,14 @@
         @keyframes textReveal { 0% { opacity: 0; filter: blur(10px); } 20% { opacity: 1; filter: blur(0); } 80% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); } }
 
         /* --- GŁÓWNA STRONA --- */
-        #app { display: none; opacity: 0; transition: opacity 1.5s ease; padding-bottom: 100px; }
+        #app { display: none; opacity: 0; transition: opacity 1.5s ease; padding-bottom: 120px; }
 
-        /* --- NAWIGACJA --- */
+        /* --- NAWIGACJA PŁYWAJĄCA --- */
         .nav-dock {
             position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; padding: 10px; border-radius: 100px; display: flex; gap: 10px;
-            background: rgba(10, 10, 10, 0.7); box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            z-index: 1000; padding: 10px; border-radius: 100px; display: flex; gap: 8px;
+            background: rgba(10, 10, 10, 0.75); box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05);
         }
         .nav-btn {
             background: transparent; border: none; color: var(--text-muted); cursor: pointer;
@@ -125,9 +104,18 @@
             content: ''; position: absolute; inset: 0; background: var(--accent); border-radius: 50%;
             opacity: 0; transform: scale(0.5); transition: var(--transition); z-index: 1;
         }
-        .nav-btn:hover { color: #fff; }
+        .nav-btn:hover { color: #fff; transform: translateY(-3px); }
         .nav-btn.active { color: #000; }
         .nav-btn.active::before { opacity: 1; transform: scale(1); }
+
+        /* --- TOOLTIP DLA NAWIGACJI --- */
+        .nav-btn::after {
+            content: attr(data-tooltip); position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+            background: #111; color: #fff; font-size: 0.75rem; padding: 6px 12px; border-radius: 8px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1); font-family: 'Inter'; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .nav-btn:hover::after { opacity: 1; top: -45px; }
 
         /* --- CONTENT & ZAKŁADKI --- */
         .content-area { max-width: 1200px; margin: 80px auto 0; padding: 0 5%; }
@@ -138,8 +126,7 @@
         /* --- SEKCJY START --- */
         .hero-section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .hero-logo {
-            width: clamp(150px, 30vw, 250px);
-            margin-bottom: 30px;
+            width: clamp(150px, 30vw, 250px); margin-bottom: 30px;
             filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.2));
             animation: float 6s ease-in-out infinite;
         }
@@ -147,7 +134,7 @@
         
         .hero-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
         .hero-title span { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; font-weight: 300; line-height: 1.7; }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 650px; font-weight: 300; line-height: 1.7; }
 
         .section-header { text-align: center; margin-bottom: 50px; margin-top: 40px; }
         .section-header h2 { font-size: 2.5rem; font-weight: 600; letter-spacing: 2px; }
@@ -160,9 +147,7 @@
             aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a;
         }
         .gallery-item img { 
-            width: 100%; height: 100%; 
-            /* Zapobieganie pikselozie - wyśrodkowane i przycięte */
-            object-fit: cover; object-position: center; 
+            width: 100%; height: 100%; object-fit: cover; object-position: center; 
             transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .gallery-overlay {
@@ -191,7 +176,6 @@
         
         .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
         .link-card:hover .link-icon { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
-        
         .link-card.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
         .badge { font-size: 0.7rem; background: var(--accent); color: #000; padding: 2px 8px; border-radius: 20px; font-weight: 800; margin-left: 10px; }
 
@@ -201,6 +185,38 @@
         .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid var(--glass-border); padding-top: 30px; }
         .stat-item h4 { font-size: 2.5rem; font-family: 'Outfit'; font-weight: 800; color: var(--accent); margin-bottom: 5px; }
         .stat-item p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+
+        /* --- EKIPA (STAFF) --- */
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 20px; }
+        .staff-card { 
+            padding: 40px 20px; text-align: center; border-radius: 24px; 
+            transition: var(--transition); position: relative; overflow: hidden;
+        }
+        .staff-card:hover { transform: translateY(-8px); border-color: rgba(0, 229, 255, 0.3); background: rgba(255,255,255,0.05); }
+        .avatar-box {
+            width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%;
+            background: #111; border: 3px solid rgba(255,255,255,0.1); display: flex;
+            align-items: center; justify-content: center; font-size: 2.5rem; color: var(--text-muted);
+            overflow: hidden;
+        }
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+        .staff-card h3 { font-size: 1.4rem; margin-bottom: 5px; }
+        .staff-role { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); }
+        .role-owner { color: #ff3366; text-shadow: 0 0 10px rgba(255, 51, 102, 0.4); }
+        .role-dev { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
+        .role-mod { color: #33ff99; }
+
+        /* --- AKTUALIZACJE (CHANGELOG) --- */
+        .update-timeline { position: relative; max-width: 800px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 30px; }
+        .update-item { margin-bottom: 40px; position: relative; }
+        .update-item::before {
+            content: ''; position: absolute; left: -37px; top: 5px; width: 12px; height: 12px;
+            background: var(--bg-dark); border: 2px solid var(--accent); border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .update-date { font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .update-item h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .update-item p { color: #ccc; line-height: 1.6; font-size: 1rem; }
 
         /* --- LIGHTBOX --- */
         #lightbox {
@@ -216,36 +232,35 @@
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .top-logo { top: 15px; left: 15px; width: 45px; height: 45px; }
-            .nav-dock { bottom: 20px; width: 90%; justify-content: space-around; }
+            .nav-dock { bottom: 20px; width: 95%; justify-content: space-around; padding: 8px; gap: 5px; }
+            .nav-btn { width: 45px; height: 45px; }
             .info-container { padding: 30px 20px; }
             .stat-grid { grid-template-columns: 1fr; gap: 30px; }
+            .update-timeline { padding-left: 20px; }
+            .update-item::before { left: -27px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LOGO W LEWYM GÓRNYM ROGU -->
-    <div class="top-logo glass">
-        <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo">
-    </div>
+    <div class="top-logo glass"><img src="assets/plik/Projekt%20Pomorze.png" alt="Logo"></div>
 
-    <!-- KINOWE INTRO (Bez loadera, ładuje się od razu) -->
+    <!-- KINOWE INTRO -->
     <div id="intro">
         <div class="intro-slide" style="animation-delay: 0s;">
             <img src="assets/plik/las.png" alt="Las">
-            <div class="intro-text" style="animation-delay: 0s;">Poczuj klimat</div>
+            <div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div>
         </div>
         <div class="intro-slide" style="animation-delay: 3.5s;">
             <img src="assets/plik/czarnoszki.png" alt="Czarnoszki">
-            <div class="intro-text" style="animation-delay: 3.5s;">Odkrywaj tereny</div>
+            <div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div>
         </div>
         <div class="intro-slide" style="animation-delay: 7s;">
             <img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd">
-            <div class="intro-text" style="animation-delay: 7s;">Rozpocznij jazdę</div>
+            <div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div>
         </div>
     </div>
 
-    <!-- LIGHTBOX -->
     <div id="lightbox" onclick="closeLightbox()">
         <div class="close-lb"><i class="fas fa-times"></i></div>
         <img id="lightbox-img" src="" alt="Powiększenie">
@@ -254,12 +269,14 @@
     <!-- GŁÓWNA APLIKACJA -->
     <div id="app">
         
-        <!-- Pływająca Nawigacja (Nav Dock) -->
-        <nav class="nav-dock glass">
-            <button class="nav-btn active" onclick="openTab('home', this)" title="Start"><span class="material-icons">adjust</span></button>
-            <button class="nav-btn" onclick="openTab('galeria', this)" title="Galeria"><span class="material-icons">landscape</span></button>
-            <button class="nav-btn" onclick="openTab('linki', this)" title="Społeczność"><span class="material-icons">hub</span></button>
-            <button class="nav-btn" onclick="openTab('info', this)" title="O Grze"><span class="material-icons">segment</span></button>
+        <!-- Pływająca Nawigacja -->
+        <nav class="nav-dock">
+            <button class="nav-btn active" onclick="openTab('home', this)" data-tooltip="Start"><span class="material-icons">adjust</span></button>
+            <button class="nav-btn" onclick="openTab('galeria', this)" data-tooltip="Miejscówki"><span class="material-icons">landscape</span></button>
+            <button class="nav-btn" onclick="openTab('info', this)" data-tooltip="O co biega?"><span class="material-icons">segment</span></button>
+            <button class="nav-btn" onclick="openTab('ekipa', this)" data-tooltip="Twórcy"><span class="material-icons">groups</span></button>
+            <button class="nav-btn" onclick="openTab('aktualizacje', this)" data-tooltip="Co nowego?"><span class="material-icons">update</span></button>
+            <button class="nav-btn" onclick="openTab('linki', this)" data-tooltip="Sociale"><span class="material-icons">hub</span></button>
         </nav>
 
         <main class="content-area">
@@ -267,11 +284,9 @@
             <!-- START -->
             <div id="home" class="tab active">
                 <div class="hero-section">
-                    <!-- Dodane Logo na środku ekranu -->
-                    <img src="assets/plik/Projekt%20Pomorze.png" alt="Projekt Pomorze Logo" class="hero-logo">
-                    
+                    <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" class="hero-logo">
                     <h1 class="hero-title">Projekt <span>Pomorze</span></h1>
-                    <p class="hero-subtitle">Eksploruj realistyczne trasy, gęste lasy i malownicze miejscowości inspirowane prawdziwymi terenami Pomorza. Zupełnie nowy standard jazdy w świecie Roblox.</p>
+                    <p class="hero-subtitle">Wskakuj za kółko i pojeździj po prawdziwych terenach Pomorza. Lasy, wsie i lokalne drogi w klimatach, które dobrze znasz. Robimy coś więcej niż zwykłą grę do jeżdżenia na Robloxie.</p>
                 </div>
             </div>
 
@@ -279,24 +294,16 @@
             <div id="galeria" class="tab">
                 <div class="section-header">
                     <p>Zrzuty Ekranu</p>
-                    <h2>Odkryj Świat Gry</h2>
+                    <h2>Miejscówki w grze</h2>
                 </div>
                 <div class="gallery-grid">
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/czarnoszki.png')">
                         <img src="assets/plik/czarnoszki.png" alt="Czarnoszki">
                         <div class="gallery-overlay"><div class="gallery-title">Czarnoszki</div></div>
                     </div>
-                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/czarnoszki1.png')">
-                        <img src="assets/plik/czarnoszki1.png" alt="Czarnoszki 1">
-                        <div class="gallery-overlay"><div class="gallery-title">Czarnoszki 1</div></div>
-                    </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/kiełpin.png')">
                         <img src="assets/plik/kiełpin.png" alt="Kiełpin">
                         <div class="gallery-overlay"><div class="gallery-title">Kiełpin</div></div>
-                    </div>
-                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/kiełpin1.png')">
-                        <img src="assets/plik/kiełpin1.png" alt="Kiełpin 1">
-                        <div class="gallery-overlay"><div class="gallery-title">Kiełpin 1</div></div>
                     </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/krery.png')">
                         <img src="assets/plik/krery.png" alt="Krery">
@@ -310,13 +317,95 @@
                         <img src="assets/plik/rychnowy.png" alt="Rychnowy">
                         <div class="gallery-overlay"><div class="gallery-title">Rychnowy</div></div>
                     </div>
-                    <div class="gallery-item glass" onclick="openLightbox('assets/plik/wyjazd%20krzy%C5%BCanki.png')">
-                        <img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd Krzyżanki">
-                        <div class="gallery-overlay"><div class="gallery-title">Wyjazd Krzyżanki</div></div>
-                    </div>
                     <div class="gallery-item glass" onclick="openLightbox('assets/plik/zagórki.png')">
                         <img src="assets/plik/zagórki.png" alt="Zagórki">
                         <div class="gallery-overlay"><div class="gallery-title">Zagórki</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFO -->
+            <div id="info" class="tab">
+                <div class="section-header">
+                    <p>O Projekcie</p>
+                    <h2>O co tutaj biega?</h2>
+                </div>
+                <div class="info-container glass">
+                    <p class="info-text">
+                        Tworzymy mapę w 100% opartą na powiecie człuchowskim. Skupiamy się na tym, żeby drogi i lasy wyglądały tak, jak w rzeczywistości – bez zbędnej sztuczności. Zależy nam na detalach, które budują ten specyficzny, polski klimat. Cały czas siedzimy w studiu, grzebiemy przy mapie i dodajemy nowe rzeczy, więc projekt ciągle rośnie i ewoluuje.
+                    </p>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <h4>7</h4>
+                            <p>Gotowych Wsi</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>9+</h4>
+                            <p>Kilometrów Dróg</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>WIP</h4>
+                            <p>Status Prac</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EKIPA (NOWA ZAKŁADKA) -->
+            <div id="ekipa" class="tab">
+                <div class="section-header">
+                    <p>Twórcy</p>
+                    <h2>Nasza Ekipa</h2>
+                </div>
+                <div class="staff-grid">
+                    <!-- Karta 1 -->
+                    <div class="staff-card glass">
+                        <div class="avatar-box"><i class="fas fa-crown"></i></div> <!-- Tu możesz dodać <img src="..."> -->
+                        <h3>Facio</h3>
+                        <p class="staff-role role-owner">Główny Twórca</p>
+                    </div>
+                    <!-- Karta 2 -->
+                    <div class="staff-card glass">
+                        <div class="avatar-box"><i class="fas fa-hammer"></i></div>
+                        <h3>Mruczek</h3>
+                        <p class="staff-role role-dev">Główny Builder</p>
+                    </div>
+                    <!-- Karta 3 -->
+                    <div class="staff-card glass">
+                        <div class="avatar-box"><i class="fas fa-code"></i></div>
+                        <h3>ScripterX</h3>
+                        <p class="staff-role role-dev">Programista</p>
+                    </div>
+                    <!-- Karta 4 -->
+                    <div class="staff-card glass">
+                        <div class="avatar-box"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Janek</h3>
+                        <p class="staff-role role-mod">Moderator Discord</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AKTUALIZACJE (NOWA ZAKŁADKA) -->
+            <div id="aktualizacje" class="tab">
+                <div class="section-header">
+                    <p>Changelog</p>
+                    <h2>Co nowego na mapie?</h2>
+                </div>
+                <div class="update-timeline">
+                    <div class="update-item">
+                        <span class="update-date">Najnowsze prace</span>
+                        <h3>Rozbudowa Dróg Leśnych</h3>
+                        <p>Dodaliśmy kolejne kilometry ścieżek między Kiełpinem a Zagórkami. Teraz przejazd przez las wymaga znacznie więcej uwagi, a klimat jest jeszcze bardziej gęsty.</p>
+                    </div>
+                    <div class="update-item">
+                        <span class="update-date">Wcześniej</span>
+                        <h3>Optymalizacja i Rychnowy</h3>
+                        <p>Wieś Rychnowy została dopracowana pod kątem detali. Zoptymalizowaliśmy też modele drzew, żeby gra nie klatkowała na słabszych kompach i telefonach.</p>
+                    </div>
+                    <div class="update-item">
+                        <span class="update-date">Początki</span>
+                        <h3>Start budowy infrastruktury</h3>
+                        <p>Postawiliśmy pierwsze wsie: Czarnoszki i Krery. Rozpoczęto prace nad głównym szkieletem dróg asfaltowych w regionie.</p>
                     </div>
                 </div>
             </div>
@@ -325,7 +414,7 @@
             <div id="linki" class="tab">
                 <div class="section-header">
                     <p>Społeczność</p>
-                    <h2>Dołącz do nas</h2>
+                    <h2>Nasze sociale</h2>
                 </div>
                 <div class="links-wrapper">
                     <a href="https://discord.gg/Hq8jvUM9D6" target="_blank" class="link-card glass">
@@ -338,7 +427,7 @@
                     </a>
                     <a href="https://www.tiktok.com/@widze.ze.ktos.lubi.wdupe" target="_blank" class="link-card glass">
                         <div class="link-icon"><i class="fab fa-tiktok"></i></div>
-                        <div class="link-info"><h3>TikTok</h3><p>Krótkie materiały</p></div>
+                        <div class="link-info"><h3>TikTok</h3><p>Krótkie materiały z gry</p></div>
                     </a>
                     <a href="https://www.youtube.com/@FacioYT1000" target="_blank" class="link-card glass">
                         <div class="link-icon"><i class="fab fa-youtube"></i></div>
@@ -346,40 +435,13 @@
                     </a>
                     <a href="https://trello.com/b/jBpRzDJW/projekt-pomorze" target="_blank" class="link-card glass">
                         <div class="link-icon"><i class="fab fa-trello"></i></div>
-                        <div class="link-info"><h3>Trello</h3><p>Postępy z prac</p></div>
+                        <div class="link-info"><h3>Trello</h3><p>Zobacz nad czym pracujemy</p></div>
                     </a>
                     <div class="link-card glass disabled">
                         <div class="link-icon"><i class="fas fa-gamepad"></i></div>
                         <div class="link-info">
                             <h3 style="display:flex;align-items:center;">Gra <span class="badge">WKRÓTCE</span></h3>
-                            <p>Dostęp do gry</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INFO -->
-            <div id="info" class="tab">
-                <div class="section-header">
-                    <p>O Projekcie</p>
-                    <h2>Baza Wiedzy</h2>
-                </div>
-                <div class="info-container glass">
-                    <p class="info-text">
-                        Projekt Pomorze to unikalne doświadczenie odwzorowujące tereny powiatu i gminy Człuchów. Stawiamy na realizm dróg, gęste kompleksy leśne i dbałość o lokalne detale. Mapa jest stale rozwijana przez Facio Studios, aby dostarczyć najlepsze wrażenia z jazdy na platformie Roblox.
-                    </p>
-                    <div class="stat-grid">
-                        <div class="stat-item">
-                            <h4>7</h4>
-                            <p>Miejscowości</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>9+</h4>
-                            <p>KM Dróg</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>WIP</h4>
-                            <p>Status Mapy</p>
+                            <p>Przycisk zablokowany</p>
                         </div>
                     </div>
                 </div>
@@ -390,9 +452,7 @@
 
     <!-- SKRYPTY -->
     <script>
-        // --- LOGIKA STARTOWA (Brak loadera, od razu intro) ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Intro trwa ok 11 sekund (3 slajdy po 4 sekundy z nachodzeniem)
             setTimeout(showApp, 11000);
         });
 
@@ -409,7 +469,6 @@
             }, 1000);
         }
 
-        // --- ZARZĄDZANIE ZAKŁADKAMI ---
         function openTab(tabId, btn) {
             document.querySelectorAll('.tab').forEach(t => {
                 t.style.display = 'none';
@@ -419,14 +478,13 @@
             
             const activeTab = document.getElementById(tabId);
             activeTab.style.display = 'block';
-            void activeTab.offsetWidth; // Wymuszenie reflow dla animacji
+            void activeTab.offsetWidth; 
             activeTab.classList.add('active');
             
             btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- LIGHTBOX ---
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
             document.getElementById('lightbox-img').src = src;
