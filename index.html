@@ -96,23 +96,45 @@
         .link-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--accent); }
         .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
 
+        /* --- SYSTEM PRZYCISKÓW ADMINA NA STRONIE --- */
         .admin-controls { position: absolute; top: 10px; right: 10px; z-index: 10; display: none; gap: 5px; }
         .admin-mode .admin-controls { display: flex; }
-        .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }
-        .btn-action:hover { background: #ff3366; border-color: #ff3366; }
+        .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 6px 12px; border-radius: 5px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+        .btn-action.del:hover { background: #ff3366; border-color: #ff3366; }
+        .btn-action.edit:hover { background: #ffaa00; border-color: #ffaa00; color: #000; }
 
         /* --- ADMIN PANEL (CMS) --- */
         #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #555; cursor: pointer; z-index: 9999; padding: 10px; border-radius: 50%; transition: 0.3s; }
         #admin-trigger:hover { color: var(--accent); border-color: var(--accent); }
-        .admin-container { max-width: 800px; margin: 0 auto; padding: 40px; }
+        
+        .admin-container { max-width: 900px; margin: 0 auto; padding: 40px; }
+        .admin-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 5px; color: var(--accent); font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; }
-        .btn-primary { background: var(--accent); color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; }
+        
+        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         .btn-primary:hover { background: #fff; }
-        .admin-section { border-top: 1px solid var(--glass-border); padding-top: 30px; margin-top: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; }
+        .btn-danger { background: #ff3366; color: #fff; }
+        .btn-danger:hover { background: #ff0040; }
         .btn-warning { background: #ffaa00; color: #000; }
+        
         #admin-dashboard { display: none; }
+        
+        /* ZAKŁADKI W ADMIN PANELU */
+        .admin-tabs-nav { display: flex; gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; }
+        .admin-tab-btn:hover, .admin-tab-btn.active { background: rgba(255,255,255,0.1); color: #fff; border-color: var(--accent); }
+        .admin-sub-tab { display: none; background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .admin-sub-tab.active { display: block; animation: slideFade 0.4s ease forwards; }
+
+        /* --- MODAL EDYCJI --- */
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .edit-box { background: #111; border: 1px solid var(--glass-border); padding: 30px; border-radius: 16px; width: 500px; max-width: 90%; }
+        .edit-box h3 { margin-bottom: 20px; color: var(--accent); }
+        .edit-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .edit-actions button { flex: 1; }
 
         /* --- LIGHTBOX --- */
         #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 9999; display: none; justify-content: center; align-items: center; }
@@ -124,18 +146,9 @@
 
     <!-- KINOWE INTRO -->
     <div id="intro">
-        <div class="intro-slide" style="animation-delay: 0s;">
-            <img src="assets/plik/las.png" alt="Las">
-            <div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div>
-        </div>
-        <div class="intro-slide" style="animation-delay: 3.5s;">
-            <img src="assets/plik/czarnoszki.png" alt="Czarnoszki">
-            <div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div>
-        </div>
-        <div class="intro-slide" style="animation-delay: 7s;">
-            <img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd">
-            <div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div>
-        </div>
+        <div class="intro-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png" alt="Las"><div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div></div>
+        <div class="intro-slide" style="animation-delay: 3.5s;"><img src="assets/plik/czarnoszki.png" alt="Czarnoszki"><div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div></div>
+        <div class="intro-slide" style="animation-delay: 7s;"><img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd"><div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div></div>
     </div>
 
     <!-- LOGO -->
@@ -147,8 +160,20 @@
         <img id="lightbox-img" src="" alt="Zoom">
     </div>
 
+    <!-- MODAL EDYCJI -->
+    <div id="edit-modal">
+        <div class="edit-box">
+            <h3>Edytuj wpis</h3>
+            <div id="edit-form-content"></div>
+            <div class="edit-actions">
+                <button class="btn-primary" onclick="saveEdit()">Zapisz zmiany</button>
+                <button class="btn-primary" style="background:#333; color:#fff;" onclick="closeEditModal()">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
     <!-- NAWIGACJA -->
-    <nav class="nav-dock">
+    <nav class="nav-dock" id="main-nav">
         <button class="nav-btn active" onclick="openTab('home', this)" title="Start"><span class="material-icons">adjust</span></button>
         <button class="nav-btn" onclick="openTab('galeria', this)" title="Miejscówki"><span class="material-icons">landscape</span></button>
         <button class="nav-btn" onclick="openTab('ekipa', this)" title="Ekipa"><span class="material-icons">groups</span></button>
@@ -198,6 +223,8 @@
             <div class="section-header"><p>CMS</p><h2>Panel Zarządzania</h2></div>
             
             <div class="admin-container glass">
+                
+                <!-- Logowanie -->
                 <div id="admin-login-form">
                     <div class="form-group"><label>Email</label><input type="email" id="admin-email"></div>
                     <div class="form-group"><label>Hasło</label><input type="password" id="admin-pass"></div>
@@ -205,50 +232,61 @@
                     <p id="login-error" style="color: red; display: none; margin-top: 10px;">Błąd logowania!</p>
                 </div>
 
+                <!-- Dashboard po zalogowaniu -->
                 <div id="admin-dashboard">
-                    <h3>Panel Administratora</h3>
-                    <button class="btn-primary" style="background:#ff3366;" onclick="logoutAdmin()">Wyloguj</button>
-
-                    <!-- MIGRATOR -->
-                    <div class="admin-section">
-                        <h4 style="color: var(--accent); margin-bottom: 10px;">Narzędzie: Migracja lokalnych zdjęć</h4>
-                        <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 15px;">Użyj tego przycisku TYLKO RAZ (wymaga odpalenia strony na serwerze local/host), aby skrypt pobrał stare zdjęcia z folderu 'assets/plik/...', wrzucił je na ImgBB i zapisał w Firebase.</p>
-                        <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()">Zacznij migrację zdjęć</button>
+                    <div class="admin-header-flex">
+                        <h3 style="color:#fff;">Jesteś zalogowany</h3>
+                        <div>
+                            <button class="btn-primary" onclick="openTab('home', document.querySelector('.nav-btn'))"><i class="fas fa-home"></i> Wróć na stronę</button>
+                            <button class="btn-primary btn-danger" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Wyloguj</button>
+                        </div>
                     </div>
 
-                    <!-- DODAJ DO GALERII -->
-                    <div class="admin-section">
-                        <h4>Dodaj zdjęcie (Galeria)</h4>
-                        <div class="form-group"><label>Plik</label><input type="file" id="g-file" accept="image/*"></div>
+                    <!-- Nawigacja w Adminie -->
+                    <div class="admin-tabs-nav">
+                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-gallery', this)">Galeria</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-staff', this)">Ekipa</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-changelog', this)">Aktualizacje</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-links', this)">Linki</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> Narzędzia</button>
+                    </div>
+
+                    <!-- Podzakładki -->
+                    <div id="a-gallery" class="admin-sub-tab active">
+                        <h4>Dodaj zdjęcie</h4>
+                        <div class="form-group"><label>Plik (wysyłany na ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
                         <div class="form-group"><label>Nazwa</label><input type="text" id="g-title"></div>
                         <button class="btn-primary" onclick="addGallery()" id="g-btn">Wgraj zdjęcie</button>
                     </div>
 
-                    <!-- DODAJ EKIPE -->
-                    <div class="admin-section">
+                    <div id="a-staff" class="admin-sub-tab">
                         <h4>Dodaj Członka Ekipy</h4>
                         <div class="form-group"><label>Nick</label><input type="text" id="s-name"></div>
                         <div class="form-group"><label>Rola (np. Główny Twórca)</label><input type="text" id="s-role"></div>
-                        <button class="btn-primary" onclick="addStaff()">Dodaj</button>
+                        <button class="btn-primary" onclick="addStaff()">Dodaj do ekipy</button>
                     </div>
 
-                    <!-- DODAJ AKTUALIZACJE -->
-                    <div class="admin-section">
-                        <h4>Dodaj Aktualizację (Changelog)</h4>
-                        <div class="form-group"><label>Data / Etykieta (np. Najnowsze prace)</label><input type="text" id="c-date"></div>
-                        <div class="form-group"><label>Tytuł (np. Rozbudowa dróg)</label><input type="text" id="c-title"></div>
+                    <div id="a-changelog" class="admin-sub-tab">
+                        <h4>Dodaj Wpis (Changelog)</h4>
+                        <div class="form-group"><label>Data / Etykieta (np. Nowość)</label><input type="text" id="c-date"></div>
+                        <div class="form-group"><label>Tytuł</label><input type="text" id="c-title"></div>
                         <div class="form-group"><label>Opis</label><textarea id="c-desc" rows="3"></textarea></div>
-                        <button class="btn-primary" onclick="addChangelog()">Dodaj wpis</button>
+                        <button class="btn-primary" onclick="addChangelog()">Opublikuj wpis</button>
                     </div>
 
-                    <!-- DODAJ LINK -->
-                    <div class="admin-section">
+                    <div id="a-links" class="admin-sub-tab">
                         <h4>Dodaj Link</h4>
                         <div class="form-group"><label>Nazwa (np. Discord)</label><input type="text" id="l-name"></div>
-                        <div class="form-group"><label>Opis (np. Oficjalny serwer)</label><input type="text" id="l-desc"></div>
-                        <div class="form-group"><label>URL (https://...)</label><input type="text" id="l-url"></div>
-                        <div class="form-group"><label>Klasa Ikony FontAwesome (np. fab fa-discord)</label><input type="text" id="l-icon" value="fas fa-link"></div>
+                        <div class="form-group"><label>Opis (np. Serwer społeczności)</label><input type="text" id="l-desc"></div>
+                        <div class="form-group"><label>Pełny URL</label><input type="text" id="l-url" placeholder="https://..."></div>
+                        <div class="form-group"><label>Ikona FontAwesome</label><input type="text" id="l-icon" value="fas fa-link"></div>
                         <button class="btn-primary" onclick="addLink()">Dodaj Link</button>
+                    </div>
+
+                    <div id="a-tools" class="admin-sub-tab">
+                        <h4 style="color: var(--accent); margin-bottom: 10px;">Migracja lokalnych zdjęć</h4>
+                        <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 15px;">Pobiera pliki z dysku (assets) i zapisuje w chmurze.</p>
+                        <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()"><i class="fas fa-sync-alt"></i> Uruchom migrację</button>
                     </div>
 
                 </div>
@@ -259,7 +297,7 @@
     <!-- FIREBASE SDK & LOGIKA CMS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -276,28 +314,36 @@
         const db = getDatabase(app);
         const auth = getAuth(app);
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
-        let isAdmin = false;
 
-        // --- RENDEROWANIE Z BAZY ---
+        // Globalny obiekt do przechowywania danych na potrzeby edycji
+        window.appData = { gallery: {}, staff: {}, changelog: {}, links: {} };
+        window.currentEdit = { path: '', key: '' };
+
+        // --- RENDEROWANIE DANYCH ---
         const renderData = (path, elementId, templateFn) => {
             onValue(ref(db, path), (snapshot) => {
                 const container = document.getElementById(elementId);
                 container.innerHTML = '';
                 const data = snapshot.val();
                 if(data) {
-                    Object.keys(data).reverse().forEach(key => { // Odwracam żeby najnowsze były pierwsze
+                    window.appData[path] = data; // Zapis w pamięci dla edycji
+                    Object.keys(data).reverse().forEach(key => {
                         container.innerHTML += templateFn(key, data[key]);
                     });
                 } else {
+                    window.appData[path] = {};
                     container.innerHTML = '<p style="color:#666;">Brak danych do wyświetlenia.</p>';
                 }
             });
         };
 
-        // Nasłuchiwanie zmian w bazie dla poszczególnych zakładek
+        // Generowanie elementów z przyciskami Edytuj / Usuń
         renderData('gallery', 'dyn-gallery', (key, item) => `
             <div class="gallery-item glass">
-                <div class="admin-controls"><button class="btn-action" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="admin-controls">
+                    <button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button>
+                </div>
                 <img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')">
                 <div class="gallery-overlay" onclick="window.openLightbox('${item.url}')">
                     <div class="gallery-title">${item.title}</div>
@@ -307,7 +353,10 @@
 
         renderData('staff', 'dyn-staff', (key, item) => `
             <div class="staff-card">
-                <div class="admin-controls"><button class="btn-action" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="admin-controls">
+                    <button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button>
+                </div>
                 <h3>${item.name}</h3>
                 <p class="staff-role">${item.role}</p>
             </div>
@@ -315,7 +364,10 @@
 
         renderData('changelog', 'dyn-changelog', (key, item) => `
             <div class="update-item">
-                <div class="admin-controls" style="right:-30px; top:0;"><button class="btn-action" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="admin-controls" style="right:-60px; top:0;">
+                    <button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button>
+                </div>
                 <span class="update-date">${item.date}</span>
                 <h3>${item.title}</h3>
                 <p>${item.desc}</p>
@@ -324,21 +376,24 @@
 
         renderData('links', 'dyn-links', (key, item) => `
             <a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;">
-                <div class="admin-controls"><button class="btn-action" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="admin-controls">
+                    <button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button>
+                </div>
                 <div class="link-icon"><i class="${item.icon}"></i></div>
                 <div><h3>${item.name}</h3><p style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div>
             </a>
         `);
 
-        // --- AUTH ADMINA ---
+        // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
-            const loginForm = document.getElementById('admin-login-form');
-            const dashboard = document.getElementById('admin-dashboard');
             if (user) {
-                isAdmin = true; loginForm.style.display = 'none'; dashboard.style.display = 'block';
+                document.getElementById('admin-login-form').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'block';
                 document.body.classList.add('admin-mode');
             } else {
-                isAdmin = false; loginForm.style.display = 'block'; dashboard.style.display = 'none';
+                document.getElementById('admin-login-form').style.display = 'block';
+                document.getElementById('admin-dashboard').style.display = 'none';
                 document.body.classList.remove('admin-mode');
             }
         });
@@ -346,128 +401,127 @@
         window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(() => document.getElementById('login-error').style.display = 'block');
         window.logoutAdmin = () => signOut(auth);
 
-        // --- DODAWANIE DO BAZY ---
+        // --- DODAWANIE ---
         window.addGallery = async () => {
-            const fileInput = document.getElementById('g-file');
-            const title = document.getElementById('g-title').value;
-            const btn = document.getElementById('g-btn');
+            const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn');
             if(!fileInput.files[0] || !title) return alert("Brakuje danych!");
-            
             btn.innerText = "Wgrywanie..."; btn.disabled = true;
             try {
                 const fd = new FormData(); fd.append('image', fileInput.files[0]);
                 const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
                 const data = await res.json();
-                if(data.success) {
-                    await push(ref(db, 'gallery'), { url: data.data.url, title: title });
-                    fileInput.value = ""; document.getElementById('g-title').value = ""; alert("Dodano!");
-                }
-            } catch(e) { alert("Błąd!"); }
+                if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; alert("Dodano!"); }
+            } catch(e) { alert("Błąd serwera!"); }
             btn.innerText = "Wgraj zdjęcie"; btn.disabled = false;
         };
 
-        window.addStaff = async () => {
-            await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value });
-            document.getElementById('s-name').value = ""; document.getElementById('s-role').value = "";
-        };
+        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = ""; alert("Dodano!"); };
+        window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; alert("Dodano wpis!"); };
+        window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; alert("Dodano link!"); };
 
-        window.addChangelog = async () => {
-            await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value });
-            document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = "";
-        };
-
-        window.addLink = async () => {
-            await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value });
-            document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = "";
-        };
-
+        // --- USUWANIE I EDYCJA ---
         window.delItem = async (path, key, e) => {
             e.preventDefault(); e.stopPropagation();
             if(confirm("Na pewno usunąć?")) await remove(ref(db, `${path}/${key}`));
         };
 
-        // --- MIGRATOR LOKALNYCH ZDJĘĆ ---
+        window.openEditModal = (path, key, e) => {
+            e.preventDefault(); e.stopPropagation();
+            window.currentEdit = { path, key };
+            const item = window.appData[path][key];
+            const form = document.getElementById('edit-form-content');
+            form.innerHTML = ''; // czyszczenie
+            
+            // Generowanie pól zależnie od sekcji
+            if(path === 'gallery') {
+                form.innerHTML = `<div class="form-group"><label>Tytuł zdjęcia</label><input type="text" id="e-title" value="${item.title}"></div>`;
+            } else if (path === 'staff') {
+                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div>
+                                  <div class="form-group"><label>Rola</label><input type="text" id="e-role" value="${item.role}"></div>`;
+            } else if (path === 'changelog') {
+                form.innerHTML = `<div class="form-group"><label>Data</label><input type="text" id="e-date" value="${item.date}"></div>
+                                  <div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div>
+                                  <div class="form-group"><label>Opis</label><textarea id="e-desc" rows="4">${item.desc}</textarea></div>`;
+            } else if (path === 'links') {
+                form.innerHTML = `<div class="form-group"><label>Nazwa</label><input type="text" id="e-name" value="${item.name}"></div>
+                                  <div class="form-group"><label>Opis</label><input type="text" id="e-desc" value="${item.desc}"></div>
+                                  <div class="form-group"><label>URL</label><input type="text" id="e-url" value="${item.url}"></div>
+                                  <div class="form-group"><label>Ikona</label><input type="text" id="e-icon" value="${item.icon}"></div>`;
+            }
+            document.getElementById('edit-modal').style.display = 'flex';
+        };
+
+        window.saveEdit = async () => {
+            const { path, key } = window.currentEdit;
+            const newData = {};
+            if(path === 'gallery') { newData.title = document.getElementById('e-title').value; }
+            else if (path === 'staff') { newData.name = document.getElementById('e-name').value; newData.role = document.getElementById('e-role').value; }
+            else if (path === 'changelog') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.desc = document.getElementById('e-desc').value; }
+            else if (path === 'links') { newData.name = document.getElementById('e-name').value; newData.desc = document.getElementById('e-desc').value; newData.url = document.getElementById('e-url').value; newData.icon = document.getElementById('e-icon').value; }
+            
+            await update(ref(db, `${path}/${key}`), newData);
+            window.closeEditModal();
+        };
+
+        window.closeEditModal = () => { document.getElementById('edit-modal').style.display = 'none'; };
+
+        // --- MIGRATOR ---
         window.migrateLocalImages = async () => {
             const btn = document.getElementById('btn-migrate');
             const localAssets = [
-                { path: 'assets/plik/czarnoszki.png', title: 'Czarnoszki' },
-                { path: 'assets/plik/czarnoszki1.png', title: 'Czarnoszki 1' },
-                { path: 'assets/plik/kiełpin.png', title: 'Kiełpin' },
-                { path: 'assets/plik/kiełpin1.png', title: 'Kiełpin 1' },
-                { path: 'assets/plik/krery.png', title: 'Krery' },
-                { path: 'assets/plik/las.png', title: 'Droga Leśna' },
-                { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' },
-                { path: 'assets/plik/wyjazd%20krzy%C5%BCanki.png', title: 'Wyjazd Krzyżanki' },
+                { path: 'assets/plik/czarnoszki.png', title: 'Czarnoszki' }, { path: 'assets/plik/czarnoszki1.png', title: 'Czarnoszki 1' },
+                { path: 'assets/plik/kiełpin.png', title: 'Kiełpin' }, { path: 'assets/plik/kiełpin1.png', title: 'Kiełpin 1' },
+                { path: 'assets/plik/krery.png', title: 'Krery' }, { path: 'assets/plik/las.png', title: 'Droga Leśna' },
+                { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' }, { path: 'assets/plik/wyjazd%20krzy%C5%BCanki.png', title: 'Wyjazd Krzyżanki' },
                 { path: 'assets/plik/zagórki.png', title: 'Zagórki' }
             ];
-
-            if(!confirm("Uruchomić migrację? Upewnij się, że strona działa na serwerze (np. localhost) inaczej pobranie plików zablokuje przeglądarka!")) return;
-            
-            btn.innerText = "Migracja trwa... (Może zająć chwilę)";
-            btn.disabled = true;
-
-            let successCount = 0;
+            if(!confirm("Uruchomić migrację? Strona musi działać z localhosta!")) return;
+            btn.innerText = "Trwa migracja..."; btn.disabled = true;
+            let count = 0;
             for(let asset of localAssets) {
                 try {
-                    // Pobranie lokalnego pliku
-                    const res = await fetch(asset.path);
-                    if(!res.ok) throw new Error("File not found");
-                    const blob = await res.blob();
-                    
-                    // Wysłanie na ImgBB
-                    const fd = new FormData();
-                    fd.append('image', blob);
+                    const res = await fetch(asset.path); const blob = await res.blob();
+                    const fd = new FormData(); fd.append('image', blob);
                     const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
                     const imgbbData = await imgbbRes.json();
-                    
-                    // Zapis do Firebase
-                    if(imgbbData.success) {
-                        await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title });
-                        successCount++;
-                    }
-                } catch(e) {
-                    console.error("Błąd migracji pliku: " + asset.path, e);
-                }
+                    if(imgbbData.success) { await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title }); count++; }
+                } catch(e) { console.error(e); }
             }
-            alert(`Migracja zakończona! Przeniesiono ${successCount} z ${localAssets.length} zdjęć.`);
-            btn.innerText = "Zacznij migrację zdjęć";
-            btn.disabled = false;
+            alert(`Zakończono! Wgrano ${count} zdjęć.`);
+            btn.innerText = "Uruchom migrację"; btn.disabled = false;
         };
-
     </script>
 
-    <!-- ZARZĄDZANIE UI (INTRO I ZAKŁADKI) -->
+    <!-- UI SCRIPTS -->
     <script>
+        // Intro wyłączane po 11s
         window.addEventListener('DOMContentLoaded', () => {
-            // Po 11s ukryj intro i pokaż apkę
             setTimeout(() => {
                 const intro = document.getElementById('intro');
                 intro.style.transition = 'opacity 1s ease'; intro.style.opacity = '0';
-                setTimeout(() => {
-                    intro.style.display = 'none';
-                    const app = document.getElementById('app');
-                    app.style.display = 'block';
-                    setTimeout(() => app.style.opacity = '1', 50);
-                }, 1000);
+                setTimeout(() => { intro.style.display = 'none'; const app = document.getElementById('app'); app.style.display = 'block'; setTimeout(() => app.style.opacity = '1', 50); }, 1000);
             }, 11000);
         });
 
+        // Główne zakładki strony
         window.openTab = function(tabId, btn) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            if(btn) btn.classList.add('active');
+            if(btn && btn.classList.contains('nav-btn')) btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.openLightbox = function(src) {
-            const lb = document.getElementById('lightbox');
-            document.getElementById('lightbox-img').src = src;
-            lb.style.display = 'flex';
+        // Zakładki wewnętrzne w Panelu Admina
+        window.switchAdminTab = function(subTabId, btn) {
+            document.querySelectorAll('.admin-sub-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(subTabId).classList.add('active');
+            if(btn) btn.classList.add('active');
         }
-        window.closeLightbox = function() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
+
+        window.openLightbox = function(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+        window.closeLightbox = function() { document.getElementById('lightbox').style.display = 'none'; }
     </script>
 </body>
 </html>
