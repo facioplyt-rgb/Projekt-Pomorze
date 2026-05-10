@@ -7,216 +7,154 @@
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-       
+        /* --- ZMIENNE: JASNY MOTYW POMORSKI --- */
         :root {
-            --bg-dark: #050400; 
-            --accent: #FFC107; /* Pomorskie Złoto */
-            --accent-glow: rgba(255, 193, 7, 0.4);
-            --glass-bg: rgba(20, 18, 15, 0.6); 
-            --glass-border: rgba(255, 215, 0, 0.08);
-            --text-main: #ffffff; 
-            --text-muted: #a0a0a0; 
-            --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --header-height: 80px;
+            --bg-body: #fcfcfc;
+            --bg-card: #ffffff;
+            --text-main: #1a1a1b;
+            --text-muted: #5f6368;
+            --accent: #e5b100; /* Szlachetne złoto Pomorza */
+            --accent-dark: #cc9900;
+            --border: #ececec;
+            --header-height: 70px;
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main);
-            overflow-x: hidden; min-height: 100vh;
-            /* Subtelne złote poświaty w tle */
-            background-image: radial-gradient(circle at 15% 50%, rgba(255, 193, 7, 0.05) 0%, transparent 50%), 
-                              radial-gradient(circle at 85% 30%, rgba(255, 160, 0, 0.05) 0%, transparent 50%);
-            background-attachment: fixed;
-        }
-        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
-        .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; }
         
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            /* Subtelna tekstura papieru/ziarna */
+            background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+        }
+
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 900; }
+
         /* --- KINOWE INTRO --- */
-        #intro { position: fixed; inset: 0; background: #000; z-index: 9999; overflow: hidden; }
+        #intro { position: fixed; inset: 0; background: #000; z-index: 9999; overflow: hidden; color: #fff; }
         .intro-slide { position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; }
-        .intro-slide.img-slide::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 30%, #000 100%); z-index: 1; }
-        .intro-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.5) contrast(1.1) saturate(1.2); animation: kenBurns 4s linear forwards; }
-        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Outfit'; font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; text-align: center; letter-spacing: 8px; text-transform: uppercase; opacity: 0; width: 100%; animation: textReveal 4s ease-in-out forwards; z-index: 2; text-shadow: 0 5px 20px #000; }
+        .intro-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); animation: kenBurns 4s linear forwards; }
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: clamp(2rem, 5vw, 4rem); text-align: center; letter-spacing: 4px; text-transform: uppercase; z-index: 2; font-weight: 900; }
 
-        @keyframes fadeSlide { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
-        @keyframes kenBurns { 0% { transform: scale(1.02); } 100% { transform: scale(1.12); } }
-        @keyframes textReveal { 0% { opacity: 0; filter: blur(10px); } 20% { opacity: 1; filter: blur(0); } 80% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); } }
+        @keyframes fadeSlide { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
-        /* --- NAWIGACJA TOP NAVBAR --- */
+        /* --- NOWOCZESNY NAVBAR --- */
         .top-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             z-index: 8000; display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(25px);
-            border-bottom: 1px solid var(--glass-border); opacity: 0; animation: fadeInNav 1s ease forwards 1s;
+            padding: 0 5%; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
         }
-        @keyframes fadeInNav { to { opacity: 1; } }
         
-        .nav-brand { display: flex; align-items: center; gap: 15px; cursor: pointer; }
-        .nav-brand img { width: 45px; height: 45px; border-radius: 10px; object-fit: contain; }
-        .nav-brand span { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
+        .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .nav-brand img { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); }
+        .nav-brand span { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.5px; color: #000; }
         .nav-brand span b { color: var(--accent); }
 
-        .nav-menu { display: flex; gap: 3px; }
+        .nav-menu { display: flex; gap: 8px; }
         .nav-btn {
-            background: transparent; border: none; color: var(--text-muted); font-family: 'Inter';
-            font-size: 0.9rem; font-weight: 500; padding: 10px 14px; border-radius: 12px;
+            background: transparent; border: none; color: var(--text-muted); 
+            font-size: 0.9rem; font-weight: 700; padding: 8px 16px; border-radius: 8px;
             cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 6px;
         }
-        .nav-btn i { font-size: 1.05rem; }
-        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-btn.active { color: #000; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); font-weight: 700; }
+        .nav-btn:hover { color: #000; background: #f0f0f0; }
+        .nav-btn.active { color: #fff; background: #000; }
 
-        .mobile-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
 
-        /* --- CONTENT & ZAKŁADKI --- */
-        #app { display: none; opacity: 0; transition: opacity 1.5s ease; padding-top: calc(var(--header-height) + 40px); padding-bottom: 80px; }
-        .content-area { max-width: 1300px; margin: 0 auto; padding: 0 5%; }
-        .tab { display: none; animation: slideFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .tab.active { display: block; }
-        @keyframes slideFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- CONTENT --- */
+        #app { display: none; opacity: 0; transition: 1s ease; padding-top: calc(var(--header-height) + 60px); }
+        .content-area { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .tab { display: none; }
+        .tab.active { display: block; animation: tabEnter 0.6s ease forwards; }
+        @keyframes tabEnter { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- SEKCJY STRONY --- */
-        .hero-section { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-size: clamp(3rem, 8vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
-        .hero-title span { color: var(--accent); text-shadow: 0 0 40px var(--accent-glow); }
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; font-weight: 400; line-height: 1.8; }
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
-        .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
+        /* --- SEKCJA HOME --- */
+        .hero-section { text-align: center; padding: 40px 0 80px 0; }
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; color: #000; }
+        .hero-title span { color: var(--accent); }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 400; }
+
+        /* --- KARTY I ELEMENTY --- */
+        .card-white { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+
+        .section-header { margin-bottom: 40px; }
+        .section-header h2 { font-size: 2.5rem; color: #000; letter-spacing: -1px; }
+        .section-header p { color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; }
+
+        /* --- GALERIA --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #eee; aspect-ratio: 16/10; cursor: pointer; position: relative; transition: var(--transition); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* --- EKIPA (CLEAN LIST) --- */
+        .staff-wrapper { max-width: 700px; margin: 0 auto; }
+        .staff-group-title { font-size: 0.85rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
+        .staff-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: 0.2s; }
+        .staff-row:hover { border-color: #000; background: #fafafa; }
+        .staff-info h4 { font-size: 1.1rem; color: #000; font-weight: 700; margin: 0; }
+        .staff-info span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+
+        /* --- KOMUNIKATY --- */
+        .announcement-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 15px; position: relative; border-left: 6px solid var(--accent); }
+        .announcement-card h3 { font-size: 1.2rem; color: #000; margin-bottom: 8px; }
+        .announcement-date { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+
+        /* --- FAQ --- */
+        .faq-item { background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 20px 25px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+        .faq-answer { max-height: 0; padding: 0 25px; color: var(--text-muted); line-height: 1.6; transition: 0.3s ease; opacity: 0; }
+        .faq-item.active { border-color: #000; }
+        .faq-item.active .faq-answer { max-height: 500px; padding-bottom: 20px; opacity: 1; }
 
         /* --- DEVLOG --- */
-        .devlog-container { max-width: 900px; margin: 0 auto; }
-        .devlog-post { background: rgba(20,18,15,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; margin-bottom: 40px; position: relative; transition: 0.3s; }
-        .devlog-post:hover { border-color: rgba(255, 193, 7, 0.3); background: rgba(30,28,25,0.5); }
-        .devlog-header { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
-        .devlog-title { font-size: 2rem; color: #fff; margin-bottom: 10px; }
-        .devlog-date { font-size: 0.9rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
-        .devlog-content { color: #ccc; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
-        .devlog-media { margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: #000; }
-        .devlog-media iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .devlog-post { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 40px; margin-bottom: 30px; }
+        .devlog-title { font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 10px; color: #000; }
+        .devlog-date { color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
+        .devlog-content { font-size: 1.1rem; line-height: 1.7; color: #333; margin-top: 20px; }
 
-        /* --- DYNAMICZNE GRIDY I KARTY --- */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .gallery-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a; border: 1px solid var(--glass-border); }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
-        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; opacity: 0; transition: var(--transition); }
-        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-color: rgba(255, 193, 7, 0.4); }
-        .gallery-item:hover img { transform: scale(1.06); }
-        .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-title { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 600; color: #fff; }
+        /* --- ADMIN PANEL (CLEAN) --- */
+        #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid var(--border); color: #000; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 9000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .admin-sub-tab { background: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border); display: none; }
+        .admin-sub-tab.active { display: block; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; margin-top: 5px; background: #f9f9f9; }
+        .btn-primary { background: #000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-primary:hover { background: var(--accent); color: #000; }
 
-        .staff-wrapper { max-width: 800px; margin: 0 auto; }
-        .staff-group { margin-bottom: 35px; text-align: left; }
-        .staff-group-title { font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255, 193, 7, 0.2); padding-bottom: 8px; }
-        .staff-list { display: flex; flex-direction: column; gap: 10px; }
-        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; transition: var(--transition); border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
-        .staff-row:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); border-color: rgba(255, 193, 7, 0.4); }
-        .staff-info h4 { font-family: 'Outfit'; font-size: 1.3rem; margin: 0 0 4px 0; color: #fff; font-weight: 600; }
-        .staff-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        /* --- MODALS & OVERLAYS --- */
+        #lightbox { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 4px solid #fff; }
+        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #000; }
 
-        .update-timeline { max-width: 900px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px; }
-        .update-item { margin-bottom: 50px; position: relative; }
-        .update-item::before { content: ''; position: absolute; left: -47px; top: 5px; width: 14px; height: 14px; background: var(--bg-dark); border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
-        .update-date { font-size: 0.9rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 10px; letter-spacing: 1px; }
-        .update-item h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
-        .update-item p { color: #bbb; line-height: 1.7; font-size: 1.05rem; }
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .edit-box { background: #fff; padding: 40px; border-radius: 20px; width: 500px; max-width: 95%; }
 
-        .links-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .link-card { display: flex; align-items: center; gap: 20px; padding: 30px; text-decoration: none; color: var(--text-main); transition: var(--transition); }
-        .link-icon { width: 70px; height: 70px; border-radius: 18px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent); transition: 0.3s; }
-        .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-8px); border-color: var(--accent); }
-        .link-card:hover .link-icon { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
-
-        .announcement-card { background: rgba(20,18,15,0.6); border: 1px solid var(--glass-border); border-left: 5px solid var(--accent); border-radius: 16px; padding: 30px; margin-bottom: 25px; position: relative; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .announcement-card:hover { transform: translateX(10px); background: rgba(30,28,25,0.8); }
-        .announcement-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .announcement-card h3 i { color: var(--accent); }
-        .announcement-date { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 15px; font-weight: 600; }
-
-        /* --- FAQ AKORDEON --- */
-        .faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; margin-bottom: 15px; position: relative; transition: 0.3s; overflow: hidden; }
-        .faq-item:hover { border-color: rgba(255, 193, 7, 0.4); }
-        .faq-question { font-size: 1.15rem; font-weight: 600; color: #fff; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; user-select: none; }
-        .faq-question:hover { color: var(--accent); }
-        .faq-question i.chevron { transition: transform 0.3s ease; color: var(--accent); font-size: 1.2rem; }
-        .faq-item.active .faq-question i.chevron { transform: rotate(180deg); }
-        .faq-item.active .faq-question { color: var(--accent); background: rgba(255, 193, 7, 0.05); }
-        .faq-answer { max-height: 0; padding: 0 30px; color: #bbb; line-height: 1.7; font-size: 1rem; transition: all 0.4s ease; opacity: 0; }
-        .faq-item.active .faq-answer { max-height: 1000px; padding: 20px 30px 30px 30px; opacity: 1; border-top: 1px solid rgba(255,255,255,0.05); }
-
-        .map-container { width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border); position: relative; background: #0a0a0a; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .map-container img { width: 100%; display: block; cursor: pointer; transition: 0.5s; }
-        .map-container img:hover { transform: scale(1.03); filter: brightness(1.1); }
-
-        /* --- ADMIN CONTROLS NA STRONIE --- */
-        .admin-controls { position: absolute; top: 15px; right: 15px; z-index: 10; display: none; gap: 8px; }
+        /* --- ADMIN MODE OVERLAY --- */
+        .admin-controls { display: none; gap: 5px; margin-top: 10px; }
         .admin-mode .admin-controls { display: flex; }
-        .admin-controls-inline { display: none; gap: 8px; }
-        .admin-mode .admin-controls-inline { display: flex; }
-        
-        .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-        .btn-action.del:hover { background: #ff3366; border-color: #ff3366; }
-        .btn-action.edit:hover { background: #fff; border-color: #fff; color: #000; } /* Zmieniono edycję na biały by odciąć od złotego */
+        .admin-mode .admin-controls-inline { display: flex; gap: 5px; }
+        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: 700; text-transform: uppercase; }
+        .btn-mini:hover { background: #000; color: #fff; }
 
-        /* --- ADMIN PANEL (CMS) --- */
-        #admin-trigger { position: fixed; bottom: 30px; right: 30px; background: rgba(15,12,5,0.8); border: 1px solid var(--glass-border); color: #888; cursor: pointer; z-index: 9000; width: 50px; height: 50px; border-radius: 50%; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; backdrop-filter: blur(10px); }
-        #admin-trigger:hover { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-5px); }
-        
-        .admin-container { max-width: 1000px; margin: 0 auto; padding: 50px; }
-        .admin-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;}
-        
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; font-size: 1rem; transition: 0.3s; }
-        .form-group select { appearance: none; cursor: pointer; }
-        .form-group select option { background: #111; color: #fff; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(255, 193, 7, 0.2); }
-        
-        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary:hover { background: #fff; transform: translateY(-2px); }
-        .btn-danger { background: #ff3366; color: #fff; }
-        .btn-danger:hover { background: #ff0040; }
-        .btn-warning { background: #fff; color: #000; }
-        
-        #admin-dashboard { display: none; }
-        
-        .admin-tabs-nav { display: flex; gap: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 30px; flex-wrap: wrap; }
-        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; font-size: 0.9rem;}
-        .admin-tab-btn:hover, .admin-tab-btn.active { background: rgba(255, 193, 7, 0.1); color: #fff; border-color: var(--accent); }
-        .admin-sub-tab { display: none; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border); }
-        .admin-sub-tab.active { display: block; animation: slideFade 0.4s ease forwards; }
-
-        /* --- MODAL EDYCJI --- */
-        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 10000; display: none; justify-content: center; align-items: center; }
-        .edit-box { background: #0a0905; border: 1px solid var(--glass-border); padding: 40px; border-radius: 24px; width: 600px; max-width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-        .edit-box h3 { margin-bottom: 25px; color: var(--accent); font-size: 1.8rem; }
-        .edit-actions { display: flex; gap: 15px; margin-top: 30px; }
-        .edit-actions button { flex: 1; justify-content: center; }
-
-        /* --- LIGHTBOX --- */
-        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); z-index: 9999; display: none; justify-content: center; align-items: center; }
-        #lightbox img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 16px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-        .close-lb { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2.5rem; cursor: pointer; transition: 0.3s; }
-        .close-lb:hover { color: var(--accent); transform: scale(1.1); }
-
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 1100px) {
-            .nav-menu {
-                position: fixed; top: var(--header-height); left: 0; width: 100%; height: calc(100vh - var(--header-height));
-                background: rgba(5, 4, 0, 0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center;
-                justify-content: flex-start; padding-top: 40px; gap: 15px; transform: translateX(100%); transition: 0.4s ease;
-            }
-            .nav-menu.active { transform: translateX(0); }
-            .nav-btn { width: 80%; justify-content: center; padding: 15px; font-size: 1.1rem; }
+        /* --- MOBILE --- */
+        @media (max-width: 900px) {
+            .nav-menu { position: fixed; top: var(--header-height); left: 0; width: 100%; background: #fff; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); display: none; }
+            .nav-menu.active { display: flex; }
             .mobile-toggle { display: block; }
-            .hero-title { font-size: 3rem; }
-            .update-timeline { padding-left: 20px; }
-            .update-item::before { left: -27px; }
-            .admin-controls { position: relative; top: 0; right: 0; justify-content: flex-end; margin-bottom: 10px; }
-            .faq-question { padding-right: 80px; }
+            .top-navbar { padding: 0 20px; }
+            .nav-btn { width: 100%; justify-content: flex-start; }
+            .hero-title { font-size: 3.5rem; }
         }
     </style>
 </head>
@@ -224,217 +162,161 @@
 
     <div id="intro"></div>
 
-    <div id="lightbox" onclick="closeLightbox()"><div class="close-lb"><i class="fas fa-times"></i></div><img id="lightbox-img" src="" alt="Zoom"></div>
-
-    <div id="edit-modal">
-        <div class="edit-box">
-            <h3>Edytuj wpis</h3>
-            <div id="edit-form-content"></div>
-            <div class="edit-actions">
-                <button class="btn-primary" onclick="saveEdit()"><i class="fas fa-save"></i> Zapisz zmiany</button>
-                <button class="btn-primary" style="background:#333; color:#fff;" onclick="closeEditModal()"><i class="fas fa-times"></i> Anuluj</button>
-            </div>
-        </div>
-    </div>
-
-    <header class="top-navbar" id="main-nav">
+    <header class="top-navbar">
         <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
-            <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" onerror="this.src='https://via.placeholder.com/45?text=PP'">
+            <img src="assets/plik/Projekt%20Pomorze.png" alt="PP" onerror="this.src='https://via.placeholder.com/40?text=P'">
             <span>Projekt <b>Pomorze</b></span>
         </div>
-        
         <nav class="nav-menu" id="nav-menu">
-            <button class="nav-btn active" id="nav-home" onclick="openTab('home', this)"><i class="fas fa-home"></i> Start</button>
-            <button class="nav-btn" onclick="openTab('devlog', this)"><i class="fas fa-newspaper"></i> DevLog</button>
-            <button class="nav-btn" onclick="openTab('mapa', this)"><i class="fas fa-map"></i> Mapa</button>
-            <button class="nav-btn" onclick="openTab('galeria', this)"><i class="fas fa-camera"></i> Galeria</button>
-            <button class="nav-btn" onclick="openTab('komunikaty', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
-            <button class="nav-btn" onclick="openTab('aktualizacje', this)"><i class="fas fa-clock"></i> Aktualizacje</button>
-            <button class="nav-btn" onclick="openTab('ekipa', this)"><i class="fas fa-users"></i> Ekipa</button>
-            <button class="nav-btn" onclick="openTab('faq', this)"><i class="fas fa-question-circle"></i> FAQ</button>
-            <button class="nav-btn" onclick="openTab('linki', this)"><i class="fas fa-link"></i> Sociale</button>
+            <button class="nav-btn active" id="nav-home" onclick="openTab('home', this)">Start</button>
+            <button class="nav-btn" onclick="openTab('devlog', this)">DevLog</button>
+            <button class="nav-btn" onclick="openTab('mapa', this)">Mapa</button>
+            <button class="nav-btn" onclick="openTab('galeria', this)">Galeria</button>
+            <button class="nav-btn" onclick="openTab('komunikaty', this)">Ogłoszenia</button>
+            <button class="nav-btn" onclick="openTab('aktualizacje', this)">Zmiany</button>
+            <button class="nav-btn" onclick="openTab('ekipa', this)">Ekipa</button>
+            <button class="nav-btn" onclick="openTab('faq', this)">FAQ</button>
+            <button class="nav-btn" onclick="openTab('linki', this)">Sociale</button>
         </nav>
-        
         <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </header>
 
-    <button id="admin-trigger" onclick="openTab('admin', null)" title="Panel Administratora"><i class="fas fa-lock"></i></button>
+    <div id="lightbox" onclick="closeLightbox()"><span class="close-lb">&times;</span><img id="lightbox-img" src=""></div>
+
+    <button id="admin-trigger" onclick="openTab('admin', null)"><i class="fas fa-fingerprint"></i></button>
 
     <main class="content-area" id="app">
         
         <div id="home" class="tab active">
-            <div class="hero-section">
-                <h1 class="hero-title">Projekt <span>Pomorze</span></h1>
-                <p class="hero-subtitle">Wskakuj za kółko i pojeździj po prawdziwych terenach Pomorza. Lasy, wsie i lokalne drogi w klimatach, które dobrze znasz.</p>
-            </div>
+            <section class="hero-section">
+                <h1 class="hero-title">Witaj na<br><span>Pomorzu.</span></h1>
+                <p class="hero-subtitle">Realistyczna jazda, polskie drogi i klimat, którego nie znajdziesz nigdzie indziej w świecie Roblox. Tworzone z pasją na bazie prawdziwych terenów.</p>
+            </section>
         </div>
 
         <div id="devlog" class="tab">
-            <div class="section-header"><p>Kulisy tworzenia</p><h2>Dziennik Dewelopera</h2></div>
-            <div class="devlog-container" id="dyn-devlog"></div>
+            <div class="section-header"><p>Kulisy</p><h2>Dziennik prac</h2></div>
+            <div id="dyn-devlog"></div>
         </div>
 
         <div id="mapa" class="tab">
-            <div class="section-header"><p>Eksploracja</p><h2>Mapa Gry</h2></div>
-            <div id="dyn-map" class="map-container glass">
-                <p style="padding: 60px; text-align: center; color: #666; font-size: 1.2rem;">Brak wgranej mapy. Zaloguj się do panelu, aby ją dodać.</p>
+            <div class="section-header"><p>Topografia</p><h2>Mapa terenu</h2></div>
+            <div id="dyn-map" class="card-white" style="padding:10px; overflow:hidden;">
+                <p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>
             </div>
         </div>
 
         <div id="galeria" class="tab">
-            <div class="section-header"><p>Zrzuty Ekranu</p><h2>Miejscówki w grze</h2></div>
+            <div class="section-header"><p>Zdjęcia</p><h2>Zrzuty z gry</h2></div>
             <div class="gallery-grid" id="dyn-gallery"></div>
         </div>
 
         <div id="komunikaty" class="tab">
-            <div class="section-header"><p>Ważne informacje</p><h2>Komunikaty i Ogłoszenia</h2></div>
-            <div style="max-width: 900px; margin: 0 auto;" id="dyn-announcements"></div>
+            <div class="section-header"><p>News</p><h2>Ważne komunikaty</h2></div>
+            <div id="dyn-announcements" style="max-width:800px; margin:0 auto;"></div>
         </div>
 
         <div id="aktualizacje" class="tab">
-            <div class="section-header"><p>Postępy Prac</p><h2>Co nowego na mapie?</h2></div>
+            <div class="section-header"><p>Historia</p><h2>Lista zmian</h2></div>
             <div class="update-timeline" id="dyn-changelog"></div>
         </div>
 
         <div id="ekipa" class="tab">
-            <div class="section-header"><p>Twórcy</p><h2>Nasza Ekipa</h2></div>
+            <div class="section-header"><p>Zespół</p><h2>Nasza ekipa</h2></div>
             <div class="staff-wrapper" id="dyn-staff"></div>
         </div>
 
         <div id="faq" class="tab">
-            <div class="section-header"><p>Baza Wiedzy</p><h2>Często zadawane pytania</h2></div>
-            <div style="max-width: 900px; margin: 0 auto;" id="dyn-faq"></div>
+            <div class="section-header"><p>Pytania</p><h2>FAQ</h2></div>
+            <div id="dyn-faq" style="max-width:800px; margin:0 auto;"></div>
         </div>
 
         <div id="linki" class="tab">
-            <div class="section-header"><p>Bądź na bieżąco</p><h2>Nasze społeczności</h2></div>
+            <div class="section-header"><p>Linki</p><h2>Social Media</h2></div>
             <div class="links-wrapper" id="dyn-links"></div>
         </div>
 
         <div id="admin" class="tab">
-            <div class="section-header"><p>Zarządzanie Systemem</p><h2>Panel Administratora (CMS)</h2></div>
-            
-            <div class="admin-container glass">
+            <div class="section-header"><h2>Panel Admina</h2></div>
+            <div class="card-white" style="max-width:600px; margin:0 auto;">
                 <div id="admin-login-form">
-                    <div class="form-group"><label>Email Administratora</label><input type="email" id="admin-email" placeholder="admin@projektpomorze.pl"></div>
-                    <div class="form-group"><label>Hasło</label><input type="password" id="admin-pass" placeholder="••••••••"></div>
-                    <button class="btn-primary" onclick="loginAdmin()"><i class="fas fa-sign-in-alt"></i> Zaloguj się</button>
-                    <p id="login-error" style="color: #ff3366; display: none; margin-top: 15px; font-weight: 600;">Błędne dane logowania!</p>
+                    <input type="email" id="admin-email" placeholder="Email">
+                    <input type="password" id="admin-pass" placeholder="Hasło" style="margin: 10px 0;">
+                    <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">Zaloguj się</button>
+                    <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd!</p>
                 </div>
-
                 <div id="admin-dashboard">
-                    <div class="admin-header-flex">
-                        <h3 style="color:#fff; font-size: 1.8rem;"><i class="fas fa-shield-alt" style="color:var(--accent);"></i> Zalogowano pomyślnie</h3>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn-primary" onclick="openTab('home', document.getElementById('nav-home'))"><i class="fas fa-desktop"></i> Podgląd Strony</button>
-                            <button class="btn-primary btn-danger" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Wyloguj</button>
-                        </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                        <button class="btn-primary" onclick="logoutAdmin()">Wyloguj</button>
+                        <button class="btn-primary" onclick="openTab('home', null)">Zamknij panel</button>
                     </div>
-
-                    <div class="admin-tabs-nav">
-                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-devlog', this)"><i class="fas fa-newspaper"></i> DevLog</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-map', this)"><i class="fas fa-map"></i> Mapa Gry</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-gallery', this)"><i class="fas fa-camera"></i> Galeria</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-announcements', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-changelog', this)"><i class="fas fa-clock"></i> Aktualizacje</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-staff', this)"><i class="fas fa-users"></i> Ekipa</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-faq', this)"><i class="fas fa-question-circle"></i> FAQ</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-links', this)"><i class="fas fa-link"></i> Linki</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> System</button>
+                    <select id="admin-select-tab" onchange="switchAdminTab(this.value)">
+                        <option value="a-devlog">DevLog</option>
+                        <option value="a-map">Mapa</option>
+                        <option value="a-gallery">Galeria</option>
+                        <option value="a-ann">Komunikaty</option>
+                        <option value="a-staff">Ekipa</option>
+                        <option value="a-faq">FAQ</option>
+                        <option value="a-links">Linki</option>
+                        <option value="a-tools">System</option>
+                    </select>
+                    <div id="a-devlog" class="admin-sub-tab active" style="margin-top:20px;">
+                        <input type="text" id="d-date" placeholder="Data"><br>
+                        <input type="text" id="d-title" placeholder="Tytuł" style="margin:10px 0;"><br>
+                        <textarea id="d-content" placeholder="Treść" rows="5"></textarea><br>
+                        <input type="text" id="d-yt" placeholder="Link YT" style="margin-top:10px;"><br>
+                        <button class="btn-primary" onclick="addDevLog()">Dodaj</button>
                     </div>
-
-                    <div id="a-devlog" class="admin-sub-tab active">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj wpis do Dziennika (DevLog)</h4>
-                        <div class="form-group"><label>Data publikacji</label><input type="text" id="d-date" placeholder="np. Niedziela, 10 Maja 2026"></div>
-                        <div class="form-group"><label>Tytuł wpisu</label><input type="text" id="d-title" placeholder="Podsumowanie tygodnia: Nowy model jazdy"></div>
-                        <div class="form-group"><label>Treść wpisu (Akceptuje ENTERy jako akapity)</label><textarea id="d-content" rows="6" placeholder="Rozpisz się o nowościach..."></textarea></div>
-                        <div class="form-group"><label>Link do filmu YouTube (Opcjonalnie)</label><input type="text" id="d-yt" placeholder="https://www.youtube.com/watch?v=..."></div>
-                        <button class="btn-primary" onclick="addDevLog()"><i class="fas fa-paper-plane"></i> Opublikuj News</button>
+                    <div id="a-map" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="file" id="m-file"><br><br>
+                        <button class="btn-primary" onclick="updateMap()">Wgraj mapę</button>
                     </div>
-
-                    <div id="a-map" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzaj Mapą Gry</h4>
-                        <div class="form-group"><label>Plik Mapy (Zastąpi obecnie wyświetlaną mapę)</label><input type="file" id="m-file" accept="image/*"></div>
-                        <button class="btn-primary" onclick="updateMap()" id="m-btn"><i class="fas fa-upload"></i> Wgraj nową mapę</button>
+                    <div id="a-gallery" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="file" id="g-file"><br><br>
+                        <input type="text" id="g-title" placeholder="Tytuł"><br><br>
+                        <button class="btn-primary" onclick="addGallery()">Wgraj</button>
                     </div>
-
-                    <div id="a-gallery" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj zdjęcie do galerii</h4>
-                        <div class="form-group"><label>Plik (Optymalizowany przez ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
-                        <div class="form-group"><label>Nazwa Miejscowości / Tytuł</label><input type="text" id="g-title" placeholder="np. Centrum Czarnoszki"></div>
-                        <button class="btn-primary" onclick="addGallery()" id="g-btn"><i class="fas fa-plus"></i> Opublikuj zdjęcie</button>
+                    <div id="a-ann" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="a-date" placeholder="Data"><br><br>
+                        <input type="text" id="a-title" placeholder="Tytuł"><br><br>
+                        <textarea id="a-desc" placeholder="Treść"></textarea><br><br>
+                        <button class="btn-primary" onclick="addAnnouncement()">Dodaj</button>
                     </div>
-
-                    <div id="a-announcements" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Nowy Komunikat</h4>
-                        <div class="form-group"><label>Etykieta / Data</label><input type="text" id="a-date" placeholder="np. PILNE | 20.10.2023"></div>
-                        <div class="form-group"><label>Nagłówek ogłoszenia</label><input type="text" id="a-title" placeholder="np. Przerwa techniczna serwerów"></div>
-                        <div class="form-group"><label>Pełna treść</label><textarea id="a-desc" rows="4" placeholder="Wpisz szczegóły komunikatu..."></textarea></div>
-                        <button class="btn-primary" onclick="addAnnouncement()"><i class="fas fa-bullhorn"></i> Wyślij w świat</button>
+                    <div id="a-staff" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="s-name" placeholder="Nick"><br><br>
+                        <select id="s-role">
+                            <option value="Owner">Owner</option><option value="Co-Owner">Co-Owner</option><option value="Technik">Technik</option><option value="Head of Staff">Head of Staff</option><option value="Head of Developers">Head of Developers</option><option value="Head of Admins">Head of Admins</option><option value="Event Host">Event Host</option><option value="Developer">Developer</option><option value="Trial Event Host">Trial Event Host</option><option value="Admin">Admin</option><option value="Trial Admin">Trial Admin</option><option value="Moderator">Moderator</option><option value="Trial Moderator">Trial Moderator</option><option value="Support Developer">Support Developer</option>
+                        </select><br><br>
+                        <button class="btn-primary" onclick="addStaff()">Dodaj</button>
                     </div>
-
-                    <div id="a-changelog" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Krótki Changelog (Lista zmian)</h4>
-                        <div class="form-group"><label>Data / Wersja</label><input type="text" id="c-date" placeholder="np. Update v1.2"></div>
-                        <div class="form-group"><label>Główna zmiana</label><input type="text" id="c-title" placeholder="np. Dodano nową wieś Rychnowy"></div>
-                        <div class="form-group"><label>Szczegóły zmian (co zrobiono)</label><textarea id="c-desc" rows="4"></textarea></div>
-                        <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-list"></i> Zapisz Log</button>
+                    <div id="a-faq" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="f-q" placeholder="Pytanie"><br><br>
+                        <textarea id="f-a" placeholder="Odpowiedź"></textarea><br><br>
+                        <button class="btn-primary" onclick="addFaq()">Dodaj</button>
                     </div>
-
-                    <div id="a-staff" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzanie Ekipą</h4>
-                        <div class="form-group"><label>Nick w grze</label><input type="text" id="s-name" placeholder="np. Facio"></div>
-                        <div class="form-group">
-                            <label>Ranga (Kolejność będzie poprawnie sortowana)</label>
-                            <select id="s-role">
-                                <option value="Owner">Owner</option>
-                                <option value="Co-Owner">Co-Owner</option>
-                                <option value="Technik">Technik</option>
-                                <option value="Head of Staff">Head of Staff</option>
-                                <option value="Head of Developers">Head of Developers</option>
-                                <option value="Head of Admins">Head of Admins</option>
-                                <option value="Event Host">Event Host</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Trial Event Host">Trial Event Host</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Trial Admin">Trial Admin</option>
-                                <option value="Moderator">Moderator</option>
-                                <option value="Trial Moderator">Trial Moderator</option>
-                                <option value="Support Developer">Support Developer</option>
-                            </select>
-                        </div>
-                        <button class="btn-primary" onclick="addStaff()"><i class="fas fa-user-plus"></i> Zarejestruj członka</button>
+                    <div id="a-links" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="l-n" placeholder="Nazwa"><br><br>
+                        <input type="text" id="l-d" placeholder="Opis"><br><br>
+                        <input type="text" id="l-u" placeholder="URL"><br><br>
+                        <input type="text" id="l-i" value="fas fa-link"><br><br>
+                        <button class="btn-primary" onclick="addLink()">Dodaj</button>
                     </div>
-
-                    <div id="a-faq" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Baza FAQ</h4>
-                        <div class="form-group"><label>Pytanie od graczy</label><input type="text" id="f-question" placeholder="np. Kiedy gra będzie publiczna?"></div>
-                        <div class="form-group"><label>Twoja odpowiedź</label><textarea id="f-answer" rows="4" placeholder="Odpowiedz wyczerpująco..."></textarea></div>
-                        <button class="btn-primary" onclick="addFaq()"><i class="fas fa-question"></i> Zapisz Q&A</button>
+                    <div id="a-tools" class="admin-sub-tab" style="margin-top:20px;">
+                        <button class="btn-primary" id="btn-migrate" onclick="migrateLocalImages()">Migracja zdjęć</button>
                     </div>
-
-                    <div id="a-links" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Odnośniki zewnętrzne</h4>
-                        <div class="form-group"><label>Nazwa Platformy</label><input type="text" id="l-name" placeholder="np. Serwer Discord"></div>
-                        <div class="form-group"><label>Krótki opis pod spodem</label><input type="text" id="l-desc" placeholder="np. Dołącz do pogawędek"></div>
-                        <div class="form-group"><label>Link docelowy</label><input type="text" id="l-url" placeholder="https://discord.gg/..."></div>
-                        <div class="form-group"><label>Ikona FontAwesome (zostaw domyślną jak nie wiesz)</label><input type="text" id="l-icon" value="fas fa-link"></div>
-                        <button class="btn-primary" onclick="addLink()"><i class="fas fa-external-link-alt"></i> Zapisz Link</button>
-                    </div>
-
-                    <div id="a-tools" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; color: var(--accent); margin-bottom: 15px;"><i class="fas fa-cogs"></i> Narzędzia Systemowe</h4>
-                        <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                            <h5 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Migracja plików lokalnych (Auto-Upload)</h5>
-                            <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height:1.5;">Jeżeli Twoje zdjęcia z folderu `assets/plik/...` jeszcze nie są w chmurze, kliknij poniższy przycisk. Skrypt pobierze je z dysku, wgra na serwery ImgBB i podłączy do galerii Firebase.</p>
-                            <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()"><i class="fas fa-cloud-upload-alt"></i> Uruchom masową migrację</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </main>
+
+    <div id="edit-modal">
+        <div class="edit-box">
+            <h3>Edycja</h3>
+            <div id="edit-form-content"></div><br>
+            <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
+            <button class="btn-primary" style="background:#eee; color:#000;" onclick="closeEditModal()">Anuluj</button>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -442,13 +324,10 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCb5QmZdwWwa9LafqqGZvGW-6vblkab32M",
-            authDomain: "mzk-by-facio.firebaseapp.com",
+            apiKey: "AIzaSyCb5QmZdwWwa9LafqqGZvGW-6vblkab32M", authDomain: "mzk-by-facio.firebaseapp.com",
             databaseURL: "https://mzk-by-facio-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "mzk-by-facio",
-            storageBucket: "mzk-by-facio.firebasestorage.app",
-            messagingSenderId: "676970411647",
-            appId: "1:676970411647:web:26137e7242c0db7c83714a"
+            projectId: "mzk-by-facio", storageBucket: "mzk-by-facio.firebasestorage.app",
+            messagingSenderId: "676970411647", appId: "1:676970411647:web:26137e7242c0db7c83714a"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -457,287 +336,140 @@
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
 
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
-        window.currentEdit = { path: '', key: '' };
+        const staffOrder = ["Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers", "Head of Admins", "Event Host", "Developer", "Trial Event Host", "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"];
 
-        const staffRoleOrder = [
-            "Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers",
-            "Head of Admins", "Event Host", "Developer", "Trial Event Host",
-            "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"
-        ];
-
-        // --- RENDEROWANIE ZWYKŁYCH DANYCH ---
-        const renderData = (path, elementId, templateFn) => {
-            onValue(ref(db, path), (snapshot) => {
-                const container = document.getElementById(elementId);
-                container.innerHTML = '';
-                const data = snapshot.val();
-                if(data) {
-                    window.appData[path] = data; 
-                    Object.keys(data).reverse().forEach(key => { container.innerHTML += templateFn(key, data[key]); });
-                } else {
-                    window.appData[path] = {};
-                    container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych do wyświetlenia.</div>';
-                }
+        // RENDER DATA
+        const renderData = (path, elId, tmpl) => {
+            onValue(ref(db, path), snap => {
+                const cont = document.getElementById(elId); cont.innerHTML = '';
+                const data = snap.val();
+                if(data) { window.appData[path] = data; Object.keys(data).reverse().forEach(k => cont.innerHTML += tmpl(k, data[k])); }
+                else { cont.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px;">Brak danych.</p>'; }
             });
         };
 
-        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI ---
-        onValue(ref(db, 'staff'), (snapshot) => {
-            const container = document.getElementById('dyn-staff');
-            container.innerHTML = '';
-            const data = snapshot.val();
+        onValue(ref(db, 'staff'), snap => {
+            const cont = document.getElementById('dyn-staff'); cont.innerHTML = '';
+            const data = snap.val();
             if(data) {
-                window.appData['staff'] = data;
-                const grouped = {};
-                staffRoleOrder.forEach(r => grouped[r] = []);
-                grouped['Inne'] = [];
-
-                Object.keys(data).forEach(key => {
-                    const item = data[key];
-                    let assignedRole = 'Inne';
-                    for(let r of staffRoleOrder) {
-                        if(item.role.trim().toLowerCase() === r.toLowerCase()) { assignedRole = r; break; }
-                    }
-                    grouped[assignedRole].push({ key, ...item });
+                window.appData.staff = data;
+                const grp = {}; staffOrder.forEach(r => grp[r] = []); grp['Inne'] = [];
+                Object.keys(data).forEach(k => {
+                    const r = data[k].role;
+                    if(staffOrder.includes(r)) grp[r].push({k, ...data[k]}); else grp['Inne'].push({k, ...data[k]});
                 });
-
-                let html = '';
-                [...staffRoleOrder, 'Inne'].forEach(role => {
-                    if(grouped[role].length > 0) {
-                        html += `<div class="staff-group"><h3 class="staff-group-title"><i class="fas fa-shield-alt"></i> ${role}</h3><div class="staff-list">`;
-                        grouped[role].forEach(item => {
-                            html += `
-                            <div class="staff-row">
-                                <div class="staff-info"><h4>${item.name}</h4><span>${item.role}</span></div>
-                                <div class="admin-controls-inline"><button class="btn-action edit" onclick="window.openEditModal('staff', '${item.key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${item.key}', event)"><i class="fas fa-trash"></i></button></div>
-                            </div>`;
-                        });
-                        html += `</div></div>`;
+                [...staffOrder, 'Inne'].forEach(r => {
+                    if(grp[r].length) {
+                        let html = `<div class="staff-group-title">${r}</div>`;
+                        grp[r].forEach(i => html += `<div class="staff-row"><div class="staff-info"><h4>${i.name}</h4><span>${i.role}</span></div><div class="admin-controls-inline"><button class="btn-mini" onclick="window.openEditModal('staff','${i.k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('staff','${i.k}',event)">Usuń</button></div></div>`);
+                        cont.innerHTML += html;
                     }
                 });
-                container.innerHTML = html;
-            } else {
-                window.appData['staff'] = {};
-                container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych do wyświetlenia.</div>';
             }
         });
 
-        // --- MAPA ---
-        onValue(ref(db, 'gameMap'), (snapshot) => {
-            const container = document.getElementById('dyn-map');
-            const data = snapshot.val();
-            if(data && data.url) {
-                container.innerHTML = `
-                    <div class="admin-controls" style="top:20px; right:20px;">
-                        <button class="btn-action del" onclick="window.delMap(event)"><i class="fas fa-trash"></i> Usuń Mapę z serwera</button>
-                    </div>
-                    <img src="${data.url}" alt="Mapa Gry" onclick="window.openLightbox('${data.url}')">
-                `;
-            } else {
-                container.innerHTML = '<p style="padding: 60px; text-align: center; color: #666; font-size: 1.2rem;">Brak wgranej mapy. Zaloguj się do panelu, aby ją dodać.</p>';
-            }
+        onValue(ref(db, 'gameMap'), snap => {
+            const cont = document.getElementById('dyn-map');
+            const data = snap.val();
+            if(data) cont.innerHTML = `<img src="${data.url}" onclick="window.openLightbox('${data.url}')"><div class="admin-controls"><button class="btn-mini" onclick="window.delMap(event)">Usuń mapę</button></div>`;
+            else cont.innerHTML = '<p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>';
         });
 
-        // --- DEVLOG ---
-        renderData('devlog', 'dyn-devlog', (key, item) => {
-            let mediaHtml = '';
-            if(item.ytLink) {
-                let ytId = '';
-                if(item.ytLink.includes('v=')) ytId = item.ytLink.split('v=')[1].split('&')[0];
-                else if(item.ytLink.includes('youtu.be/')) ytId = item.ytLink.split('youtu.be/')[1].split('?')[0];
-                if(ytId) mediaHtml = `<div class="devlog-media"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen></iframe></div>`;
-            }
-            return `
-            <article class="devlog-post">
-                <div class="admin-controls" style="top:20px; right:20px;">
-                    <button class="btn-action edit" onclick="window.openEditModal('devlog', '${key}', event)"><i class="fas fa-edit"></i> Edytuj</button>
-                    <button class="btn-action del" onclick="window.delItem('devlog', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <div class="devlog-header">
-                    <div class="devlog-date"><i class="far fa-calendar-check"></i> ${item.date}</div>
-                    <h3 class="devlog-title">${item.title}</h3>
-                </div>
-                <div class="devlog-content">${item.content}</div>
-                ${mediaHtml}
-            </article>
-        `});
+        renderData('devlog', 'dyn-devlog', (k, i) => `<div class="devlog-post"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('devlog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('devlog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title">${i.title}</h3><div class="devlog-content">${i.content}</div>${i.ytLink ? '<div style="margin-top:20px; border-radius:12px; overflow:hidden;"><iframe width="100%" height="400" src="https://www.youtube.com/embed/'+(i.ytLink.split('v=')[1]||i.ytLink.split('/').pop())+'" frameborder="0" allowfullscreen></iframe></div>':''}</div>`);
+        renderData('gallery', 'dyn-gallery', (k, i) => `<div class="gallery-item"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('gallery','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('gallery','${k}',event)">Usuń</button></div><img src="${i.url}" onclick="window.openLightbox('${i.url}')"></div>`);
+        renderData('announcements', 'dyn-announcements', (k, i) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('announcements','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('announcements','${k}',event)">Usuń</button></div><div class="announcement-date">${i.date}</div><h3>${i.title}</h3><p>${i.desc}</p></div>`);
+        renderData('faq', 'dyn-faq', (k, i) => `<div class="faq-item" id="faq-${k}"><div class="faq-question" onclick="window.toggleFaq('${k}')">${i.question} <i class="fas fa-chevron-down"></i></div><div class="faq-answer">${i.answer}<div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('faq','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('faq','${k}',event)">Usuń</button></div></div></div>`);
 
-        // --- POZOSTAŁE RENDERY ---
-        renderData('gallery', 'dyn-gallery', (key, item) => `<div class="gallery-item glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div><img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div></div>`);
-        renderData('changelog', 'dyn-changelog', (key, item) => `<div class="update-item"><div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p></div>`);
-        renderData('links', 'dyn-links', (key, item) => `<a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div></a>`);
-        renderData('announcements', 'dyn-announcements', (key, item) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p></div>`);
-        
-        // FAQ
-        renderData('faq', 'dyn-faq', (key, item) => `
-            <div class="faq-item" id="faq-${key}">
-                <div class="admin-controls" style="top:15px; right:60px;">
-                    <button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <div class="faq-question" onclick="window.toggleFaq('${key}')">
-                    <span><i class="fas fa-caret-right" style="margin-right: 8px;"></i> ${item.question}</span>
-                    <i class="fas fa-chevron-down chevron"></i>
-                </div>
-                <div class="faq-answer">${item.answer}</div>
-            </div>
-        `);
-
-        // --- AUTH ---
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('admin-login-form').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'block';
-                document.body.classList.add('admin-mode');
-            } else {
-                document.getElementById('admin-login-form').style.display = 'block';
-                document.getElementById('admin-dashboard').style.display = 'none';
-                document.body.classList.remove('admin-mode');
-            }
+        onAuthStateChanged(auth, u => {
+            document.getElementById('admin-login-form').style.display = u ? 'none' : 'block';
+            document.getElementById('admin-dashboard').style.display = u ? 'block' : 'none';
+            document.body.classList.toggle('admin-mode', !!u);
         });
 
-        window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(() => document.getElementById('login-error').style.display = 'block');
+        window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value);
         window.logoutAdmin = () => signOut(auth);
 
-        // --- DODAWANIE DO BAZY ---
-        window.addDevLog = async () => { await push(ref(db, 'devlog'), { date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value }); document.getElementById('d-date').value = ""; document.getElementById('d-title').value = ""; document.getElementById('d-content').value = ""; document.getElementById('d-yt').value = ""; alert("DevLog Opublikowany!"); };
-        window.updateMap = async () => { const fileInput = document.getElementById('m-file'); const btn = document.getElementById('m-btn'); if(!fileInput.files[0]) return alert("Wybierz plik mapy!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie na serwer...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await set(ref(db, 'gameMap'), { url: data.data.url }); fileInput.value = ""; alert("Mapa zaktualizowana!"); } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-upload"></i> Wgraj nową mapę'; btn.disabled = false; };
-        window.addGallery = async () => { const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn'); if(!fileInput.files[0] || !title) return alert("Brakuje danych!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-plus"></i> Opublikuj zdjęcie'; btn.disabled = false; };
-        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = staffRoleOrder[0]; };
-        window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; };
-        window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; };
-        window.addAnnouncement = async () => { await push(ref(db, 'announcements'), { date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value }); document.getElementById('a-date').value = ""; document.getElementById('a-title').value = ""; document.getElementById('a-desc').value = ""; };
-        window.addFaq = async () => { await push(ref(db, 'faq'), { question: document.getElementById('f-question').value, answer: document.getElementById('f-answer').value }); document.getElementById('f-question').value = ""; document.getElementById('f-answer').value = ""; };
+        // UPLOAD & ADD FUNCTIONS
+        window.updateMap = async () => {
+            const file = document.getElementById('m-file').files[0]; if(!file) return;
+            const fd = new FormData(); fd.append('image', file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd});
+            const d = await res.json(); if(d.success) set(ref(db, 'gameMap'), {url: d.data.url});
+        };
+        window.addGallery = async () => {
+            const file = document.getElementById('g-file').files[0]; if(!file) return;
+            const fd = new FormData(); fd.append('image', file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd});
+            const d = await res.json(); if(d.success) push(ref(db, 'gallery'), {url: d.data.url, title: document.getElementById('g-title').value});
+        };
+        window.addDevLog = () => push(ref(db, 'devlog'), {date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value});
+        window.addStaff = () => push(ref(db, 'staff'), {name: document.getElementById('s-name').value, role: document.getElementById('s-role').value});
+        window.addAnnouncement = () => push(ref(db, 'announcements'), {date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value});
+        window.addFaq = () => push(ref(db, 'faq'), {question: document.getElementById('f-q').value, answer: document.getElementById('f-a').value});
 
-        // --- USUWANIE I EDYCJA ---
-        window.delItem = async (path, key, e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Na pewno usunąć ten element bezpowrotnie?")) await remove(ref(db, `${path}/${key}`)); };
-        window.delMap = async (e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Usunąć mapę z gry? Będzie widoczne puste pole.")) await remove(ref(db, 'gameMap')); };
+        window.delItem = (p, k, e) => { e.stopPropagation(); if(confirm("Usuń?")) remove(ref(db, `${p}/${k}`)); };
+        window.delMap = () => remove(ref(db, 'gameMap'));
 
-        window.openEditModal = (path, key, e) => {
-            e.preventDefault(); e.stopPropagation();
-            window.currentEdit = { path, key }; const item = window.appData[path][key]; const form = document.getElementById('edit-form-content');
-            form.innerHTML = ''; 
-            
-            if(path === 'devlog') {
-                form.innerHTML = `<div class="form-group"><label>Data</label><input type="text" id="e-date" value="${item.date}"></div><div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div><div class="form-group"><label>Treść</label><textarea id="e-content" rows="6">${item.content}</textarea></div><div class="form-group"><label>Link YT</label><input type="text" id="e-yt" value="${item.ytLink || ''}"></div>`;
-            } else if(path === 'gallery') {
-                form.innerHTML = `<div class="form-group"><label>Tytuł zdjęcia</label><input type="text" id="e-title" value="${item.title}"></div>`;
-            } else if (path === 'staff') {
-                let options = staffRoleOrder.map(r => `<option value="${r}" ${r === item.role ? 'selected' : ''}>${r}</option>`).join('');
-                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Rola</label><select id="e-role">${options}</select></div>`;
-            } else if (path === 'changelog' || path === 'announcements') {
-                form.innerHTML = `<div class="form-group"><label>Data / Etykieta</label><input type="text" id="e-date" value="${item.date}"></div><div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div><div class="form-group"><label>Treść</label><textarea id="e-desc" rows="6">${item.desc}</textarea></div>`;
-            } else if (path === 'links') {
-                form.innerHTML = `<div class="form-group"><label>Nazwa</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Opis</label><input type="text" id="e-desc" value="${item.desc}"></div><div class="form-group"><label>URL</label><input type="text" id="e-url" value="${item.url}"></div><div class="form-group"><label>Ikona</label><input type="text" id="e-icon" value="${item.icon}"></div>`;
-            } else if (path === 'faq') {
-                form.innerHTML = `<div class="form-group"><label>Pytanie</label><input type="text" id="e-question" value="${item.question}"></div><div class="form-group"><label>Odpowiedź</label><textarea id="e-answer" rows="6">${item.answer}</textarea></div>`;
-            }
+        window.openEditModal = (p, k, e) => {
+            e.stopPropagation(); window.currentEdit = {p, k};
+            const i = window.appData[p][k]; const f = document.getElementById('edit-form-content'); f.innerHTML = '';
+            if(p === 'staff') f.innerHTML = `<input type="text" id="e1" value="${i.name}"><select id="e2">${staffOrder.map(r=>`<option ${r===i.role?'selected':''}>${r}</option>`).join('')}</select>`;
+            else if(p==='faq') f.innerHTML = `<input type="text" id="e1" value="${i.question}"><textarea id="e2">${i.answer}</textarea>`;
+            else f.innerHTML = `<input type="text" id="e1" value="${i.title||i.date}"><textarea id="e2">${i.content||i.desc}</textarea>`;
             document.getElementById('edit-modal').style.display = 'flex';
         };
 
-        window.saveEdit = async () => {
-            const { path, key } = window.currentEdit; const newData = {};
-            if(path === 'devlog') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.content = document.getElementById('e-content').value; newData.ytLink = document.getElementById('e-yt').value; }
-            else if(path === 'gallery') { newData.title = document.getElementById('e-title').value; }
-            else if (path === 'staff') { newData.name = document.getElementById('e-name').value; newData.role = document.getElementById('e-role').value; }
-            else if (path === 'changelog' || path === 'announcements') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.desc = document.getElementById('e-desc').value; }
-            else if (path === 'links') { newData.name = document.getElementById('e-name').value; newData.desc = document.getElementById('e-desc').value; newData.url = document.getElementById('e-url').value; newData.icon = document.getElementById('e-icon').value; }
-            else if (path === 'faq') { newData.question = document.getElementById('e-question').value; newData.answer = document.getElementById('e-answer').value; }
-            await update(ref(db, `${path}/${key}`), newData); window.closeEditModal();
+        window.saveEdit = () => {
+            const {p, k} = window.currentEdit; const d = {};
+            if(p==='staff') {d.name=document.getElementById('e1').value; d.role=document.getElementById('e2').value;}
+            else if(p==='faq') {d.question=document.getElementById('e1').value; d.answer=document.getElementById('e2').value;}
+            else { d.title=document.getElementById('e1').value; d.content=document.getElementById('e2').value; d.desc=document.getElementById('e2').value; }
+            update(ref(db, `${p}/${k}`), d); document.getElementById('edit-modal').style.display='none';
         };
-
-        window.closeEditModal = () => { document.getElementById('edit-modal').style.display = 'none'; };
-
-        // --- MIGRATOR ---
-        window.migrateLocalImages = async () => {
-            const btn = document.getElementById('btn-migrate');
-            const localAssets = [
-                { path: 'assets/plik/czarnoszki.png', title: 'Czarnoszki' }, { path: 'assets/plik/czarnoszki1.png', title: 'Czarnoszki 1' },
-                { path: 'assets/plik/kiełpin.png', title: 'Kiełpin' }, { path: 'assets/plik/kiełpin1.png', title: 'Kiełpin 1' },
-                { path: 'assets/plik/krery.png', title: 'Krery' }, { path: 'assets/plik/las.png', title: 'Droga Leśna' },
-                { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' }, { path: 'assets/plik/wyjazd%20krzy%C5%BCanki.png', title: 'Wyjazd Krzyżanki' },
-                { path: 'assets/plik/zagórki.png', title: 'Zagórki' }
-            ];
-            if(!confirm("Upewnij się, że używasz środowiska testowego (localhost). Zaczynamy?")) return;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Trwa migracja do chmury...'; btn.disabled = true;
-            let count = 0;
-            for(let asset of localAssets) {
-                try {
-                    const res = await fetch(asset.path); const blob = await res.blob();
-                    const fd = new FormData(); fd.append('image', blob);
-                    const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
-                    const imgbbData = await imgbbRes.json();
-                    if(imgbbData.success) { await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title }); count++; }
-                } catch(e) { console.log("Pomijam: " + asset.path); }
-            }
-            alert(`Zakończono! Wgrano pomyślnie ${count} zdjęć do bazy.`);
-            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Uruchom masową migrację'; btn.disabled = false;
-        };
+        window.closeEditModal = () => document.getElementById('edit-modal').style.display='none';
     </script>
 
     <script>
+        // UI CORE
         window.addEventListener('DOMContentLoaded', () => {
+            const last = localStorage.getItem('pp_lastVisit');
             const now = Date.now();
-            const lastVisit = localStorage.getItem('pp_lastVisit');
-            let mode = 'FIRST_TIME';
-            if (lastVisit) { if ((now - parseInt(lastVisit)) / 86400000 > 10) mode = 'RETURN_LONG'; else mode = 'RETURN_SHORT'; }
-            localStorage.setItem('pp_lastVisit', now.toString());
-
-            const introContainer = document.getElementById('intro');
-            let introDuration = 0;
-
-            if (mode === 'FIRST_TIME' || mode === 'RETURN_LONG') {
-                const welcomeText = (mode === 'FIRST_TIME') ? 'Witamy!' : 'Witamy Ponownie!';
-                introContainer.innerHTML = `
-                    <div class="intro-slide img-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png" alt="Las"><div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div></div>
-                    <div class="intro-slide img-slide" style="animation-delay: 3.5s;"><img src="assets/plik/czarnoszki.png" alt="Czarnoszki"><div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div></div>
-                    <div class="intro-slide img-slide" style="animation-delay: 7s;"><img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd"><div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div></div>
-                    <div class="intro-slide" style="animation-delay: 10.5s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 10.5s; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.6; color: #ddd;"><span style="color:var(--accent); font-weight:800; font-size:2rem;">PORADNIK</span><br><br>Użyj paska nawigacji na górze strony,<br>aby przełączać się między zakładkami.</div></div>
-                    <div class="intro-slide" style="animation-delay: 14s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 14s; color: var(--accent); font-weight: 800;">${welcomeText}</div></div>
+            const long = !last || (now - parseInt(last)) / 86400000 > 10;
+            localStorage.setItem('pp_lastVisit', now);
+            
+            const intro = document.getElementById('intro');
+            if(long) {
+                intro.innerHTML = `
+                    <div class="intro-slide img-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png"><div class="intro-text">Poczuj ten klimat</div></div>
+                    <div class="intro-slide img-slide" style="animation-delay: 3.5s;"><img src="assets/plik/czarnoszki.png"><div class="intro-text">Witaj na Pomorzu</div></div>
+                    <div class="intro-slide" style="animation-delay: 7s; background:#fff; color:#000;"><div class="intro-text">Witamy!</div></div>
                 `;
-                introDuration = 18000;
+                setTimeout(showApp, 11000);
             } else {
-                introContainer.innerHTML = `<div class="intro-slide" style="animation-delay: 0s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 0s; color: var(--accent); font-weight: 800;">Witamy Ponownie!</div></div>`;
-                introDuration = 4000;
+                intro.innerHTML = `<div class="intro-slide" style="background:#fff; color:#000;"><div class="intro-text">Witaj ponownie</div></div>`;
+                setTimeout(showApp, 3000);
             }
-
-            setTimeout(() => {
-                introContainer.style.transition = 'opacity 1s ease'; introContainer.style.opacity = '0';
-                setTimeout(() => { 
-                    introContainer.style.display = 'none'; 
-                    document.getElementById('app').style.display = 'block'; 
-                    setTimeout(() => document.getElementById('app').style.opacity = '1', 50); 
-                }, 1000);
-            }, introDuration);
         });
 
-        window.toggleFaq = function(key) {
-            const element = document.getElementById('faq-' + key);
-            if(element) element.classList.toggle('active');
+        function showApp() {
+            const i = document.getElementById('intro'); i.style.opacity = '0';
+            setTimeout(() => { i.style.display='none'; const a = document.getElementById('app'); a.style.display='block'; setTimeout(()=>a.style.opacity='1',50); }, 1000);
         }
 
-        window.toggleMobileMenu = function() { document.getElementById('nav-menu').classList.toggle('active'); }
-
-        window.openTab = function(tabId, btn) {
+        function openTab(id, btn) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            if(btn && btn.classList.contains('nav-btn')) btn.classList.add('active');
-            
-            document.getElementById('nav-menu').classList.remove('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.switchAdminTab = function(subTabId, btn) {
-            document.querySelectorAll('.admin-sub-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(subTabId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             if(btn) btn.classList.add('active');
+            document.getElementById('nav-menu').classList.remove('active');
+            window.scrollTo({top:0, behavior:'smooth'});
         }
 
-        window.openLightbox = function(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
-        window.closeLightbox = function() { document.getElementById('lightbox').style.display = 'none'; }
+        function toggleMobileMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+        function switchAdminTab(id) { document.querySelectorAll('.admin-sub-tab').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        function openLightbox(s) { document.getElementById('lightbox-img').src = s; document.getElementById('lightbox').style.display='flex'; }
+        function closeLightbox() { document.getElementById('lightbox').style.display='none'; }
+        function toggleFaq(k) { document.getElementById('faq-'+k).classList.toggle('active'); }
     </script>
 </body>
 </html>
