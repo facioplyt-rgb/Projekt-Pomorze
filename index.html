@@ -80,6 +80,24 @@
         .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
         .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
 
+        /* --- EKIPA (KOMPAKTOWA LISTA) --- */
+        .staff-wrapper { max-width: 800px; margin: 0 auto; }
+        .staff-group { margin-bottom: 35px; text-align: left; }
+        .staff-group-title {
+            font-size: 1rem; color: var(--accent); text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 8px;
+        }
+        .staff-list { display: flex; flex-direction: column; gap: 10px; }
+        .staff-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; transition: var(--transition); border-radius: 12px;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+        }
+        .staff-row:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); border-color: rgba(0, 229, 255, 0.3); }
+        .staff-info h4 { font-family: 'Outfit'; font-size: 1.3rem; margin: 0 0 4px 0; color: #fff; font-weight: 600; }
+        .staff-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
         /* --- DEVLOG --- */
         .devlog-container { max-width: 900px; margin: 0 auto; }
         .devlog-post { background: rgba(20,20,30,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; margin-bottom: 40px; position: relative; transition: 0.3s; }
@@ -100,12 +118,6 @@
         .gallery-item:hover img { transform: scale(1.06); }
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-title { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 600; color: #fff; }
-
-        .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
-        .staff-card { padding: 30px 20px; text-align: center; transition: var(--transition); position: relative; overflow: hidden; border-radius: 20px; }
-        .staff-card:hover { transform: translateY(-10px); border-color: rgba(0, 229, 255, 0.4); background: rgba(255,255,255,0.05); }
-        .staff-card h3 { font-size: 1.5rem; margin-bottom: 5px; color: #fff; }
-        .staff-role { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
 
         .update-timeline { max-width: 900px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px; }
         .update-item { margin-bottom: 50px; position: relative; }
@@ -138,6 +150,9 @@
         /* --- ADMIN CONTROLS NA STRONIE --- */
         .admin-controls { position: absolute; top: 15px; right: 15px; z-index: 10; display: none; gap: 8px; }
         .admin-mode .admin-controls { display: flex; }
+        .admin-controls-inline { display: none; gap: 8px; }
+        .admin-mode .admin-controls-inline { display: flex; }
+        
         .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
         .btn-action.del:hover { background: #ff3366; border-color: #ff3366; }
         .btn-action.edit:hover { background: #ffaa00; border-color: #ffaa00; color: #000; }
@@ -202,13 +217,10 @@
 </head>
 <body>
 
-    <!-- INTRO -->
     <div id="intro"></div>
 
-    <!-- LIGHTBOX -->
     <div id="lightbox" onclick="closeLightbox()"><div class="close-lb"><i class="fas fa-times"></i></div><img id="lightbox-img" src="" alt="Zoom"></div>
 
-    <!-- MODAL EDYCJI -->
     <div id="edit-modal">
         <div class="edit-box">
             <h3>Edytuj wpis</h3>
@@ -220,7 +232,6 @@
         </div>
     </div>
 
-    <!-- NAWIGACJA GŁÓWNA -->
     <header class="top-navbar" id="main-nav">
         <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
             <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" onerror="this.src='https://via.placeholder.com/45?text=PP'">
@@ -242,12 +253,10 @@
         <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- PRZYCISK ADMINA -->
     <button id="admin-trigger" onclick="openTab('admin', null)" title="Panel Administratora"><i class="fas fa-lock"></i></button>
 
     <main class="content-area" id="app">
         
-        <!-- HOME -->
         <div id="home" class="tab active">
             <div class="hero-section">
                 <h1 class="hero-title">Projekt <span>Pomorze</span></h1>
@@ -255,13 +264,11 @@
             </div>
         </div>
 
-        <!-- DEVLOG -->
         <div id="devlog" class="tab">
             <div class="section-header"><p>Kulisy tworzenia</p><h2>Dziennik Dewelopera</h2></div>
             <div class="devlog-container" id="dyn-devlog"></div>
         </div>
 
-        <!-- MAPA GRY -->
         <div id="mapa" class="tab">
             <div class="section-header"><p>Eksploracja</p><h2>Mapa Gry</h2></div>
             <div id="dyn-map" class="map-container glass">
@@ -269,49 +276,40 @@
             </div>
         </div>
 
-        <!-- GALERIA -->
         <div id="galeria" class="tab">
             <div class="section-header"><p>Zrzuty Ekranu</p><h2>Miejscówki w grze</h2></div>
             <div class="gallery-grid" id="dyn-gallery"></div>
         </div>
 
-        <!-- KOMUNIKATY -->
         <div id="komunikaty" class="tab">
             <div class="section-header"><p>Ważne informacje</p><h2>Komunikaty i Ogłoszenia</h2></div>
             <div style="max-width: 900px; margin: 0 auto;" id="dyn-announcements"></div>
         </div>
 
-        <!-- AKTUALIZACJE / CHANGELOG -->
         <div id="aktualizacje" class="tab">
             <div class="section-header"><p>Postępy Prac</p><h2>Co nowego na mapie?</h2></div>
             <div class="update-timeline" id="dyn-changelog"></div>
         </div>
 
-        <!-- EKIPA -->
         <div id="ekipa" class="tab">
             <div class="section-header"><p>Twórcy</p><h2>Nasza Ekipa</h2></div>
-            <!-- Zmieniony kontener główny dla ekipy -->
-            <div id="dyn-staff"></div>
+            <div class="staff-wrapper" id="dyn-staff"></div>
         </div>
 
-        <!-- FAQ -->
         <div id="faq" class="tab">
             <div class="section-header"><p>Baza Wiedzy</p><h2>Często zadawane pytania</h2></div>
             <div style="max-width: 900px; margin: 0 auto;" id="dyn-faq"></div>
         </div>
 
-        <!-- LINKI -->
         <div id="linki" class="tab">
             <div class="section-header"><p>Bądź na bieżąco</p><h2>Nasze społeczności</h2></div>
             <div class="links-wrapper" id="dyn-links"></div>
         </div>
 
-        <!-- ADMIN PANEL -->
         <div id="admin" class="tab">
             <div class="section-header"><p>Zarządzanie Systemem</p><h2>Panel Administratora (CMS)</h2></div>
             
             <div class="admin-container glass">
-                <!-- Logowanie -->
                 <div id="admin-login-form">
                     <div class="form-group"><label>Email Administratora</label><input type="email" id="admin-email" placeholder="admin@projektpomorze.pl"></div>
                     <div class="form-group"><label>Hasło</label><input type="password" id="admin-pass" placeholder="••••••••"></div>
@@ -319,7 +317,6 @@
                     <p id="login-error" style="color: #ff3366; display: none; margin-top: 15px; font-weight: 600;">Błędne dane logowania!</p>
                 </div>
 
-                <!-- Dashboard -->
                 <div id="admin-dashboard">
                     <div class="admin-header-flex">
                         <h3 style="color:#fff; font-size: 1.8rem;"><i class="fas fa-shield-alt" style="color:var(--accent);"></i> Zalogowano pomyślnie</h3>
@@ -329,7 +326,6 @@
                         </div>
                     </div>
 
-                    <!-- Nawigacja w Adminie -->
                     <div class="admin-tabs-nav">
                         <button class="admin-tab-btn active" onclick="switchAdminTab('a-devlog', this)"><i class="fas fa-newspaper"></i> DevLog</button>
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-map', this)"><i class="fas fa-map"></i> Mapa Gry</button>
@@ -342,7 +338,6 @@
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> System</button>
                     </div>
 
-                    <!-- Podzakładki CMS -->
                     <div id="a-devlog" class="admin-sub-tab active">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj wpis do Dziennika (DevLog)</h4>
                         <div class="form-group"><label>Data publikacji</label><input type="text" id="d-date" placeholder="np. Niedziela, 10 Maja 2026"></div>
@@ -381,12 +376,11 @@
                         <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-list"></i> Zapisz Log</button>
                     </div>
 
-                    <!-- ZMODYFIKOWANE DODAWANIE EKIPY -->
                     <div id="a-staff" class="admin-sub-tab">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzanie Ekipą</h4>
                         <div class="form-group"><label>Nick w grze</label><input type="text" id="s-name" placeholder="np. Facio"></div>
                         <div class="form-group">
-                            <label>Ranga (Kolejność jest automatycznie sortowana)</label>
+                            <label>Ranga (Kolejność będzie poprawnie sortowana)</label>
                             <select id="s-role">
                                 <option value="Owner">Owner</option>
                                 <option value="Co-Owner">Co-Owner</option>
@@ -437,7 +431,6 @@
         </div>
     </main>
 
-    <!-- FIREBASE SDK & LOGIKA CMS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getDatabase, ref, onValue, push, remove, update, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
@@ -484,7 +477,7 @@
             });
         };
 
-        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI (SORTOWANIE) ---
+        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI (Kompaktowa Lista) ---
         onValue(ref(db, 'staff'), (snapshot) => {
             const container = document.getElementById('dyn-staff');
             container.innerHTML = '';
@@ -492,12 +485,12 @@
             if(data) {
                 window.appData['staff'] = data;
                 
-                // Przygotowanie grup
+                // Przygotowanie grup do sortowania
                 const grouped = {};
                 staffRoleOrder.forEach(r => grouped[r] = []);
                 grouped['Inne'] = [];
 
-                // Grupowanie użytkowników
+                // Przypisywanie graczy do grup
                 Object.keys(data).forEach(key => {
                     const item = data[key];
                     let assignedRole = 'Inne';
@@ -511,23 +504,25 @@
                 });
 
                 let html = '';
-                // Renderowanie według kolejności staffRoleOrder
+                // Renderowanie gotowych grup
                 [...staffRoleOrder, 'Inne'].forEach(role => {
                     if(grouped[role].length > 0) {
                         html += `
-                        <div style="width: 100%; margin-bottom: 40px;">
-                            <h3 style="color: var(--accent); margin-bottom: 20px; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">${role}</h3>
-                            <div class="staff-grid">
+                        <div class="staff-group">
+                            <h3 class="staff-group-title"><i class="fas fa-shield-alt"></i> ${role}</h3>
+                            <div class="staff-list">
                         `;
                         grouped[role].forEach(item => {
                             html += `
-                            <div class="staff-card glass">
-                                <div class="admin-controls">
+                            <div class="staff-row">
+                                <div class="staff-info">
+                                    <h4>${item.name}</h4>
+                                    <span>${item.role}</span>
+                                </div>
+                                <div class="admin-controls-inline">
                                     <button class="btn-action edit" onclick="window.openEditModal('staff', '${item.key}', event)"><i class="fas fa-edit"></i></button>
                                     <button class="btn-action del" onclick="window.delItem('staff', '${item.key}', event)"><i class="fas fa-trash"></i></button>
                                 </div>
-                                <h3>${item.name}</h3>
-                                <p class="staff-role">${item.role}</p>
                             </div>`;
                         });
                         html += `</div></div>`;
@@ -540,6 +535,7 @@
             }
         });
 
+        // --- MAPA ---
         onValue(ref(db, 'gameMap'), (snapshot) => {
             const container = document.getElementById('dyn-map');
             const data = snapshot.val();
@@ -555,6 +551,7 @@
             }
         });
 
+        // --- DEVLOG ---
         renderData('devlog', 'dyn-devlog', (key, item) => {
             let mediaHtml = '';
             if(item.ytLink) {
@@ -578,6 +575,7 @@
             </article>
         `});
 
+        // --- POZOSTAŁE RENDERY ---
         renderData('gallery', 'dyn-gallery', (key, item) => `<div class="gallery-item glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div><img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div></div>`);
         renderData('changelog', 'dyn-changelog', (key, item) => `<div class="update-item"><div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p></div>`);
         renderData('links', 'dyn-links', (key, item) => `<a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div></a>`);
@@ -676,7 +674,6 @@
         };
     </script>
 
-    <!-- UI SCRIPTS & LOGIKA INTRO -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const now = Date.now();
