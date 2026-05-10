@@ -80,24 +80,6 @@
         .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
         .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
 
-        /* --- EKIPA (KOMPAKTOWA LISTA) --- */
-        .staff-wrapper { max-width: 800px; margin: 0 auto; }
-        .staff-group { margin-bottom: 35px; text-align: left; }
-        .staff-group-title {
-            font-size: 1rem; color: var(--accent); text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 8px;
-        }
-        .staff-list { display: flex; flex-direction: column; gap: 10px; }
-        .staff-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; transition: var(--transition); border-radius: 12px;
-            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
-        }
-        .staff-row:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); border-color: rgba(0, 229, 255, 0.3); }
-        .staff-info h4 { font-family: 'Outfit'; font-size: 1.3rem; margin: 0 0 4px 0; color: #fff; font-weight: 600; }
-        .staff-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-
         /* --- DEVLOG --- */
         .devlog-container { max-width: 900px; margin: 0 auto; }
         .devlog-post { background: rgba(20,20,30,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; margin-bottom: 40px; position: relative; transition: 0.3s; }
@@ -119,6 +101,15 @@
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-title { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 600; color: #fff; }
 
+        .staff-wrapper { max-width: 800px; margin: 0 auto; }
+        .staff-group { margin-bottom: 35px; text-align: left; }
+        .staff-group-title { font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 8px; }
+        .staff-list { display: flex; flex-direction: column; gap: 10px; }
+        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; transition: var(--transition); border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
+        .staff-row:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); border-color: rgba(0, 229, 255, 0.3); }
+        .staff-info h4 { font-family: 'Outfit'; font-size: 1.3rem; margin: 0 0 4px 0; color: #fff; font-weight: 600; }
+        .staff-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
         .update-timeline { max-width: 900px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px; }
         .update-item { margin-bottom: 50px; position: relative; }
         .update-item::before { content: ''; position: absolute; left: -47px; top: 5px; width: 14px; height: 14px; background: var(--bg-dark); border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
@@ -138,10 +129,16 @@
         .announcement-card h3 i { color: var(--accent); }
         .announcement-date { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 15px; font-weight: 600; }
 
-        .faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 25px 30px; margin-bottom: 20px; position: relative; transition: 0.3s; }
-        .faq-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
-        .faq-question { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .faq-answer { color: #bbb; line-height: 1.7; font-size: 1rem; }
+        /* --- FAQ AKORDEON --- */
+        .faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; margin-bottom: 15px; position: relative; transition: 0.3s; overflow: hidden; }
+        .faq-item:hover { border-color: rgba(0, 229, 255, 0.3); }
+        .faq-question { font-size: 1.15rem; font-weight: 600; color: #fff; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; user-select: none; }
+        .faq-question:hover { color: var(--accent); }
+        .faq-question i.chevron { transition: transform 0.3s ease; color: var(--accent); font-size: 1.2rem; }
+        .faq-item.active .faq-question i.chevron { transform: rotate(180deg); }
+        .faq-item.active .faq-question { color: var(--accent); background: rgba(0, 229, 255, 0.05); }
+        .faq-answer { max-height: 0; padding: 0 30px; color: #bbb; line-height: 1.7; font-size: 1rem; transition: all 0.4s ease; opacity: 0; }
+        .faq-item.active .faq-answer { max-height: 1000px; padding: 20px 30px 30px 30px; opacity: 1; border-top: 1px solid rgba(255,255,255,0.05); }
 
         .map-container { width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border); position: relative; background: #0a0a0a; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .map-container img { width: 100%; display: block; cursor: pointer; transition: 0.5s; }
@@ -212,6 +209,8 @@
             .update-timeline { padding-left: 20px; }
             .update-item::before { left: -27px; }
             .admin-controls { position: relative; top: 0; right: 0; justify-content: flex-end; margin-bottom: 10px; }
+            /* Zabezpieczenie przycisków w FAQ na mobile */
+            .faq-question { padding-right: 80px; }
         }
     </style>
 </head>
@@ -454,7 +453,6 @@
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
         window.currentEdit = { path: '', key: '' };
 
-        // Definicja prawidłowej hierarchii rang ekipy
         const staffRoleOrder = [
             "Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers",
             "Head of Admins", "Event Host", "Developer", "Trial Event Host",
@@ -477,52 +475,35 @@
             });
         };
 
-        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI (Kompaktowa Lista) ---
+        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI ---
         onValue(ref(db, 'staff'), (snapshot) => {
             const container = document.getElementById('dyn-staff');
             container.innerHTML = '';
             const data = snapshot.val();
             if(data) {
                 window.appData['staff'] = data;
-                
-                // Przygotowanie grup do sortowania
                 const grouped = {};
                 staffRoleOrder.forEach(r => grouped[r] = []);
                 grouped['Inne'] = [];
 
-                // Przypisywanie graczy do grup
                 Object.keys(data).forEach(key => {
                     const item = data[key];
                     let assignedRole = 'Inne';
                     for(let r of staffRoleOrder) {
-                        if(item.role.trim().toLowerCase() === r.toLowerCase()) {
-                            assignedRole = r;
-                            break;
-                        }
+                        if(item.role.trim().toLowerCase() === r.toLowerCase()) { assignedRole = r; break; }
                     }
                     grouped[assignedRole].push({ key, ...item });
                 });
 
                 let html = '';
-                // Renderowanie gotowych grup
                 [...staffRoleOrder, 'Inne'].forEach(role => {
                     if(grouped[role].length > 0) {
-                        html += `
-                        <div class="staff-group">
-                            <h3 class="staff-group-title"><i class="fas fa-shield-alt"></i> ${role}</h3>
-                            <div class="staff-list">
-                        `;
+                        html += `<div class="staff-group"><h3 class="staff-group-title"><i class="fas fa-shield-alt"></i> ${role}</h3><div class="staff-list">`;
                         grouped[role].forEach(item => {
                             html += `
                             <div class="staff-row">
-                                <div class="staff-info">
-                                    <h4>${item.name}</h4>
-                                    <span>${item.role}</span>
-                                </div>
-                                <div class="admin-controls-inline">
-                                    <button class="btn-action edit" onclick="window.openEditModal('staff', '${item.key}', event)"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-action del" onclick="window.delItem('staff', '${item.key}', event)"><i class="fas fa-trash"></i></button>
-                                </div>
+                                <div class="staff-info"><h4>${item.name}</h4><span>${item.role}</span></div>
+                                <div class="admin-controls-inline"><button class="btn-action edit" onclick="window.openEditModal('staff', '${item.key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${item.key}', event)"><i class="fas fa-trash"></i></button></div>
                             </div>`;
                         });
                         html += `</div></div>`;
@@ -575,12 +556,26 @@
             </article>
         `});
 
-        // --- POZOSTAŁE RENDERY ---
+        // --- POZOSTAŁE RENDERY (W TYM NOWY FAQ Z AKORDEONEM) ---
         renderData('gallery', 'dyn-gallery', (key, item) => `<div class="gallery-item glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div><img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div></div>`);
         renderData('changelog', 'dyn-changelog', (key, item) => `<div class="update-item"><div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p></div>`);
         renderData('links', 'dyn-links', (key, item) => `<a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div></a>`);
         renderData('announcements', 'dyn-announcements', (key, item) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p></div>`);
-        renderData('faq', 'dyn-faq', (key, item) => `<div class="faq-item"><div class="admin-controls" style="top:15px; right:15px;"><button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="faq-question"><i class="fas fa-caret-right"></i> ${item.question}</div><div class="faq-answer">${item.answer}</div></div>`);
+        
+        // Render FAQ jako klikalny akordeon
+        renderData('faq', 'dyn-faq', (key, item) => `
+            <div class="faq-item" id="faq-${key}">
+                <div class="admin-controls" style="top:15px; right:60px;">
+                    <button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="faq-question" onclick="window.toggleFaq('${key}')">
+                    <span><i class="fas fa-caret-right" style="margin-right: 8px;"></i> ${item.question}</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="faq-answer">${item.answer}</div>
+            </div>
+        `);
 
         // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
@@ -709,6 +704,12 @@
                 }, 1000);
             }, introDuration);
         });
+
+        // Obsługa FAQ Akordeon
+        window.toggleFaq = function(key) {
+            const element = document.getElementById('faq-' + key);
+            if(element) element.classList.toggle('active');
+        }
 
         window.toggleMobileMenu = function() { document.getElementById('nav-menu').classList.toggle('active'); }
 
