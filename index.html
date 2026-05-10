@@ -7,27 +7,28 @@
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- ZMIENNE GLOBALNE --- */
         :root {
-            --bg-dark: #050505; --accent: #00e5ff; --accent-glow: rgba(0, 229, 255, 0.4);
-            --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-dark: #030305; --accent: #00e5ff; --accent-glow: rgba(0, 229, 255, 0.4);
+            --glass-bg: rgba(20, 20, 25, 0.6); --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff; --text-muted: #a0a0a0; --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --header-height: 80px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main);
             overflow-x: hidden; min-height: 100vh;
-            background-image: radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.04) 0%, transparent 50%), radial-gradient(circle at 85% 30%, rgba(112, 0, 255, 0.04) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 85% 30%, rgba(112, 0, 255, 0.05) 0%, transparent 50%);
             background-attachment: fixed;
         }
         h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
-        .glass { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 24px; }
+        .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; }
         
         /* --- KINOWE INTRO --- */
-        #intro { position: fixed; inset: 0; background: #000; z-index: 9000; overflow: hidden; }
+        #intro { position: fixed; inset: 0; background: #000; z-index: 9999; overflow: hidden; }
         .intro-slide { position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; }
         .intro-slide.img-slide::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 30%, #000 100%); z-index: 1; }
         .intro-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.5) contrast(1.1) saturate(1.2); animation: kenBurns 4s linear forwards; }
@@ -37,142 +38,164 @@
         @keyframes kenBurns { 0% { transform: scale(1.02); } 100% { transform: scale(1.12); } }
         @keyframes textReveal { 0% { opacity: 0; filter: blur(10px); } 20% { opacity: 1; filter: blur(0); } 80% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); } }
 
-        /* --- LOGO TOP --- */
-        .top-logo { position: fixed; top: 25px; left: 25px; z-index: 8000; width: 60px; height: 60px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; animation: fadeInLogo 2s ease forwards 1s; }
-        .top-logo img { width: 100%; height: 100%; object-fit: contain; }
-        @keyframes fadeInLogo { to { opacity: 1; } }
-
-        /* --- NAWIGACJA PŁYWAJĄCA --- */
-        .nav-dock { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1000; padding: 10px; border-radius: 100px; display: flex; flex-wrap: wrap; justify-content: center; max-width: 95%; gap: 8px; background: rgba(10, 10, 10, 0.85); box-shadow: 0 20px 40px rgba(0,0,0,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); position: relative; }
-        .nav-btn .material-icons { font-size: 1.4rem; transition: var(--transition); z-index: 2; }
-        .nav-btn::before { content: ''; position: absolute; inset: 0; background: var(--accent); border-radius: 50%; opacity: 0; transform: scale(0.5); transition: var(--transition); z-index: 1; }
-        .nav-btn:hover { color: #fff; transform: translateY(-3px); }
-        .nav-btn.active { color: #000; }
-        .nav-btn.active::before { opacity: 1; transform: scale(1); }
+        /* --- NOWA NAWIGACJA (TOP NAVBAR) --- */
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
+            z-index: 8000; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 40px; background: rgba(5, 5, 8, 0.85); backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border); opacity: 0; animation: fadeInNav 1s ease forwards 1s;
+        }
+        @keyframes fadeInNav { to { opacity: 1; } }
         
-        /* Tooltip dla nav */
-        .nav-btn::after { content: attr(title); position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; font-size: 0.7rem; padding: 5px 10px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); font-family: 'Inter'; letter-spacing: 1px; text-transform: uppercase; z-index: 10; }
-        .nav-btn:hover::after { opacity: 1; top: -40px; }
+        .nav-brand { display: flex; align-items: center; gap: 15px; cursor: pointer; }
+        .nav-brand img { width: 45px; height: 45px; border-radius: 10px; object-fit: contain; }
+        .nav-brand span { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
+        .nav-brand span b { color: var(--accent); }
+
+        .nav-menu { display: flex; gap: 5px; }
+        .nav-btn {
+            background: transparent; border: none; color: var(--text-muted); font-family: 'Inter';
+            font-size: 0.95rem; font-weight: 500; padding: 10px 16px; border-radius: 12px;
+            cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px;
+        }
+        .nav-btn i { font-size: 1.1rem; }
+        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-btn.active { color: #000; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); font-weight: 700; }
+
+        .mobile-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
 
         /* --- CONTENT & ZAKŁADKI --- */
-        #app { display: none; opacity: 0; transition: opacity 1.5s ease; padding-bottom: 140px; }
-        .content-area { max-width: 1200px; margin: 80px auto 0; padding: 0 5%; }
-        .tab { display: none; animation: slideFade 0.6s ease forwards; }
+        #app { display: none; opacity: 0; transition: opacity 1.5s ease; padding-top: calc(var(--header-height) + 40px); padding-bottom: 80px; }
+        .content-area { max-width: 1300px; margin: 0 auto; padding: 0 5%; }
+        .tab { display: none; animation: slideFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .tab.active { display: block; }
-        @keyframes slideFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- SEKCJY STRONY --- */
-        .hero-section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-        .hero-title span { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
-        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 650px; font-weight: 300; line-height: 1.7; }
-        .section-header { text-align: center; margin-bottom: 50px; margin-top: 40px; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 600; letter-spacing: 2px; }
-        .section-header p { color: var(--accent); font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
+        .hero-section { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-title { font-size: clamp(3rem, 8vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-title span { color: var(--accent); text-shadow: 0 0 40px var(--accent-glow); }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; font-weight: 400; line-height: 1.8; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+        .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
 
         /* --- DYNAMICZNE GRIDY I KARTY --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .gallery-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a; border: 1px solid var(--glass-border); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
         .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; opacity: 0; transition: var(--transition); }
-        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-color: rgba(0, 229, 255, 0.3); }
-        .gallery-item:hover img { transform: scale(1.06); filter: brightness(1.1); }
+        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-color: rgba(0, 229, 255, 0.4); }
+        .gallery-item:hover img { transform: scale(1.06); }
         .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-title { font-family: 'Outfit'; font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 5px; }
+        .gallery-title { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 600; color: #fff; }
 
-        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
-        .staff-card { padding: 40px 20px; text-align: center; border-radius: 24px; transition: var(--transition); position: relative; overflow: hidden; border: 1px solid var(--glass-border); background: var(--glass-bg); }
-        .staff-card:hover { transform: translateY(-8px); border-color: rgba(0, 229, 255, 0.3); background: rgba(255,255,255,0.05); }
-        .staff-card h3 { font-size: 1.4rem; margin-bottom: 5px; }
-        .staff-role { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--accent); }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .staff-card { padding: 40px 20px; text-align: center; transition: var(--transition); position: relative; overflow: hidden; }
+        .staff-card:hover { transform: translateY(-10px); border-color: rgba(0, 229, 255, 0.4); background: rgba(255,255,255,0.05); }
+        .staff-card h3 { font-size: 1.5rem; margin-bottom: 5px; color: #fff; }
+        .staff-role { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
 
-        .update-timeline { max-width: 800px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 30px; }
-        .update-item { margin-bottom: 40px; position: relative; }
-        .update-item::before { content: ''; position: absolute; left: -37px; top: 5px; width: 12px; height: 12px; background: var(--bg-dark); border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow); }
-        .update-date { font-size: 0.85rem; color: var(--accent); font-weight: 600; display: block; margin-bottom: 8px; }
-        .update-item h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .update-item p { color: #ccc; line-height: 1.6; }
+        .update-timeline { max-width: 900px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px; }
+        .update-item { margin-bottom: 50px; position: relative; }
+        .update-item::before { content: ''; position: absolute; left: -47px; top: 5px; width: 14px; height: 14px; background: var(--bg-dark); border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
+        .update-date { font-size: 0.9rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 10px; letter-spacing: 1px; }
+        .update-item h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
+        .update-item p { color: #bbb; line-height: 1.7; font-size: 1.05rem; }
 
-        .links-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .link-card { display: flex; align-items: center; gap: 20px; padding: 25px; text-decoration: none; color: var(--text-main); transition: var(--transition); }
-        .link-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--accent); }
-        .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
+        .links-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .link-card { display: flex; align-items: center; gap: 20px; padding: 30px; text-decoration: none; color: var(--text-main); transition: var(--transition); }
+        .link-icon { width: 70px; height: 70px; border-radius: 18px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent); transition: 0.3s; }
+        .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-8px); border-color: var(--accent); }
+        .link-card:hover .link-icon { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
-        /* NOWE: KOMUNIKATY I FAQ */
-        .announcement-card { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 25px; margin-bottom: 20px; position: relative; transition: 0.3s; }
-        .announcement-card:hover { background: rgba(255,255,255,0.05); }
-        .announcement-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
-        .announcement-date { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 15px; }
+        /* KOMUNIKATY I FAQ */
+        .announcement-card { background: rgba(20,20,30,0.6); border: 1px solid var(--glass-border); border-left: 5px solid var(--accent); border-radius: 16px; padding: 30px; margin-bottom: 25px; position: relative; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .announcement-card:hover { transform: translateX(10px); background: rgba(30,30,40,0.8); }
+        .announcement-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .announcement-card h3 i { color: var(--accent); }
+        .announcement-date { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 15px; font-weight: 600; }
 
-        .faq-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; position: relative; }
-        .faq-question { font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 10px; }
-        .faq-answer { color: #ccc; line-height: 1.6; font-size: 0.95rem; }
+        .faq-item { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 25px 30px; margin-bottom: 20px; position: relative; transition: 0.3s; }
+        .faq-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+        .faq-question { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .faq-answer { color: #bbb; line-height: 1.7; font-size: 1rem; }
 
-        /* MAPA GRY KONTENER */
-        .map-container { width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); position: relative; background: #0a0a0a; }
-        .map-container img { width: 100%; display: block; cursor: pointer; transition: 0.4s; }
-        .map-container img:hover { transform: scale(1.02); }
+        /* MAPA GRY */
+        .map-container { width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border); position: relative; background: #0a0a0a; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .map-container img { width: 100%; display: block; cursor: pointer; transition: 0.5s; }
+        .map-container img:hover { transform: scale(1.03); filter: brightness(1.1); }
 
-        /* --- SYSTEM PRZYCISKÓW ADMINA NA STRONIE --- */
-        .admin-controls { position: absolute; top: 10px; right: 10px; z-index: 10; display: none; gap: 5px; }
+        /* --- ADMIN CONTROLS NA STRONIE --- */
+        .admin-controls { position: absolute; top: 15px; right: 15px; z-index: 10; display: none; gap: 8px; }
         .admin-mode .admin-controls { display: flex; }
-        .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 6px 12px; border-radius: 5px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+        .btn-action { background: rgba(0,0,0,0.8); color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
         .btn-action.del:hover { background: #ff3366; border-color: #ff3366; }
         .btn-action.edit:hover { background: #ffaa00; border-color: #ffaa00; color: #000; }
 
         /* --- ADMIN PANEL (CMS) --- */
-        #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #555; cursor: pointer; z-index: 9999; padding: 10px; border-radius: 50%; transition: 0.3s; }
-        #admin-trigger:hover { color: var(--accent); border-color: var(--accent); }
+        #admin-trigger { position: fixed; bottom: 30px; right: 30px; background: rgba(10,10,15,0.8); border: 1px solid var(--glass-border); color: #666; cursor: pointer; z-index: 9000; width: 50px; height: 50px; border-radius: 50%; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; backdrop-filter: blur(10px); }
+        #admin-trigger:hover { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-5px); }
         
-        .admin-container { max-width: 900px; margin: 0 auto; padding: 40px; }
-        .admin-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;}
+        .admin-container { max-width: 1000px; margin: 0 auto; padding: 50px; }
+        .admin-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;}
         
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--accent); font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; font-size: 1rem; transition: 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); }
         
-        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-primary:hover { background: #fff; }
+        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: #fff; transform: translateY(-2px); }
         .btn-danger { background: #ff3366; color: #fff; }
         .btn-danger:hover { background: #ff0040; }
         .btn-warning { background: #ffaa00; color: #000; }
         
         #admin-dashboard { display: none; }
         
-        /* ZAKŁADKI W ADMIN PANELU */
-        .admin-tabs-nav { display: flex; gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; font-size: 0.85rem;}
-        .admin-tab-btn:hover, .admin-tab-btn.active { background: rgba(255,255,255,0.1); color: #fff; border-color: var(--accent); }
-        .admin-sub-tab { display: none; background: rgba(255,255,255,0.02); padding: 25px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .admin-tabs-nav { display: flex; gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; font-size: 0.95rem;}
+        .admin-tab-btn:hover, .admin-tab-btn.active { background: rgba(0, 229, 255, 0.1); color: #fff; border-color: var(--accent); }
+        .admin-sub-tab { display: none; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border); }
         .admin-sub-tab.active { display: block; animation: slideFade 0.4s ease forwards; }
 
         /* --- MODAL EDYCJI --- */
-        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 10000; display: none; justify-content: center; align-items: center; }
-        .edit-box { background: #111; border: 1px solid var(--glass-border); padding: 30px; border-radius: 16px; width: 500px; max-width: 90%; max-height: 90vh; overflow-y: auto;}
-        .edit-box h3 { margin-bottom: 20px; color: var(--accent); }
-        .edit-actions { display: flex; gap: 10px; margin-top: 20px; }
-        .edit-actions button { flex: 1; }
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .edit-box { background: #0a0a0f; border: 1px solid var(--glass-border); padding: 40px; border-radius: 24px; width: 600px; max-width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .edit-box h3 { margin-bottom: 25px; color: var(--accent); font-size: 1.8rem; }
+        .edit-actions { display: flex; gap: 15px; margin-top: 30px; }
+        .edit-actions button { flex: 1; justify-content: center; }
 
         /* --- LIGHTBOX --- */
-        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 9999; display: none; justify-content: center; align-items: center; }
-        #lightbox img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
-        .close-lb { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2rem; cursor: pointer; }
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); z-index: 9999; display: none; justify-content: center; align-items: center; }
+        #lightbox img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 16px; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .close-lb { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2.5rem; cursor: pointer; transition: 0.3s; }
+        .close-lb:hover { color: var(--accent); transform: scale(1.1); }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed; top: var(--header-height); left: 0; width: 100%; height: calc(100vh - var(--header-height));
+                background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center;
+                justify-content: flex-start; padding-top: 40px; gap: 15px; transform: translateX(100%); transition: 0.4s ease;
+            }
+            .nav-menu.active { transform: translateX(0); }
+            .nav-btn { width: 80%; justify-content: center; padding: 15px; font-size: 1.1rem; }
+            .mobile-toggle { display: block; }
+            .hero-title { font-size: 3rem; }
+            .update-timeline { padding-left: 20px; }
+            .update-item::before { left: -27px; }
+            .admin-controls { position: relative; top: 0; right: 0; justify-content: flex-end; margin-bottom: 10px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- INTRO KONTENER (Zawartość generowana dynamicznie w JS) -->
+    <!-- INTRO -->
     <div id="intro"></div>
 
-    <!-- LOGO -->
-    <div class="top-logo glass"><img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" onerror="this.style.display='none'"></div>
-
     <!-- LIGHTBOX -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <div class="close-lb"><i class="fas fa-times"></i></div>
-        <img id="lightbox-img" src="" alt="Zoom">
-    </div>
+    <div id="lightbox" onclick="closeLightbox()"><div class="close-lb"><i class="fas fa-times"></i></div><img id="lightbox-img" src="" alt="Zoom"></div>
 
     <!-- MODAL EDYCJI -->
     <div id="edit-modal">
@@ -180,27 +203,35 @@
             <h3>Edytuj wpis</h3>
             <div id="edit-form-content"></div>
             <div class="edit-actions">
-                <button class="btn-primary" onclick="saveEdit()">Zapisz zmiany</button>
-                <button class="btn-primary" style="background:#333; color:#fff;" onclick="closeEditModal()">Anuluj</button>
+                <button class="btn-primary" onclick="saveEdit()"><i class="fas fa-save"></i> Zapisz zmiany</button>
+                <button class="btn-primary" style="background:#333; color:#fff;" onclick="closeEditModal()"><i class="fas fa-times"></i> Anuluj</button>
             </div>
         </div>
     </div>
 
-    <!-- NAWIGACJA -->
-    <!-- UWAGA: Usunąłem tooltipy wbudowane w CSS z 'title' na rzecz prostych atrybutów, ze względu na dużą ilość przycisków na mobile -->
-    <nav class="nav-dock" id="main-nav">
-        <button class="nav-btn active" onclick="openTab('home', this)" title="Start"><span class="material-icons">adjust</span></button>
-        <button class="nav-btn" onclick="openTab('mapa', this)" title="Mapa Gry"><span class="material-icons">map</span></button>
-        <button class="nav-btn" onclick="openTab('galeria', this)" title="Miejscówki"><span class="material-icons">landscape</span></button>
-        <button class="nav-btn" onclick="openTab('komunikaty', this)" title="Komunikaty"><span class="material-icons">campaign</span></button>
-        <button class="nav-btn" onclick="openTab('aktualizacje', this)" title="Aktualizacje"><span class="material-icons">update</span></button>
-        <button class="nav-btn" onclick="openTab('ekipa', this)" title="Ekipa"><span class="material-icons">groups</span></button>
-        <button class="nav-btn" onclick="openTab('faq', this)" title="FAQ"><span class="material-icons">help_outline</span></button>
-        <button class="nav-btn" onclick="openTab('linki', this)" title="Sociale"><span class="material-icons">hub</span></button>
-    </nav>
+    <!-- NOWY TOP NAVBAR -->
+    <header class="top-navbar" id="main-nav">
+        <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
+            <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" onerror="this.src='https://via.placeholder.com/45?text=PP'">
+            <span>Projekt <b>Pomorze</b></span>
+        </div>
+        
+        <nav class="nav-menu" id="nav-menu">
+            <button class="nav-btn active" id="nav-home" onclick="openTab('home', this)"><i class="fas fa-home"></i> Start</button>
+            <button class="nav-btn" onclick="openTab('mapa', this)"><i class="fas fa-map"></i> Mapa</button>
+            <button class="nav-btn" onclick="openTab('galeria', this)"><i class="fas fa-camera"></i> Galeria</button>
+            <button class="nav-btn" onclick="openTab('komunikaty', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
+            <button class="nav-btn" onclick="openTab('aktualizacje', this)"><i class="fas fa-clock"></i> Aktualizacje</button>
+            <button class="nav-btn" onclick="openTab('ekipa', this)"><i class="fas fa-users"></i> Ekipa</button>
+            <button class="nav-btn" onclick="openTab('faq', this)"><i class="fas fa-question-circle"></i> FAQ</button>
+            <button class="nav-btn" onclick="openTab('linki', this)"><i class="fas fa-link"></i> Sociale</button>
+        </nav>
+        
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </header>
 
     <!-- PRZYCISK ADMINA -->
-    <button id="admin-trigger" onclick="openTab('admin', null)"><i class="fas fa-lock"></i></button>
+    <button id="admin-trigger" onclick="openTab('admin', null)" title="Panel Administratora"><i class="fas fa-lock"></i></button>
 
     <main class="content-area" id="app">
         
@@ -212,143 +243,145 @@
             </div>
         </div>
 
-        <!-- MAPA GRY (CMS) -->
+        <!-- MAPA GRY -->
         <div id="mapa" class="tab">
             <div class="section-header"><p>Eksploracja</p><h2>Mapa Gry</h2></div>
             <div id="dyn-map" class="map-container glass">
-                <p style="padding: 40px; text-align: center; color: #666;">Brak wgranej mapy.</p>
+                <p style="padding: 60px; text-align: center; color: #666; font-size: 1.2rem;">Brak wgranej mapy. Zaloguj się do panelu, aby ją dodać.</p>
             </div>
         </div>
 
-        <!-- GALERIA (CMS) -->
+        <!-- GALERIA -->
         <div id="galeria" class="tab">
             <div class="section-header"><p>Zrzuty Ekranu</p><h2>Miejscówki w grze</h2></div>
             <div class="gallery-grid" id="dyn-gallery"></div>
         </div>
 
-        <!-- KOMUNIKATY (CMS) -->
+        <!-- KOMUNIKATY -->
         <div id="komunikaty" class="tab">
-            <div class="section-header"><p>Ogłoszenia</p><h2>Komunikaty</h2></div>
-            <div style="max-width: 800px; margin: 0 auto;" id="dyn-announcements"></div>
+            <div class="section-header"><p>Ważne informacje</p><h2>Komunikaty i Ogłoszenia</h2></div>
+            <div style="max-width: 900px; margin: 0 auto;" id="dyn-announcements"></div>
         </div>
 
-        <!-- AKTUALIZACJE (CMS) -->
+        <!-- AKTUALIZACJE / CHANGELOG -->
         <div id="aktualizacje" class="tab">
-            <div class="section-header"><p>Changelog</p><h2>Co nowego na mapie?</h2></div>
+            <div class="section-header"><p>Postępy Prac</p><h2>Co nowego na mapie?</h2></div>
             <div class="update-timeline" id="dyn-changelog"></div>
         </div>
 
-        <!-- EKIPA (CMS) -->
+        <!-- EKIPA -->
         <div id="ekipa" class="tab">
             <div class="section-header"><p>Twórcy</p><h2>Nasza Ekipa</h2></div>
             <div class="staff-grid" id="dyn-staff"></div>
         </div>
 
-        <!-- FAQ (CMS) -->
+        <!-- FAQ -->
         <div id="faq" class="tab">
-            <div class="section-header"><p>Pomoc</p><h2>Często zadawane pytania</h2></div>
-            <div style="max-width: 800px; margin: 0 auto;" id="dyn-faq"></div>
+            <div class="section-header"><p>Baza Wiedzy</p><h2>Często zadawane pytania</h2></div>
+            <div style="max-width: 900px; margin: 0 auto;" id="dyn-faq"></div>
         </div>
 
-        <!-- LINKI (CMS) -->
+        <!-- LINKI -->
         <div id="linki" class="tab">
-            <div class="section-header"><p>Społeczność</p><h2>Nasze sociale</h2></div>
+            <div class="section-header"><p>Bądź na bieżąco</p><h2>Nasze społeczności</h2></div>
             <div class="links-wrapper" id="dyn-links"></div>
         </div>
 
         <!-- ADMIN PANEL -->
         <div id="admin" class="tab">
-            <div class="section-header"><p>CMS</p><h2>Panel Zarządzania</h2></div>
+            <div class="section-header"><p>Zarządzanie Systemem</p><h2>Panel Administratora (CMS)</h2></div>
             
             <div class="admin-container glass">
-                
                 <!-- Logowanie -->
                 <div id="admin-login-form">
-                    <div class="form-group"><label>Email</label><input type="email" id="admin-email"></div>
-                    <div class="form-group"><label>Hasło</label><input type="password" id="admin-pass"></div>
-                    <button class="btn-primary" onclick="loginAdmin()">Zaloguj się</button>
-                    <p id="login-error" style="color: red; display: none; margin-top: 10px;">Błąd logowania!</p>
+                    <div class="form-group"><label>Email Administratora</label><input type="email" id="admin-email" placeholder="admin@projektpomorze.pl"></div>
+                    <div class="form-group"><label>Hasło</label><input type="password" id="admin-pass" placeholder="••••••••"></div>
+                    <button class="btn-primary" onclick="loginAdmin()"><i class="fas fa-sign-in-alt"></i> Zaloguj się</button>
+                    <p id="login-error" style="color: #ff3366; display: none; margin-top: 15px; font-weight: 600;">Błędne dane logowania!</p>
                 </div>
 
-                <!-- Dashboard po zalogowaniu -->
+                <!-- Dashboard -->
                 <div id="admin-dashboard">
                     <div class="admin-header-flex">
-                        <h3 style="color:#fff;">Jesteś zalogowany</h3>
-                        <div>
-                            <button class="btn-primary" onclick="openTab('home', document.querySelector('.nav-btn'))"><i class="fas fa-home"></i> Zamknij i wróc do gry</button>
+                        <h3 style="color:#fff; font-size: 1.8rem;"><i class="fas fa-shield-alt" style="color:var(--accent);"></i> Zalogowano pomyślnie</h3>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn-primary" onclick="openTab('home', document.getElementById('nav-home'))"><i class="fas fa-desktop"></i> Podgląd Strony</button>
                             <button class="btn-primary btn-danger" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Wyloguj</button>
                         </div>
                     </div>
 
                     <!-- Nawigacja w Adminie -->
                     <div class="admin-tabs-nav">
-                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-map', this)">Mapa Gry</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-gallery', this)">Galeria</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-announcements', this)">Komunikaty</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-changelog', this)">Aktualizacje</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-staff', this)">Ekipa</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-faq', this)">FAQ</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-links', this)">Linki</button>
-                        <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> Narzędzia</button>
+                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-map', this)"><i class="fas fa-map"></i> Mapa Gry</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-gallery', this)"><i class="fas fa-camera"></i> Galeria</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-announcements', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-changelog', this)"><i class="fas fa-clock"></i> Aktualizacje</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-staff', this)"><i class="fas fa-users"></i> Ekipa</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-faq', this)"><i class="fas fa-question-circle"></i> FAQ</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-links', this)"><i class="fas fa-link"></i> Linki</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> System</button>
                     </div>
 
                     <!-- Podzakładki -->
                     <div id="a-map" class="admin-sub-tab active">
-                        <h4>Zarządzaj Mapą Gry</h4>
-                        <div class="form-group"><label>Plik Mapy (Zastąpi obecną mapę)</label><input type="file" id="m-file" accept="image/*"></div>
-                        <button class="btn-primary" onclick="updateMap()" id="m-btn">Wgraj nową mapę</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzaj Mapą Gry</h4>
+                        <div class="form-group"><label>Plik Mapy (Zastąpi obecnie wyświetlaną mapę)</label><input type="file" id="m-file" accept="image/*"></div>
+                        <button class="btn-primary" onclick="updateMap()" id="m-btn"><i class="fas fa-upload"></i> Wgraj nową mapę</button>
                     </div>
 
                     <div id="a-gallery" class="admin-sub-tab">
-                        <h4>Dodaj zdjęcie</h4>
-                        <div class="form-group"><label>Plik (wysyłany na ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
-                        <div class="form-group"><label>Nazwa</label><input type="text" id="g-title"></div>
-                        <button class="btn-primary" onclick="addGallery()" id="g-btn">Wgraj zdjęcie</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj zdjęcie do galerii</h4>
+                        <div class="form-group"><label>Plik (Automatycznie optymalizowany przez ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
+                        <div class="form-group"><label>Nazwa Miejscowości / Tytuł</label><input type="text" id="g-title" placeholder="np. Centrum Czarnoszki"></div>
+                        <button class="btn-primary" onclick="addGallery()" id="g-btn"><i class="fas fa-plus"></i> Opublikuj zdjęcie</button>
                     </div>
 
                     <div id="a-announcements" class="admin-sub-tab">
-                        <h4>Dodaj Komunikat</h4>
-                        <div class="form-group"><label>Data</label><input type="text" id="a-date" placeholder="np. 20.10.2023"></div>
-                        <div class="form-group"><label>Tytuł</label><input type="text" id="a-title" placeholder="Ważna informacja!"></div>
-                        <div class="form-group"><label>Treść</label><textarea id="a-desc" rows="3"></textarea></div>
-                        <button class="btn-primary" onclick="addAnnouncement()">Opublikuj komunikat</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Nowy Komunikat</h4>
+                        <div class="form-group"><label>Etykieta / Data</label><input type="text" id="a-date" placeholder="np. PILNE | 20.10.2023"></div>
+                        <div class="form-group"><label>Nagłówek ogłoszenia</label><input type="text" id="a-title" placeholder="np. Przerwa techniczna serwerów"></div>
+                        <div class="form-group"><label>Pełna treść</label><textarea id="a-desc" rows="4" placeholder="Wpisz szczegóły komunikatu..."></textarea></div>
+                        <button class="btn-primary" onclick="addAnnouncement()"><i class="fas fa-bullhorn"></i> Wyślij w świat</button>
                     </div>
 
                     <div id="a-changelog" class="admin-sub-tab">
-                        <h4>Dodaj Wpis (Changelog)</h4>
-                        <div class="form-group"><label>Data / Etykieta (np. Nowość)</label><input type="text" id="c-date"></div>
-                        <div class="form-group"><label>Tytuł</label><input type="text" id="c-title"></div>
-                        <div class="form-group"><label>Opis</label><textarea id="c-desc" rows="3"></textarea></div>
-                        <button class="btn-primary" onclick="addChangelog()">Opublikuj wpis</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Aktualizacja Mapy (Changelog)</h4>
+                        <div class="form-group"><label>Data / Wersja</label><input type="text" id="c-date" placeholder="np. Update v1.2"></div>
+                        <div class="form-group"><label>Główna zmiana</label><input type="text" id="c-title" placeholder="np. Dodano nową wieś Rychnowy"></div>
+                        <div class="form-group"><label>Szczegóły zmian (co zrobiono)</label><textarea id="c-desc" rows="4"></textarea></div>
+                        <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-paper-plane"></i> Opublikuj log</button>
                     </div>
 
                     <div id="a-staff" class="admin-sub-tab">
-                        <h4>Dodaj Członka Ekipy</h4>
-                        <div class="form-group"><label>Nick</label><input type="text" id="s-name"></div>
-                        <div class="form-group"><label>Rola (np. Główny Twórca)</label><input type="text" id="s-role"></div>
-                        <button class="btn-primary" onclick="addStaff()">Dodaj do ekipy</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzanie Ekipą</h4>
+                        <div class="form-group"><label>Nick w grze</label><input type="text" id="s-name" placeholder="np. Facio"></div>
+                        <div class="form-group"><label>Funkcja / Ranga</label><input type="text" id="s-role" placeholder="np. Główny Developer"></div>
+                        <button class="btn-primary" onclick="addStaff()"><i class="fas fa-user-plus"></i> Zarejestruj członka</button>
                     </div>
 
                     <div id="a-faq" class="admin-sub-tab">
-                        <h4>Dodaj Pytanie (FAQ)</h4>
-                        <div class="form-group"><label>Pytanie</label><input type="text" id="f-question"></div>
-                        <div class="form-group"><label>Odpowiedź</label><textarea id="f-answer" rows="3"></textarea></div>
-                        <button class="btn-primary" onclick="addFaq()">Dodaj pytanie</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Baza FAQ</h4>
+                        <div class="form-group"><label>Pytanie od graczy</label><input type="text" id="f-question" placeholder="np. Kiedy gra będzie publiczna?"></div>
+                        <div class="form-group"><label>Twoja odpowiedź</label><textarea id="f-answer" rows="4" placeholder="Odpowiedz wyczerpująco..."></textarea></div>
+                        <button class="btn-primary" onclick="addFaq()"><i class="fas fa-question"></i> Zapisz Q&A</button>
                     </div>
 
                     <div id="a-links" class="admin-sub-tab">
-                        <h4>Dodaj Link</h4>
-                        <div class="form-group"><label>Nazwa (np. Discord)</label><input type="text" id="l-name"></div>
-                        <div class="form-group"><label>Opis (np. Serwer społeczności)</label><input type="text" id="l-desc"></div>
-                        <div class="form-group"><label>Pełny URL</label><input type="text" id="l-url" placeholder="https://..."></div>
-                        <div class="form-group"><label>Ikona FontAwesome</label><input type="text" id="l-icon" value="fas fa-link"></div>
-                        <button class="btn-primary" onclick="addLink()">Dodaj Link</button>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Odnośniki zewnętrzne</h4>
+                        <div class="form-group"><label>Nazwa Platformy</label><input type="text" id="l-name" placeholder="np. Serwer Discord"></div>
+                        <div class="form-group"><label>Krótki opis pod spodem</label><input type="text" id="l-desc" placeholder="np. Dołącz do pogawędek"></div>
+                        <div class="form-group"><label>Link docelowy</label><input type="text" id="l-url" placeholder="https://discord.gg/..."></div>
+                        <div class="form-group"><label>Ikona FontAwesome (zostaw domyślną jak nie wiesz)</label><input type="text" id="l-icon" value="fas fa-link"></div>
+                        <button class="btn-primary" onclick="addLink()"><i class="fas fa-external-link-alt"></i> Zapisz Link</button>
                     </div>
 
                     <div id="a-tools" class="admin-sub-tab">
-                        <h4 style="color: var(--accent); margin-bottom: 10px;">Migracja lokalnych zdjęć</h4>
-                        <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 15px;">Pobiera pliki z dysku (assets) i zapisuje w chmurze.</p>
-                        <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()"><i class="fas fa-sync-alt"></i> Uruchom migrację</button>
+                        <h4 style="font-size: 1.3rem; color: var(--accent); margin-bottom: 15px;"><i class="fas fa-cogs"></i> Narzędzia Systemowe</h4>
+                        <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,170,0,0.3);">
+                            <h5 style="color: #ffaa00; font-size: 1.1rem; margin-bottom: 10px;">Migracja plików lokalnych (Auto-Upload)</h5>
+                            <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height:1.5;">Jeżeli Twoje zdjęcia z folderu `assets/plik/...` jeszcze nie są w chmurze, kliknij poniższy przycisk. Skrypt pobierze je z Twojego dysku, zoptymalizuje, wgra na serwery ImgBB i podłączy do galerii Firebase.</p>
+                            <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()"><i class="fas fa-cloud-upload-alt"></i> Uruchom masową migrację</button>
+                        </div>
                     </div>
 
                 </div>
@@ -377,11 +410,10 @@
         const auth = getAuth(app);
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
 
-        // Globalny obiekt do przechowywania danych na potrzeby edycji
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {} };
         window.currentEdit = { path: '', key: '' };
 
-        // --- RENDEROWANIE DANYCH (LISTY) ---
+        // --- RENDEROWANIE DANYCH ---
         const renderData = (path, elementId, templateFn) => {
             onValue(ref(db, path), (snapshot) => {
                 const container = document.getElementById(elementId);
@@ -389,33 +421,29 @@
                 const data = snapshot.val();
                 if(data) {
                     window.appData[path] = data; 
-                    Object.keys(data).reverse().forEach(key => {
-                        container.innerHTML += templateFn(key, data[key]);
-                    });
+                    Object.keys(data).reverse().forEach(key => { container.innerHTML += templateFn(key, data[key]); });
                 } else {
                     window.appData[path] = {};
-                    container.innerHTML = '<p style="color:#666; text-align:center; padding: 20px;">Brak danych do wyświetlenia.</p>';
+                    container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych w bazie dla tej sekcji.</div>';
                 }
             });
         };
 
-        // Renderowanie Mapy Gry (Pojedynczy plik)
         onValue(ref(db, 'gameMap'), (snapshot) => {
             const container = document.getElementById('dyn-map');
             const data = snapshot.val();
             if(data && data.url) {
                 container.innerHTML = `
-                    <div class="admin-controls" style="top:15px; right:15px;">
-                        <button class="btn-action del" onclick="window.delMap(event)"><i class="fas fa-trash"></i> Usuń Mapę</button>
+                    <div class="admin-controls" style="top:20px; right:20px;">
+                        <button class="btn-action del" onclick="window.delMap(event)"><i class="fas fa-trash"></i> Usuń Mapę z serwera</button>
                     </div>
                     <img src="${data.url}" alt="Mapa Gry" onclick="window.openLightbox('${data.url}')">
                 `;
             } else {
-                container.innerHTML = '<p style="padding: 40px; text-align: center; color: #666;">Brak wgranej mapy.</p>';
+                container.innerHTML = '<p style="padding: 60px; text-align: center; color: #666; font-size: 1.2rem;">Brak wgranej mapy. Zaloguj się do panelu, aby ją dodać.</p>';
             }
         });
 
-        // Generowanie elementów z przyciskami Edytuj / Usuń
         renderData('gallery', 'dyn-gallery', (key, item) => `
             <div class="gallery-item glass">
                 <div class="admin-controls">
@@ -423,70 +451,46 @@
                     <button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button>
                 </div>
                 <img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')">
-                <div class="gallery-overlay" onclick="window.openLightbox('${item.url}')">
-                    <div class="gallery-title">${item.title}</div>
-                </div>
+                <div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div>
             </div>
         `);
 
         renderData('staff', 'dyn-staff', (key, item) => `
-            <div class="staff-card">
-                <div class="admin-controls">
-                    <button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <h3>${item.name}</h3>
-                <p class="staff-role">${item.role}</p>
+            <div class="staff-card glass">
+                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <h3>${item.name}</h3><p class="staff-role">${item.role}</p>
             </div>
         `);
 
         renderData('changelog', 'dyn-changelog', (key, item) => `
             <div class="update-item">
-                <div class="admin-controls" style="right:-60px; top:0;">
-                    <button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <span class="update-date">${item.date}</span>
-                <h3>${item.title}</h3>
-                <p>${item.desc}</p>
+                <div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p>
             </div>
         `);
 
         renderData('links', 'dyn-links', (key, item) => `
             <a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;">
-                <div class="admin-controls">
-                    <button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <div class="link-icon"><i class="${item.icon}"></i></div>
-                <div><h3>${item.name}</h3><p style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div>
+                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div>
             </a>
         `);
 
         renderData('announcements', 'dyn-announcements', (key, item) => `
             <div class="announcement-card">
-                <div class="admin-controls">
-                    <button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <span class="announcement-date">${item.date}</span>
-                <h3>${item.title}</h3>
-                <p style="color: #ccc; line-height: 1.6;">${item.desc}</p>
+                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p>
             </div>
         `);
 
         renderData('faq', 'dyn-faq', (key, item) => `
             <div class="faq-item">
-                <div class="admin-controls" style="top:5px; right:5px;">
-                    <button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button>
-                </div>
-                <div class="faq-question">${item.question}</div>
-                <div class="faq-answer">${item.answer}</div>
+                <div class="admin-controls" style="top:15px; right:15px;"><button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button></div>
+                <div class="faq-question"><i class="fas fa-caret-right"></i> ${item.question}</div><div class="faq-answer">${item.answer}</div>
             </div>
         `);
 
-        // --- AUTH ---
+        // --- LOGOWANIE ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('admin-login-form').style.display = 'none';
@@ -502,89 +506,70 @@
         window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(() => document.getElementById('login-error').style.display = 'block');
         window.logoutAdmin = () => signOut(auth);
 
-        // --- DODAWANIE DO BAZY ---
+        // --- ZAPISYWANIE DANYCH ---
         window.updateMap = async () => {
             const fileInput = document.getElementById('m-file'); const btn = document.getElementById('m-btn');
             if(!fileInput.files[0]) return alert("Wybierz plik mapy!");
-            btn.innerText = "Wgrywanie na serwer..."; btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie na serwer...'; btn.disabled = true;
             try {
                 const fd = new FormData(); fd.append('image', fileInput.files[0]);
                 const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
                 const data = await res.json();
                 if(data.success) { await set(ref(db, 'gameMap'), { url: data.data.url }); fileInput.value = ""; alert("Mapa zaktualizowana!"); }
             } catch(e) { alert("Błąd serwera!"); }
-            btn.innerText = "Wgraj nową mapę"; btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-upload"></i> Wgraj nową mapę'; btn.disabled = false;
         };
 
         window.addGallery = async () => {
             const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn');
             if(!fileInput.files[0] || !title) return alert("Brakuje danych!");
-            btn.innerText = "Wgrywanie..."; btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie...'; btn.disabled = true;
             try {
                 const fd = new FormData(); fd.append('image', fileInput.files[0]);
                 const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
                 const data = await res.json();
-                if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; alert("Dodano!"); }
+                if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; }
             } catch(e) { alert("Błąd serwera!"); }
-            btn.innerText = "Wgraj zdjęcie"; btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-plus"></i> Opublikuj zdjęcie'; btn.disabled = false;
         };
 
-        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = ""; alert("Dodano!"); };
-        window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; alert("Dodano wpis!"); };
-        window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; alert("Dodano link!"); };
-        window.addAnnouncement = async () => { await push(ref(db, 'announcements'), { date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value }); document.getElementById('a-date').value = ""; document.getElementById('a-title').value = ""; document.getElementById('a-desc').value = ""; alert("Dodano komunikat!"); };
-        window.addFaq = async () => { await push(ref(db, 'faq'), { question: document.getElementById('f-question').value, answer: document.getElementById('f-answer').value }); document.getElementById('f-question').value = ""; document.getElementById('f-answer').value = ""; alert("Dodano FAQ!"); };
+        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = ""; };
+        window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; };
+        window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; };
+        window.addAnnouncement = async () => { await push(ref(db, 'announcements'), { date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value }); document.getElementById('a-date').value = ""; document.getElementById('a-title').value = ""; document.getElementById('a-desc').value = ""; };
+        window.addFaq = async () => { await push(ref(db, 'faq'), { question: document.getElementById('f-question').value, answer: document.getElementById('f-answer').value }); document.getElementById('f-question').value = ""; document.getElementById('f-answer').value = ""; };
 
         // --- USUWANIE I EDYCJA ---
-        window.delItem = async (path, key, e) => {
-            e.preventDefault(); e.stopPropagation();
-            if(confirm("Na pewno usunąć?")) await remove(ref(db, `${path}/${key}`));
-        };
-        
-        window.delMap = async (e) => {
-            e.preventDefault(); e.stopPropagation();
-            if(confirm("Usunąć mapę z gry?")) await remove(ref(db, 'gameMap'));
-        };
+        window.delItem = async (path, key, e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Na pewno usunąć ten element bezpowrotnie?")) await remove(ref(db, `${path}/${key}`)); };
+        window.delMap = async (e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Usunąć mapę z gry? Będzie widoczne puste pole.")) await remove(ref(db, 'gameMap')); };
 
         window.openEditModal = (path, key, e) => {
             e.preventDefault(); e.stopPropagation();
-            window.currentEdit = { path, key };
-            const item = window.appData[path][key];
-            const form = document.getElementById('edit-form-content');
+            window.currentEdit = { path, key }; const item = window.appData[path][key]; const form = document.getElementById('edit-form-content');
             form.innerHTML = ''; 
             
             if(path === 'gallery') {
                 form.innerHTML = `<div class="form-group"><label>Tytuł zdjęcia</label><input type="text" id="e-title" value="${item.title}"></div>`;
             } else if (path === 'staff') {
-                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div>
-                                  <div class="form-group"><label>Rola</label><input type="text" id="e-role" value="${item.role}"></div>`;
+                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Rola</label><input type="text" id="e-role" value="${item.role}"></div>`;
             } else if (path === 'changelog' || path === 'announcements') {
-                form.innerHTML = `<div class="form-group"><label>Data</label><input type="text" id="e-date" value="${item.date}"></div>
-                                  <div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div>
-                                  <div class="form-group"><label>Treść/Opis</label><textarea id="e-desc" rows="4">${item.desc}</textarea></div>`;
+                form.innerHTML = `<div class="form-group"><label>Data / Etykieta</label><input type="text" id="e-date" value="${item.date}"></div><div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div><div class="form-group"><label>Treść</label><textarea id="e-desc" rows="6">${item.desc}</textarea></div>`;
             } else if (path === 'links') {
-                form.innerHTML = `<div class="form-group"><label>Nazwa</label><input type="text" id="e-name" value="${item.name}"></div>
-                                  <div class="form-group"><label>Opis</label><input type="text" id="e-desc" value="${item.desc}"></div>
-                                  <div class="form-group"><label>URL</label><input type="text" id="e-url" value="${item.url}"></div>
-                                  <div class="form-group"><label>Ikona</label><input type="text" id="e-icon" value="${item.icon}"></div>`;
+                form.innerHTML = `<div class="form-group"><label>Nazwa</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Opis</label><input type="text" id="e-desc" value="${item.desc}"></div><div class="form-group"><label>URL</label><input type="text" id="e-url" value="${item.url}"></div><div class="form-group"><label>Ikona</label><input type="text" id="e-icon" value="${item.icon}"></div>`;
             } else if (path === 'faq') {
-                form.innerHTML = `<div class="form-group"><label>Pytanie</label><input type="text" id="e-question" value="${item.question}"></div>
-                                  <div class="form-group"><label>Odpowiedź</label><textarea id="e-answer" rows="4">${item.answer}</textarea></div>`;
+                form.innerHTML = `<div class="form-group"><label>Pytanie</label><input type="text" id="e-question" value="${item.question}"></div><div class="form-group"><label>Odpowiedź</label><textarea id="e-answer" rows="6">${item.answer}</textarea></div>`;
             }
             document.getElementById('edit-modal').style.display = 'flex';
         };
 
         window.saveEdit = async () => {
-            const { path, key } = window.currentEdit;
-            const newData = {};
+            const { path, key } = window.currentEdit; const newData = {};
             if(path === 'gallery') { newData.title = document.getElementById('e-title').value; }
             else if (path === 'staff') { newData.name = document.getElementById('e-name').value; newData.role = document.getElementById('e-role').value; }
             else if (path === 'changelog' || path === 'announcements') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.desc = document.getElementById('e-desc').value; }
             else if (path === 'links') { newData.name = document.getElementById('e-name').value; newData.desc = document.getElementById('e-desc').value; newData.url = document.getElementById('e-url').value; newData.icon = document.getElementById('e-icon').value; }
             else if (path === 'faq') { newData.question = document.getElementById('e-question').value; newData.answer = document.getElementById('e-answer').value; }
-            
-            await update(ref(db, `${path}/${key}`), newData);
-            window.closeEditModal();
+            await update(ref(db, `${path}/${key}`), newData); window.closeEditModal();
         };
 
         window.closeEditModal = () => { document.getElementById('edit-modal').style.display = 'none'; };
@@ -599,8 +584,8 @@
                 { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' }, { path: 'assets/plik/wyjazd%20krzy%C5%BCanki.png', title: 'Wyjazd Krzyżanki' },
                 { path: 'assets/plik/zagórki.png', title: 'Zagórki' }
             ];
-            if(!confirm("Uruchomić migrację? Strona musi działać z localhosta!")) return;
-            btn.innerText = "Trwa migracja..."; btn.disabled = true;
+            if(!confirm("Upewnij się, że używasz środowiska testowego (localhost). Zaczynamy?")) return;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Trwa migracja do chmury...'; btn.disabled = true;
             let count = 0;
             for(let asset of localAssets) {
                 try {
@@ -609,27 +594,20 @@
                     const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
                     const imgbbData = await imgbbRes.json();
                     if(imgbbData.success) { await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title }); count++; }
-                } catch(e) { console.error(e); }
+                } catch(e) { console.log("Pomijam: " + asset.path); }
             }
-            alert(`Zakończono! Wgrano ${count} zdjęć.`);
-            btn.innerText = "Uruchom migrację"; btn.disabled = false;
+            alert(`Zakończono! Wgrano pomyślnie ${count} zdjęć do bazy.`);
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Uruchom masową migrację'; btn.disabled = false;
         };
     </script>
 
-    <!-- INTRO LOGIC & UI SCRIPTS -->
+    <!-- UI SCRIPTS & LOGIKA INTRO -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            // --- LOGIKA INTRO I PAMIĘCI PRZEGLĄDARKI ---
             const now = Date.now();
             const lastVisit = localStorage.getItem('pp_lastVisit');
-            let daysSince = 0;
             let mode = 'FIRST_TIME';
-
-            if (lastVisit) {
-                daysSince = (now - parseInt(lastVisit)) / (1000 * 60 * 60 * 24);
-                if (daysSince > 10) { mode = 'RETURN_LONG'; } else { mode = 'RETURN_SHORT'; }
-            }
-            
+            if (lastVisit) { if ((now - parseInt(lastVisit)) / 86400000 > 10) mode = 'RETURN_LONG'; else mode = 'RETURN_SHORT'; }
             localStorage.setItem('pp_lastVisit', now.toString());
 
             const introContainer = document.getElementById('intro');
@@ -641,36 +619,38 @@
                     <div class="intro-slide img-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png" alt="Las"><div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div></div>
                     <div class="intro-slide img-slide" style="animation-delay: 3.5s;"><img src="assets/plik/czarnoszki.png" alt="Czarnoszki"><div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div></div>
                     <div class="intro-slide img-slide" style="animation-delay: 7s;"><img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd"><div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div></div>
-                    <div class="intro-slide" style="animation-delay: 10.5s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 10.5s; font-size: clamp(1.5rem, 4vw, 2.5rem); line-height: 1.5; color: #ddd;"><span style="color:var(--accent); font-weight:800;">PORADNIK</span><br><br>Użyj pływającego menu na dole,<br>aby nawigować po stronie.</div></div>
+                    <div class="intro-slide" style="animation-delay: 10.5s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 10.5s; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.6; color: #ddd;"><span style="color:var(--accent); font-weight:800; font-size:2rem;">PORADNIK</span><br><br>Użyj menu nawigacji u góry strony,<br>aby przełączać się między zakładkami.</div></div>
                     <div class="intro-slide" style="animation-delay: 14s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 14s; color: var(--accent); font-weight: 800;">${welcomeText}</div></div>
                 `;
                 introDuration = 18000;
             } else {
-                introContainer.innerHTML = `
-                    <div class="intro-slide" style="animation-delay: 0s; background: var(--bg-dark);">
-                        <div class="intro-text" style="animation-delay: 0s; color: var(--accent); font-weight: 800;">Witamy Ponownie!</div>
-                    </div>
-                `;
+                introContainer.innerHTML = `<div class="intro-slide" style="animation-delay: 0s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 0s; color: var(--accent); font-weight: 800;">Witamy Ponownie!</div></div>`;
                 introDuration = 4000;
             }
 
             setTimeout(() => {
-                introContainer.style.transition = 'opacity 1s ease'; 
-                introContainer.style.opacity = '0';
+                introContainer.style.transition = 'opacity 1s ease'; introContainer.style.opacity = '0';
                 setTimeout(() => { 
                     introContainer.style.display = 'none'; 
-                    const app = document.getElementById('app'); 
-                    app.style.display = 'block'; 
-                    setTimeout(() => app.style.opacity = '1', 50); 
+                    document.getElementById('app').style.display = 'block'; 
+                    setTimeout(() => document.getElementById('app').style.opacity = '1', 50); 
                 }, 1000);
             }, introDuration);
         });
+
+        // Obsługa menu mobilnego
+        window.toggleMobileMenu = function() { document.getElementById('nav-menu').classList.toggle('active'); }
 
         window.openTab = function(tabId, btn) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
+            
+            // Jeśli to przycisk z głównego nav, dodaj mu klase active
             if(btn && btn.classList.contains('nav-btn')) btn.classList.add('active');
+            
+            // Ukryj menu na mobilkach po kliknięciu
+            document.getElementById('nav-menu').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
