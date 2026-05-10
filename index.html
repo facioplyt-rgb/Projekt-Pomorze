@@ -38,7 +38,7 @@
         @keyframes kenBurns { 0% { transform: scale(1.02); } 100% { transform: scale(1.12); } }
         @keyframes textReveal { 0% { opacity: 0; filter: blur(10px); } 20% { opacity: 1; filter: blur(0); } 80% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); } }
 
-        /* --- NOWA NAWIGACJA (TOP NAVBAR) --- */
+        /* --- NAWIGACJA TOP NAVBAR --- */
         .top-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             z-index: 8000; display: flex; justify-content: space-between; align-items: center;
@@ -52,13 +52,13 @@
         .nav-brand span { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
         .nav-brand span b { color: var(--accent); }
 
-        .nav-menu { display: flex; gap: 5px; }
+        .nav-menu { display: flex; gap: 3px; }
         .nav-btn {
             background: transparent; border: none; color: var(--text-muted); font-family: 'Inter';
-            font-size: 0.95rem; font-weight: 500; padding: 10px 16px; border-radius: 12px;
-            cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px;
+            font-size: 0.9rem; font-weight: 500; padding: 10px 14px; border-radius: 12px;
+            cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 6px;
         }
-        .nav-btn i { font-size: 1.1rem; }
+        .nav-btn i { font-size: 1.05rem; }
         .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
         .nav-btn.active { color: #000; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); font-weight: 700; }
 
@@ -80,7 +80,18 @@
         .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
         .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
 
-        /* --- DYNAMICZNE GRIDY I KARTY --- */
+        /* --- DEVLOG (NOWOŚĆ) --- */
+        .devlog-container { max-width: 900px; margin: 0 auto; }
+        .devlog-post { background: rgba(20,20,30,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; margin-bottom: 40px; position: relative; transition: 0.3s; }
+        .devlog-post:hover { border-color: rgba(0, 229, 255, 0.2); background: rgba(30,30,45,0.5); }
+        .devlog-header { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
+        .devlog-title { font-size: 2rem; color: #fff; margin-bottom: 10px; }
+        .devlog-date { font-size: 0.9rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+        .devlog-content { color: #ccc; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
+        .devlog-media { margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: #000; }
+        .devlog-media iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+
+        /* --- DYNAMICZNE GRIDY I KARTY (Stare sekcje zachowane) --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .gallery-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a; border: 1px solid var(--glass-border); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
@@ -109,7 +120,6 @@
         .link-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-8px); border-color: var(--accent); }
         .link-card:hover .link-icon { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
-        /* KOMUNIKATY I FAQ */
         .announcement-card { background: rgba(20,20,30,0.6); border: 1px solid var(--glass-border); border-left: 5px solid var(--accent); border-radius: 16px; padding: 30px; margin-bottom: 25px; position: relative; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .announcement-card:hover { transform: translateX(10px); background: rgba(30,30,40,0.8); }
         .announcement-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 10px; }
@@ -121,7 +131,6 @@
         .faq-question { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .faq-answer { color: #bbb; line-height: 1.7; font-size: 1rem; }
 
-        /* MAPA GRY */
         .map-container { width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border); position: relative; background: #0a0a0a; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .map-container img { width: 100%; display: block; cursor: pointer; transition: 0.5s; }
         .map-container img:hover { transform: scale(1.03); filter: brightness(1.1); }
@@ -153,8 +162,8 @@
         
         #admin-dashboard { display: none; }
         
-        .admin-tabs-nav { display: flex; gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 30px; flex-wrap: wrap; }
-        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; font-size: 0.95rem;}
+        .admin-tabs-nav { display: flex; gap: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+        .admin-tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-family: 'Inter'; font-weight: 600; font-size: 0.9rem;}
         .admin-tab-btn:hover, .admin-tab-btn.active { background: rgba(0, 229, 255, 0.1); color: #fff; border-color: var(--accent); }
         .admin-sub-tab { display: none; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 16px; border: 1px solid var(--glass-border); }
         .admin-sub-tab.active { display: block; animation: slideFade 0.4s ease forwards; }
@@ -173,7 +182,7 @@
         .close-lb:hover { color: var(--accent); transform: scale(1.1); }
 
         /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 992px) {
+        @media (max-width: 1100px) {
             .nav-menu {
                 position: fixed; top: var(--header-height); left: 0; width: 100%; height: calc(100vh - var(--header-height));
                 background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center;
@@ -209,7 +218,7 @@
         </div>
     </div>
 
-    <!-- NOWY TOP NAVBAR -->
+    <!-- NAWIGACJA GŁÓWNA -->
     <header class="top-navbar" id="main-nav">
         <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
             <img src="assets/plik/Projekt%20Pomorze.png" alt="Logo" onerror="this.src='https://via.placeholder.com/45?text=PP'">
@@ -218,6 +227,7 @@
         
         <nav class="nav-menu" id="nav-menu">
             <button class="nav-btn active" id="nav-home" onclick="openTab('home', this)"><i class="fas fa-home"></i> Start</button>
+            <button class="nav-btn" onclick="openTab('devlog', this)"><i class="fas fa-newspaper"></i> DevLog</button>
             <button class="nav-btn" onclick="openTab('mapa', this)"><i class="fas fa-map"></i> Mapa</button>
             <button class="nav-btn" onclick="openTab('galeria', this)"><i class="fas fa-camera"></i> Galeria</button>
             <button class="nav-btn" onclick="openTab('komunikaty', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
@@ -241,6 +251,12 @@
                 <h1 class="hero-title">Projekt <span>Pomorze</span></h1>
                 <p class="hero-subtitle">Wskakuj za kółko i pojeździj po prawdziwych terenach Pomorza. Lasy, wsie i lokalne drogi w klimatach, które dobrze znasz.</p>
             </div>
+        </div>
+
+        <!-- DEVLOG -->
+        <div id="devlog" class="tab">
+            <div class="section-header"><p>Kulisy tworzenia</p><h2>Dziennik Dewelopera</h2></div>
+            <div class="devlog-container" id="dyn-devlog"></div>
         </div>
 
         <!-- MAPA GRY -->
@@ -312,7 +328,8 @@
 
                     <!-- Nawigacja w Adminie -->
                     <div class="admin-tabs-nav">
-                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-map', this)"><i class="fas fa-map"></i> Mapa Gry</button>
+                        <button class="admin-tab-btn active" onclick="switchAdminTab('a-devlog', this)"><i class="fas fa-newspaper"></i> DevLog</button>
+                        <button class="admin-tab-btn" onclick="switchAdminTab('a-map', this)"><i class="fas fa-map"></i> Mapa Gry</button>
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-gallery', this)"><i class="fas fa-camera"></i> Galeria</button>
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-announcements', this)"><i class="fas fa-bullhorn"></i> Komunikaty</button>
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-changelog', this)"><i class="fas fa-clock"></i> Aktualizacje</button>
@@ -322,8 +339,17 @@
                         <button class="admin-tab-btn" onclick="switchAdminTab('a-tools', this)"><i class="fas fa-tools"></i> System</button>
                     </div>
 
-                    <!-- Podzakładki -->
-                    <div id="a-map" class="admin-sub-tab active">
+                    <!-- Podzakładki CMS -->
+                    <div id="a-devlog" class="admin-sub-tab active">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj wpis do Dziennika (DevLog)</h4>
+                        <div class="form-group"><label>Data publikacji</label><input type="text" id="d-date" placeholder="np. Niedziela, 10 Maja 2026"></div>
+                        <div class="form-group"><label>Tytuł wpisu</label><input type="text" id="d-title" placeholder="Podsumowanie tygodnia: Nowy model jazdy"></div>
+                        <div class="form-group"><label>Treść wpisu (Akceptuje ENTERy jako akapity)</label><textarea id="d-content" rows="6" placeholder="Rozpisz się o nowościach..."></textarea></div>
+                        <div class="form-group"><label>Link do filmu YouTube (Opcjonalnie)</label><input type="text" id="d-yt" placeholder="https://www.youtube.com/watch?v=..."></div>
+                        <button class="btn-primary" onclick="addDevLog()"><i class="fas fa-paper-plane"></i> Opublikuj News</button>
+                    </div>
+
+                    <div id="a-map" class="admin-sub-tab">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzaj Mapą Gry</h4>
                         <div class="form-group"><label>Plik Mapy (Zastąpi obecnie wyświetlaną mapę)</label><input type="file" id="m-file" accept="image/*"></div>
                         <button class="btn-primary" onclick="updateMap()" id="m-btn"><i class="fas fa-upload"></i> Wgraj nową mapę</button>
@@ -331,7 +357,7 @@
 
                     <div id="a-gallery" class="admin-sub-tab">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Dodaj zdjęcie do galerii</h4>
-                        <div class="form-group"><label>Plik (Automatycznie optymalizowany przez ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
+                        <div class="form-group"><label>Plik (Optymalizowany przez ImgBB)</label><input type="file" id="g-file" accept="image/*"></div>
                         <div class="form-group"><label>Nazwa Miejscowości / Tytuł</label><input type="text" id="g-title" placeholder="np. Centrum Czarnoszki"></div>
                         <button class="btn-primary" onclick="addGallery()" id="g-btn"><i class="fas fa-plus"></i> Opublikuj zdjęcie</button>
                     </div>
@@ -345,11 +371,11 @@
                     </div>
 
                     <div id="a-changelog" class="admin-sub-tab">
-                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Aktualizacja Mapy (Changelog)</h4>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Krótki Changelog (Lista zmian)</h4>
                         <div class="form-group"><label>Data / Wersja</label><input type="text" id="c-date" placeholder="np. Update v1.2"></div>
                         <div class="form-group"><label>Główna zmiana</label><input type="text" id="c-title" placeholder="np. Dodano nową wieś Rychnowy"></div>
                         <div class="form-group"><label>Szczegóły zmian (co zrobiono)</label><textarea id="c-desc" rows="4"></textarea></div>
-                        <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-paper-plane"></i> Opublikuj log</button>
+                        <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-list"></i> Zapisz Log</button>
                     </div>
 
                     <div id="a-staff" class="admin-sub-tab">
@@ -371,7 +397,7 @@
                         <div class="form-group"><label>Nazwa Platformy</label><input type="text" id="l-name" placeholder="np. Serwer Discord"></div>
                         <div class="form-group"><label>Krótki opis pod spodem</label><input type="text" id="l-desc" placeholder="np. Dołącz do pogawędek"></div>
                         <div class="form-group"><label>Link docelowy</label><input type="text" id="l-url" placeholder="https://discord.gg/..."></div>
-                        <div class="form-group"><label>Ikona FontAwesome (zostaw domyślną jak nie wiesz)</label><input type="text" id="l-icon" value="fas fa-link"></div>
+                        <div class="form-group"><label>Ikona FontAwesome</label><input type="text" id="l-icon" value="fas fa-link"></div>
                         <button class="btn-primary" onclick="addLink()"><i class="fas fa-external-link-alt"></i> Zapisz Link</button>
                     </div>
 
@@ -379,7 +405,7 @@
                         <h4 style="font-size: 1.3rem; color: var(--accent); margin-bottom: 15px;"><i class="fas fa-cogs"></i> Narzędzia Systemowe</h4>
                         <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,170,0,0.3);">
                             <h5 style="color: #ffaa00; font-size: 1.1rem; margin-bottom: 10px;">Migracja plików lokalnych (Auto-Upload)</h5>
-                            <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height:1.5;">Jeżeli Twoje zdjęcia z folderu `assets/plik/...` jeszcze nie są w chmurze, kliknij poniższy przycisk. Skrypt pobierze je z Twojego dysku, zoptymalizuje, wgra na serwery ImgBB i podłączy do galerii Firebase.</p>
+                            <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height:1.5;">Jeżeli Twoje zdjęcia z folderu `assets/plik/...` jeszcze nie są w chmurze, kliknij poniższy przycisk. Skrypt pobierze je z dysku, wgra na serwery ImgBB i podłączy do galerii Firebase.</p>
                             <button class="btn-primary btn-warning" id="btn-migrate" onclick="migrateLocalImages()"><i class="fas fa-cloud-upload-alt"></i> Uruchom masową migrację</button>
                         </div>
                     </div>
@@ -410,10 +436,10 @@
         const auth = getAuth(app);
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
 
-        window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {} };
+        // Globalny obiekt do edycji
+        window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
         window.currentEdit = { path: '', key: '' };
 
-        // --- RENDEROWANIE DANYCH ---
         const renderData = (path, elementId, templateFn) => {
             onValue(ref(db, path), (snapshot) => {
                 const container = document.getElementById(elementId);
@@ -424,11 +450,12 @@
                     Object.keys(data).reverse().forEach(key => { container.innerHTML += templateFn(key, data[key]); });
                 } else {
                     window.appData[path] = {};
-                    container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych w bazie dla tej sekcji.</div>';
+                    container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych do wyświetlenia.</div>';
                 }
             });
         };
 
+        // Render MAPY
         onValue(ref(db, 'gameMap'), (snapshot) => {
             const container = document.getElementById('dyn-map');
             const data = snapshot.val();
@@ -444,53 +471,39 @@
             }
         });
 
-        renderData('gallery', 'dyn-gallery', (key, item) => `
-            <div class="gallery-item glass">
-                <div class="admin-controls">
-                    <button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button>
-                    <button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button>
+        // Render DEVLOGA
+        renderData('devlog', 'dyn-devlog', (key, item) => {
+            let mediaHtml = '';
+            if(item.ytLink) {
+                let ytId = '';
+                if(item.ytLink.includes('v=')) ytId = item.ytLink.split('v=')[1].split('&')[0];
+                else if(item.ytLink.includes('youtu.be/')) ytId = item.ytLink.split('youtu.be/')[1].split('?')[0];
+                if(ytId) mediaHtml = `<div class="devlog-media"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen></iframe></div>`;
+            }
+            return `
+            <article class="devlog-post">
+                <div class="admin-controls" style="top:20px; right:20px;">
+                    <button class="btn-action edit" onclick="window.openEditModal('devlog', '${key}', event)"><i class="fas fa-edit"></i> Edytuj</button>
+                    <button class="btn-action del" onclick="window.delItem('devlog', '${key}', event)"><i class="fas fa-trash"></i></button>
                 </div>
-                <img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')">
-                <div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div>
-            </div>
-        `);
+                <div class="devlog-header">
+                    <div class="devlog-date"><i class="far fa-calendar-check"></i> ${item.date}</div>
+                    <h3 class="devlog-title">${item.title}</h3>
+                </div>
+                <div class="devlog-content">${item.content}</div>
+                ${mediaHtml}
+            </article>
+        `});
 
-        renderData('staff', 'dyn-staff', (key, item) => `
-            <div class="staff-card glass">
-                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button></div>
-                <h3>${item.name}</h3><p class="staff-role">${item.role}</p>
-            </div>
-        `);
+        // Pozostałe rendery
+        renderData('gallery', 'dyn-gallery', (key, item) => `<div class="gallery-item glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div><img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div></div>`);
+        renderData('staff', 'dyn-staff', (key, item) => `<div class="staff-card glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button></div><h3>${item.name}</h3><p class="staff-role">${item.role}</p></div>`);
+        renderData('changelog', 'dyn-changelog', (key, item) => `<div class="update-item"><div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p></div>`);
+        renderData('links', 'dyn-links', (key, item) => `<a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div></a>`);
+        renderData('announcements', 'dyn-announcements', (key, item) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p></div>`);
+        renderData('faq', 'dyn-faq', (key, item) => `<div class="faq-item"><div class="admin-controls" style="top:15px; right:15px;"><button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="faq-question"><i class="fas fa-caret-right"></i> ${item.question}</div><div class="faq-answer">${item.answer}</div></div>`);
 
-        renderData('changelog', 'dyn-changelog', (key, item) => `
-            <div class="update-item">
-                <div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div>
-                <span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p>
-            </div>
-        `);
-
-        renderData('links', 'dyn-links', (key, item) => `
-            <a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;">
-                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div>
-                <div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div>
-            </a>
-        `);
-
-        renderData('announcements', 'dyn-announcements', (key, item) => `
-            <div class="announcement-card">
-                <div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div>
-                <span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p>
-            </div>
-        `);
-
-        renderData('faq', 'dyn-faq', (key, item) => `
-            <div class="faq-item">
-                <div class="admin-controls" style="top:15px; right:15px;"><button class="btn-action edit" onclick="window.openEditModal('faq', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('faq', '${key}', event)"><i class="fas fa-trash"></i></button></div>
-                <div class="faq-question"><i class="fas fa-caret-right"></i> ${item.question}</div><div class="faq-answer">${item.answer}</div>
-            </div>
-        `);
-
-        // --- LOGOWANIE ---
+        // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('admin-login-form').style.display = 'none';
@@ -506,33 +519,10 @@
         window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(() => document.getElementById('login-error').style.display = 'block');
         window.logoutAdmin = () => signOut(auth);
 
-        // --- ZAPISYWANIE DANYCH ---
-        window.updateMap = async () => {
-            const fileInput = document.getElementById('m-file'); const btn = document.getElementById('m-btn');
-            if(!fileInput.files[0]) return alert("Wybierz plik mapy!");
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie na serwer...'; btn.disabled = true;
-            try {
-                const fd = new FormData(); fd.append('image', fileInput.files[0]);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
-                const data = await res.json();
-                if(data.success) { await set(ref(db, 'gameMap'), { url: data.data.url }); fileInput.value = ""; alert("Mapa zaktualizowana!"); }
-            } catch(e) { alert("Błąd serwera!"); }
-            btn.innerHTML = '<i class="fas fa-upload"></i> Wgraj nową mapę'; btn.disabled = false;
-        };
-
-        window.addGallery = async () => {
-            const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn');
-            if(!fileInput.files[0] || !title) return alert("Brakuje danych!");
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie...'; btn.disabled = true;
-            try {
-                const fd = new FormData(); fd.append('image', fileInput.files[0]);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
-                const data = await res.json();
-                if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; }
-            } catch(e) { alert("Błąd serwera!"); }
-            btn.innerHTML = '<i class="fas fa-plus"></i> Opublikuj zdjęcie'; btn.disabled = false;
-        };
-
+        // --- DODAWANIE DO BAZY ---
+        window.addDevLog = async () => { await push(ref(db, 'devlog'), { date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value }); document.getElementById('d-date').value = ""; document.getElementById('d-title').value = ""; document.getElementById('d-content').value = ""; document.getElementById('d-yt').value = ""; alert("DevLog Opublikowany!"); };
+        window.updateMap = async () => { const fileInput = document.getElementById('m-file'); const btn = document.getElementById('m-btn'); if(!fileInput.files[0]) return alert("Wybierz plik mapy!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie na serwer...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await set(ref(db, 'gameMap'), { url: data.data.url }); fileInput.value = ""; alert("Mapa zaktualizowana!"); } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-upload"></i> Wgraj nową mapę'; btn.disabled = false; };
+        window.addGallery = async () => { const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn'); if(!fileInput.files[0] || !title) return alert("Brakuje danych!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-plus"></i> Opublikuj zdjęcie'; btn.disabled = false; };
         window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = ""; };
         window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; };
         window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; };
@@ -548,7 +538,9 @@
             window.currentEdit = { path, key }; const item = window.appData[path][key]; const form = document.getElementById('edit-form-content');
             form.innerHTML = ''; 
             
-            if(path === 'gallery') {
+            if(path === 'devlog') {
+                form.innerHTML = `<div class="form-group"><label>Data</label><input type="text" id="e-date" value="${item.date}"></div><div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div><div class="form-group"><label>Treść</label><textarea id="e-content" rows="6">${item.content}</textarea></div><div class="form-group"><label>Link YT</label><input type="text" id="e-yt" value="${item.ytLink || ''}"></div>`;
+            } else if(path === 'gallery') {
                 form.innerHTML = `<div class="form-group"><label>Tytuł zdjęcia</label><input type="text" id="e-title" value="${item.title}"></div>`;
             } else if (path === 'staff') {
                 form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Rola</label><input type="text" id="e-role" value="${item.role}"></div>`;
@@ -564,7 +556,8 @@
 
         window.saveEdit = async () => {
             const { path, key } = window.currentEdit; const newData = {};
-            if(path === 'gallery') { newData.title = document.getElementById('e-title').value; }
+            if(path === 'devlog') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.content = document.getElementById('e-content').value; newData.ytLink = document.getElementById('e-yt').value; }
+            else if(path === 'gallery') { newData.title = document.getElementById('e-title').value; }
             else if (path === 'staff') { newData.name = document.getElementById('e-name').value; newData.role = document.getElementById('e-role').value; }
             else if (path === 'changelog' || path === 'announcements') { newData.date = document.getElementById('e-date').value; newData.title = document.getElementById('e-title').value; newData.desc = document.getElementById('e-desc').value; }
             else if (path === 'links') { newData.name = document.getElementById('e-name').value; newData.desc = document.getElementById('e-desc').value; newData.url = document.getElementById('e-url').value; newData.icon = document.getElementById('e-icon').value; }
@@ -619,7 +612,7 @@
                     <div class="intro-slide img-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png" alt="Las"><div class="intro-text" style="animation-delay: 0s;">Poczuj ten klimat</div></div>
                     <div class="intro-slide img-slide" style="animation-delay: 3.5s;"><img src="assets/plik/czarnoszki.png" alt="Czarnoszki"><div class="intro-text" style="animation-delay: 3.5s;">Znajome tereny</div></div>
                     <div class="intro-slide img-slide" style="animation-delay: 7s;"><img src="assets/plik/wyjazd%20krzy%C5%BCanki.png" alt="Wyjazd"><div class="intro-text" style="animation-delay: 7s;">Wbijaj za kółko</div></div>
-                    <div class="intro-slide" style="animation-delay: 10.5s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 10.5s; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.6; color: #ddd;"><span style="color:var(--accent); font-weight:800; font-size:2rem;">PORADNIK</span><br><br>Użyj menu nawigacji u góry strony,<br>aby przełączać się między zakładkami.</div></div>
+                    <div class="intro-slide" style="animation-delay: 10.5s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 10.5s; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.6; color: #ddd;"><span style="color:var(--accent); font-weight:800; font-size:2rem;">PORADNIK</span><br><br>Użyj paska nawigacji na górze strony,<br>aby przełączać się między zakładkami.</div></div>
                     <div class="intro-slide" style="animation-delay: 14s; background: var(--bg-dark);"><div class="intro-text" style="animation-delay: 14s; color: var(--accent); font-weight: 800;">${welcomeText}</div></div>
                 `;
                 introDuration = 18000;
@@ -638,7 +631,6 @@
             }, introDuration);
         });
 
-        // Obsługa menu mobilnego
         window.toggleMobileMenu = function() { document.getElementById('nav-menu').classList.toggle('active'); }
 
         window.openTab = function(tabId, btn) {
@@ -646,10 +638,8 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            // Jeśli to przycisk z głównego nav, dodaj mu klase active
             if(btn && btn.classList.contains('nav-btn')) btn.classList.add('active');
             
-            // Ukryj menu na mobilkach po kliknięciu
             document.getElementById('nav-menu').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
