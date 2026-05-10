@@ -80,7 +80,7 @@
         .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
         .section-header p { color: var(--accent); font-size: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
 
-        /* --- DEVLOG (NOWOŚĆ) --- */
+        /* --- DEVLOG --- */
         .devlog-container { max-width: 900px; margin: 0 auto; }
         .devlog-post { background: rgba(20,20,30,0.4); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; margin-bottom: 40px; position: relative; transition: 0.3s; }
         .devlog-post:hover { border-color: rgba(0, 229, 255, 0.2); background: rgba(30,30,45,0.5); }
@@ -91,7 +91,7 @@
         .devlog-media { margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: #000; }
         .devlog-media iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
 
-        /* --- DYNAMICZNE GRIDY I KARTY (Stare sekcje zachowane) --- */
+        /* --- DYNAMICZNE GRIDY I KARTY --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .gallery-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; aspect-ratio: 16/10; transition: var(--transition); background: #0a0a0a; border: 1px solid var(--glass-border); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
@@ -101,11 +101,11 @@
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-title { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 600; color: #fff; }
 
-        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .staff-card { padding: 40px 20px; text-align: center; transition: var(--transition); position: relative; overflow: hidden; }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+        .staff-card { padding: 30px 20px; text-align: center; transition: var(--transition); position: relative; overflow: hidden; border-radius: 20px; }
         .staff-card:hover { transform: translateY(-10px); border-color: rgba(0, 229, 255, 0.4); background: rgba(255,255,255,0.05); }
         .staff-card h3 { font-size: 1.5rem; margin-bottom: 5px; color: #fff; }
-        .staff-role { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
+        .staff-role { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
 
         .update-timeline { max-width: 900px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px; }
         .update-item { margin-bottom: 50px; position: relative; }
@@ -151,8 +151,10 @@
         
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; font-size: 1rem; transition: 0.3s; }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: #fff; font-family: 'Inter'; font-size: 1rem; transition: 0.3s; }
+        .form-group select { appearance: none; cursor: pointer; }
+        .form-group select option { background: #111; color: #fff; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); }
         
         .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; }
         .btn-primary:hover { background: #fff; transform: translateY(-2px); }
@@ -288,7 +290,8 @@
         <!-- EKIPA -->
         <div id="ekipa" class="tab">
             <div class="section-header"><p>Twórcy</p><h2>Nasza Ekipa</h2></div>
-            <div class="staff-grid" id="dyn-staff"></div>
+            <!-- Zmieniony kontener główny dla ekipy -->
+            <div id="dyn-staff"></div>
         </div>
 
         <!-- FAQ -->
@@ -378,10 +381,29 @@
                         <button class="btn-primary" onclick="addChangelog()"><i class="fas fa-list"></i> Zapisz Log</button>
                     </div>
 
+                    <!-- ZMODYFIKOWANE DODAWANIE EKIPY -->
                     <div id="a-staff" class="admin-sub-tab">
                         <h4 style="font-size: 1.3rem; margin-bottom: 20px;">Zarządzanie Ekipą</h4>
                         <div class="form-group"><label>Nick w grze</label><input type="text" id="s-name" placeholder="np. Facio"></div>
-                        <div class="form-group"><label>Funkcja / Ranga</label><input type="text" id="s-role" placeholder="np. Główny Developer"></div>
+                        <div class="form-group">
+                            <label>Ranga (Kolejność jest automatycznie sortowana)</label>
+                            <select id="s-role">
+                                <option value="Owner">Owner</option>
+                                <option value="Co-Owner">Co-Owner</option>
+                                <option value="Technik">Technik</option>
+                                <option value="Head of Staff">Head of Staff</option>
+                                <option value="Head of Developers">Head of Developers</option>
+                                <option value="Head of Admins">Head of Admins</option>
+                                <option value="Event Host">Event Host</option>
+                                <option value="Developer">Developer</option>
+                                <option value="Trial Event Host">Trial Event Host</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Trial Admin">Trial Admin</option>
+                                <option value="Moderator">Moderator</option>
+                                <option value="Trial Moderator">Trial Moderator</option>
+                                <option value="Support Developer">Support Developer</option>
+                            </select>
+                        </div>
                         <button class="btn-primary" onclick="addStaff()"><i class="fas fa-user-plus"></i> Zarejestruj członka</button>
                     </div>
 
@@ -397,7 +419,7 @@
                         <div class="form-group"><label>Nazwa Platformy</label><input type="text" id="l-name" placeholder="np. Serwer Discord"></div>
                         <div class="form-group"><label>Krótki opis pod spodem</label><input type="text" id="l-desc" placeholder="np. Dołącz do pogawędek"></div>
                         <div class="form-group"><label>Link docelowy</label><input type="text" id="l-url" placeholder="https://discord.gg/..."></div>
-                        <div class="form-group"><label>Ikona FontAwesome</label><input type="text" id="l-icon" value="fas fa-link"></div>
+                        <div class="form-group"><label>Ikona FontAwesome (zostaw domyślną jak nie wiesz)</label><input type="text" id="l-icon" value="fas fa-link"></div>
                         <button class="btn-primary" onclick="addLink()"><i class="fas fa-external-link-alt"></i> Zapisz Link</button>
                     </div>
 
@@ -436,10 +458,17 @@
         const auth = getAuth(app);
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
 
-        // Globalny obiekt do edycji
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
         window.currentEdit = { path: '', key: '' };
 
+        // Definicja prawidłowej hierarchii rang ekipy
+        const staffRoleOrder = [
+            "Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers",
+            "Head of Admins", "Event Host", "Developer", "Trial Event Host",
+            "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"
+        ];
+
+        // --- RENDEROWANIE ZWYKŁYCH DANYCH ---
         const renderData = (path, elementId, templateFn) => {
             onValue(ref(db, path), (snapshot) => {
                 const container = document.getElementById(elementId);
@@ -455,7 +484,62 @@
             });
         };
 
-        // Render MAPY
+        // --- RENDEROWANIE EKIPY Z PODZIAŁEM NA RANGI (SORTOWANIE) ---
+        onValue(ref(db, 'staff'), (snapshot) => {
+            const container = document.getElementById('dyn-staff');
+            container.innerHTML = '';
+            const data = snapshot.val();
+            if(data) {
+                window.appData['staff'] = data;
+                
+                // Przygotowanie grup
+                const grouped = {};
+                staffRoleOrder.forEach(r => grouped[r] = []);
+                grouped['Inne'] = [];
+
+                // Grupowanie użytkowników
+                Object.keys(data).forEach(key => {
+                    const item = data[key];
+                    let assignedRole = 'Inne';
+                    for(let r of staffRoleOrder) {
+                        if(item.role.trim().toLowerCase() === r.toLowerCase()) {
+                            assignedRole = r;
+                            break;
+                        }
+                    }
+                    grouped[assignedRole].push({ key, ...item });
+                });
+
+                let html = '';
+                // Renderowanie według kolejności staffRoleOrder
+                [...staffRoleOrder, 'Inne'].forEach(role => {
+                    if(grouped[role].length > 0) {
+                        html += `
+                        <div style="width: 100%; margin-bottom: 40px;">
+                            <h3 style="color: var(--accent); margin-bottom: 20px; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">${role}</h3>
+                            <div class="staff-grid">
+                        `;
+                        grouped[role].forEach(item => {
+                            html += `
+                            <div class="staff-card glass">
+                                <div class="admin-controls">
+                                    <button class="btn-action edit" onclick="window.openEditModal('staff', '${item.key}', event)"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-action del" onclick="window.delItem('staff', '${item.key}', event)"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <h3>${item.name}</h3>
+                                <p class="staff-role">${item.role}</p>
+                            </div>`;
+                        });
+                        html += `</div></div>`;
+                    }
+                });
+                container.innerHTML = html;
+            } else {
+                window.appData['staff'] = {};
+                container.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color:#666; font-size:1.1rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px;">Brak danych do wyświetlenia.</div>';
+            }
+        });
+
         onValue(ref(db, 'gameMap'), (snapshot) => {
             const container = document.getElementById('dyn-map');
             const data = snapshot.val();
@@ -471,7 +555,6 @@
             }
         });
 
-        // Render DEVLOGA
         renderData('devlog', 'dyn-devlog', (key, item) => {
             let mediaHtml = '';
             if(item.ytLink) {
@@ -495,9 +578,7 @@
             </article>
         `});
 
-        // Pozostałe rendery
         renderData('gallery', 'dyn-gallery', (key, item) => `<div class="gallery-item glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('gallery', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('gallery', '${key}', event)"><i class="fas fa-trash"></i></button></div><img src="${item.url}" alt="${item.title}" onclick="window.openLightbox('${item.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${item.url}')"><div class="gallery-title">${item.title}</div></div></div>`);
-        renderData('staff', 'dyn-staff', (key, item) => `<div class="staff-card glass"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('staff', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('staff', '${key}', event)"><i class="fas fa-trash"></i></button></div><h3>${item.name}</h3><p class="staff-role">${item.role}</p></div>`);
         renderData('changelog', 'dyn-changelog', (key, item) => `<div class="update-item"><div class="admin-controls" style="right:0; top:-10px; position:absolute;"><button class="btn-action edit" onclick="window.openEditModal('changelog', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('changelog', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="update-date">${item.date}</span><h3>${item.title}</h3><p>${item.desc}</p></div>`);
         renderData('links', 'dyn-links', (key, item) => `<a href="${item.url}" target="_blank" class="link-card glass" style="position:relative;"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('links', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('links', '${key}', event)"><i class="fas fa-trash"></i></button></div><div class="link-icon"><i class="${item.icon}"></i></div><div><h3>${item.name}</h3><p style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;">${item.desc}</p></div></a>`);
         renderData('announcements', 'dyn-announcements', (key, item) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-action edit" onclick="window.openEditModal('announcements', '${key}', event)"><i class="fas fa-edit"></i></button><button class="btn-action del" onclick="window.delItem('announcements', '${key}', event)"><i class="fas fa-trash"></i></button></div><span class="announcement-date"><i class="far fa-calendar-alt"></i> ${item.date}</span><h3><i class="fas fa-exclamation-circle"></i> ${item.title}</h3><p style="color: #ccc; line-height: 1.6; margin-top: 10px;">${item.desc}</p></div>`);
@@ -523,7 +604,7 @@
         window.addDevLog = async () => { await push(ref(db, 'devlog'), { date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value }); document.getElementById('d-date').value = ""; document.getElementById('d-title').value = ""; document.getElementById('d-content').value = ""; document.getElementById('d-yt').value = ""; alert("DevLog Opublikowany!"); };
         window.updateMap = async () => { const fileInput = document.getElementById('m-file'); const btn = document.getElementById('m-btn'); if(!fileInput.files[0]) return alert("Wybierz plik mapy!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie na serwer...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await set(ref(db, 'gameMap'), { url: data.data.url }); fileInput.value = ""; alert("Mapa zaktualizowana!"); } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-upload"></i> Wgraj nową mapę'; btn.disabled = false; };
         window.addGallery = async () => { const fileInput = document.getElementById('g-file'); const title = document.getElementById('g-title').value; const btn = document.getElementById('g-btn'); if(!fileInput.files[0] || !title) return alert("Brakuje danych!"); btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wgrywanie...'; btn.disabled = true; try { const fd = new FormData(); fd.append('image', fileInput.files[0]); const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd}); const data = await res.json(); if(data.success) { await push(ref(db, 'gallery'), { url: data.data.url, title: title }); fileInput.value = ""; document.getElementById('g-title').value = ""; } } catch(e) { alert("Błąd serwera!"); } btn.innerHTML = '<i class="fas fa-plus"></i> Opublikuj zdjęcie'; btn.disabled = false; };
-        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = ""; };
+        window.addStaff = async () => { await push(ref(db, 'staff'), { name: document.getElementById('s-name').value, role: document.getElementById('s-role').value }); document.getElementById('s-name').value = ""; document.getElementById('s-role').value = staffRoleOrder[0]; };
         window.addChangelog = async () => { await push(ref(db, 'changelog'), { date: document.getElementById('c-date').value, title: document.getElementById('c-title').value, desc: document.getElementById('c-desc').value }); document.getElementById('c-date').value = ""; document.getElementById('c-title').value = ""; document.getElementById('c-desc').value = ""; };
         window.addLink = async () => { await push(ref(db, 'links'), { name: document.getElementById('l-name').value, desc: document.getElementById('l-desc').value, url: document.getElementById('l-url').value, icon: document.getElementById('l-icon').value }); document.getElementById('l-name').value = ""; document.getElementById('l-desc').value = ""; document.getElementById('l-url').value = ""; };
         window.addAnnouncement = async () => { await push(ref(db, 'announcements'), { date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value }); document.getElementById('a-date').value = ""; document.getElementById('a-title').value = ""; document.getElementById('a-desc').value = ""; };
@@ -543,7 +624,8 @@
             } else if(path === 'gallery') {
                 form.innerHTML = `<div class="form-group"><label>Tytuł zdjęcia</label><input type="text" id="e-title" value="${item.title}"></div>`;
             } else if (path === 'staff') {
-                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Rola</label><input type="text" id="e-role" value="${item.role}"></div>`;
+                let options = staffRoleOrder.map(r => `<option value="${r}" ${r === item.role ? 'selected' : ''}>${r}</option>`).join('');
+                form.innerHTML = `<div class="form-group"><label>Nick</label><input type="text" id="e-name" value="${item.name}"></div><div class="form-group"><label>Rola</label><select id="e-role">${options}</select></div>`;
             } else if (path === 'changelog' || path === 'announcements') {
                 form.innerHTML = `<div class="form-group"><label>Data / Etykieta</label><input type="text" id="e-date" value="${item.date}"></div><div class="form-group"><label>Tytuł</label><input type="text" id="e-title" value="${item.title}"></div><div class="form-group"><label>Treść</label><textarea id="e-desc" rows="6">${item.desc}</textarea></div>`;
             } else if (path === 'links') {
