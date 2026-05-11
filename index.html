@@ -10,15 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ZMIENNE: JASNY MOTYW POMORSKI --- */
+        /* --- ZMIENNE: CIEMNY MOTYW PREMIUM POMORSKI --- */
         :root {
-            --bg-body: #fcfcfc;
-            --bg-card: #ffffff;
-            --text-main: #1a1a1b;
-            --text-muted: #5f6368;
-            --accent: #e5b100; /* Szlachetne złoto Pomorza */
-            --accent-dark: #cc9900;
-            --border: #ececec;
+            --bg-body: #050400; /* Głęboka czerń */
+            --bg-card: #0c0a0a; /* Ciemne karty */
+            --text-main: #ffffff; 
+            --text-muted: #aaaaaa; 
+            --accent: #FFC107; /* Szlachetne złoto Pomorza */
+            --border: #1a1a1a; /* Bardzo subtelne linie */
             --header-height: 70px;
             --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -31,8 +30,6 @@
             color: var(--text-main);
             overflow-x: hidden;
             min-height: 100vh;
-            /* Subtelna tekstura papieru/ziarna */
-            background-image: url("https://www.transparenttextures.com/patterns/felt.png");
         }
 
         h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 900; }
@@ -46,29 +43,35 @@
         @keyframes fadeSlide { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
         @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
-        /* --- NOWOCZESNY NAVBAR --- */
+        /* --- NOWOCZESNY CIEMNY NAVBAR --- */
         .top-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             z-index: 8000; display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+            padding: 0 5%; background: rgba(5,5,5,0.85); backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border);
         }
         
         .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .nav-brand img { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); }
-        .nav-brand span { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.5px; color: #000; }
+        .nav-brand span { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.5px; color: #fff; }
         .nav-brand span b { color: var(--accent); }
 
-        .nav-menu { display: flex; gap: 8px; }
+        .nav-menu { display: flex; gap: 3px; }
         .nav-btn {
             background: transparent; border: none; color: var(--text-muted); 
             font-size: 0.9rem; font-weight: 700; padding: 8px 16px; border-radius: 8px;
             cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 6px;
         }
-        .nav-btn:hover { color: #000; background: #f0f0f0; }
-        .nav-btn.active { color: #fff; background: #000; }
+        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-btn.active { color: #000; background: var(--accent); font-weight: 700;}
 
-        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #fff;}
+
+        /* --- SLIDESHOW W TLE --- */
+        #bg-slideshow { position: fixed; inset: 0; z-index: -2; overflow: hidden; }
+        .bg-slide { position: absolute; inset: 0; background-position: center; background-size: cover; background-repeat: no-repeat; opacity: 0; transition: opacity 2s ease-in-out; }
+        /* Ciemny filtr na tło, by tekst był czytelny */
+        #bg-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.75); z-index: -1; }
 
         /* --- CONTENT --- */
         #app { display: none; opacity: 0; transition: 1s ease; padding-top: calc(var(--header-height) + 60px); }
@@ -79,82 +82,86 @@
 
         /* --- SEKCJA HOME --- */
         .hero-section { text-align: center; padding: 40px 0 80px 0; }
-        .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; color: #000; }
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; color: #fff; }
         .hero-title span { color: var(--accent); }
         .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 400; }
 
         /* --- KARTY I ELEMENTY --- */
-        .card-white { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card-dark { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; }
 
-        .section-header { margin-bottom: 40px; }
-        .section-header h2 { font-size: 2.5rem; color: #000; letter-spacing: -1px; }
+        .section-header { margin-bottom: 40px; text-align: center;}
+        .section-header h2 { font-size: 2.5rem; color: #fff; letter-spacing: -1px; }
         .section-header p { color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; }
 
         /* --- GALERIA --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .gallery-item { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #eee; aspect-ratio: 16/10; cursor: pointer; position: relative; transition: var(--transition); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,193,7,0.1); border-color: var(--accent); }
         .gallery-item:hover img { transform: scale(1.05); }
 
         /* --- EKIPA (CLEAN LIST) --- */
         .staff-wrapper { max-width: 700px; margin: 0 auto; }
         .staff-group-title { font-size: 0.85rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
         .staff-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: 0.2s; }
-        .staff-row:hover { border-color: #000; background: #fafafa; }
-        .staff-info h4 { font-size: 1.1rem; color: #000; font-weight: 700; margin: 0; }
+        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: 0.2s; }
+        .staff-row:hover { border-color: var(--accent); background: #121010; }
+        .staff-info h4 { font-size: 1.1rem; color: #fff; font-weight: 700; margin: 0; }
         .staff-info span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
 
         /* --- KOMUNIKATY --- */
-        .announcement-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 15px; position: relative; border-left: 6px solid var(--accent); }
-        .announcement-card h3 { font-size: 1.2rem; color: #000; margin-bottom: 8px; }
+        .announcement-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 15px; position: relative; border-left: 6px solid var(--accent); }
+        .announcement-card h3 { font-size: 1.2rem; color: #fff; margin-bottom: 8px; }
         .announcement-date { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
 
         /* --- FAQ --- */
-        .faq-item { background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { padding: 20px 25px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 20px 25px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; color: #fff; }
+        .faq-question:hover { color: var(--accent); }
         .faq-answer { max-height: 0; padding: 0 25px; color: var(--text-muted); line-height: 1.6; transition: 0.3s ease; opacity: 0; }
-        .faq-item.active { border-color: #000; }
-        .faq-item.active .faq-answer { max-height: 500px; padding-bottom: 20px; opacity: 1; }
+        .faq-item.active { border-color: var(--accent); }
+        .faq-item.active .faq-answer { max-height: 500px; padding: 10px 25px 25px 25px; opacity: 1; }
 
         /* --- DEVLOG --- */
-        .devlog-post { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 40px; margin-bottom: 30px; }
-        .devlog-title { font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 10px; color: #000; }
+        .devlog-post { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 40px; margin-bottom: 30px; }
+        .devlog-title { font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 10px; color: #fff; }
         .devlog-date { color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
-        .devlog-content { font-size: 1.1rem; line-height: 1.7; color: #333; margin-top: 20px; }
+        .devlog-content { font-size: 1.1rem; line-height: 1.7; color: #ddd; margin-top: 20px; }
 
         /* --- ADMIN PANEL (CLEAN) --- */
         #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid var(--border); color: #000; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 9000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .admin-sub-tab { background: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border); display: none; }
+        .admin-sub-tab { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); display: none; }
         .admin-sub-tab.active { display: block; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; margin-top: 5px; background: #f9f9f9; }
-        .btn-primary { background: #000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .btn-primary:hover { background: var(--accent); color: #000; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; margin-top: 5px; background: #0c0a0a; color: #fff;}
+        input:focus, textarea:focus { border-color: var(--accent); outline: none;}
+        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-primary:hover { background: #fff; color: #000; }
 
         /* --- MODALS & OVERLAYS --- */
-        #lightbox { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
-        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 4px solid #fff; }
-        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #000; }
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 2px solid var(--accent); }
+        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #fff; }
 
-        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10000; display: none; justify-content: center; align-items: center; }
-        .edit-box { background: #fff; padding: 40px; border-radius: 20px; width: 500px; max-width: 95%; }
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .edit-box { background: var(--bg-card); padding: 40px; border-radius: 20px; width: 500px; max-width: 95%; border: 1px solid var(--border);}
+        .edit-box h3 { color: #fff;}
 
         /* --- ADMIN MODE OVERLAY --- */
-        .admin-controls { display: none; gap: 5px; margin-top: 10px; }
+        .admin-controls { display: none; gap: 5px; margin-top: 10px; justify-content: flex-end;}
         .admin-mode .admin-controls { display: flex; }
         .admin-mode .admin-controls-inline { display: flex; gap: 5px; }
-        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: 700; text-transform: uppercase; }
-        .btn-mini:hover { background: #000; color: #fff; }
+        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; cursor: pointer; font-weight: 700; text-transform: uppercase; color: #aaa;}
+        .btn-mini:hover { background: #fff; color: #000; border-color: #fff;}
 
         /* --- MOBILE --- */
         @media (max-width: 900px) {
-            .nav-menu { position: fixed; top: var(--header-height); left: 0; width: 100%; background: #fff; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); display: none; }
+            .nav-menu { position: fixed; top: var(--header-height); left: 0; width: 100%; background: #050400; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); display: none; }
             .nav-menu.active { display: flex; }
             .mobile-toggle { display: block; }
             .top-navbar { padding: 0 20px; }
             .nav-btn { width: 100%; justify-content: flex-start; }
             .hero-title { font-size: 3.5rem; }
+            .devlog-post, .staff-row, .faq-item, .announcement-card { padding: 20px; }
         }
     </style>
 </head>
@@ -181,6 +188,12 @@
         <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </header>
 
+    <div id="bg-slideshow">
+        <div id="bg-slide-1" class="bg-slide"></div>
+        <div id="bg-slide-2" class="bg-slide"></div>
+    </div>
+    <div id="bg-overlay"></div>
+
     <div id="lightbox" onclick="closeLightbox()"><span class="close-lb">&times;</span><img id="lightbox-img" src=""></div>
 
     <button id="admin-trigger" onclick="openTab('admin', null)"><i class="fas fa-fingerprint"></i></button>
@@ -201,7 +214,7 @@
 
         <div id="mapa" class="tab">
             <div class="section-header"><p>Topografia</p><h2>Mapa terenu</h2></div>
-            <div id="dyn-map" class="card-white" style="padding:10px; overflow:hidden;">
+            <div id="dyn-map" class="card-dark" style="padding:10px; overflow:hidden;">
                 <p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>
             </div>
         </div>
@@ -238,17 +251,17 @@
 
         <div id="admin" class="tab">
             <div class="section-header"><h2>Panel Admina</h2></div>
-            <div class="card-white" style="max-width:600px; margin:0 auto;">
+            <div class="card-dark" style="max-width:600px; margin:0 auto;">
                 <div id="admin-login-form">
                     <input type="email" id="admin-email" placeholder="Email">
                     <input type="password" id="admin-pass" placeholder="Hasło" style="margin: 10px 0;">
                     <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">Zaloguj się</button>
-                    <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd!</p>
+                    <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd logowania!</p>
                 </div>
                 <div id="admin-dashboard">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                        <button class="btn-primary" onclick="logoutAdmin()">Wyloguj</button>
-                        <button class="btn-primary" onclick="openTab('home', null)">Zamknij panel</button>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px; gap: 10px;">
+                        <button class="btn-mini" onclick="logoutAdmin()">Wyloguj</button>
+                        <button class="btn-mini" onclick="openTab('home', null)">Zamknij panel</button>
                     </div>
                     <select id="admin-select-tab" onchange="switchAdminTab(this.value)">
                         <option value="a-devlog">DevLog</option>
@@ -265,7 +278,7 @@
                         <input type="text" id="d-title" placeholder="Tytuł" style="margin:10px 0;"><br>
                         <textarea id="d-content" placeholder="Treść" rows="5"></textarea><br>
                         <input type="text" id="d-yt" placeholder="Link YT" style="margin-top:10px;"><br>
-                        <button class="btn-primary" onclick="addDevLog()">Dodaj</button>
+                        <button class="btn-primary" style="margin-top:10px;" onclick="addDevLog()">Dodaj</button>
                     </div>
                     <div id="a-map" class="admin-sub-tab" style="margin-top:20px;">
                         <input type="file" id="m-file"><br><br>
@@ -273,17 +286,17 @@
                     </div>
                     <div id="a-gallery" class="admin-sub-tab" style="margin-top:20px;">
                         <input type="file" id="g-file"><br><br>
-                        <input type="text" id="g-title" placeholder="Tytuł"><br><br>
+                        <input type="text" id="g-title" placeholder="Tytuł zdjęcia"><br><br>
                         <button class="btn-primary" onclick="addGallery()">Wgraj</button>
                     </div>
                     <div id="a-ann" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="a-date" placeholder="Data"><br><br>
-                        <input type="text" id="a-title" placeholder="Tytuł"><br><br>
-                        <textarea id="a-desc" placeholder="Treść"></textarea><br><br>
+                        <input type="text" id="a-date" placeholder="Etykieta/Data"><br><br>
+                        <input type="text" id="a-title" placeholder="Nagłówek ogłoszenia"><br><br>
+                        <textarea id="a-desc" placeholder="Treść ogłoszenia"></textarea><br><br>
                         <button class="btn-primary" onclick="addAnnouncement()">Dodaj</button>
                     </div>
                     <div id="a-staff" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="s-name" placeholder="Nick"><br><br>
+                        <input type="text" id="s-name" placeholder="Nick w grze"><br><br>
                         <select id="s-role">
                             <option value="Owner">Owner</option><option value="Co-Owner">Co-Owner</option><option value="Technik">Technik</option><option value="Head of Staff">Head of Staff</option><option value="Head of Developers">Head of Developers</option><option value="Head of Admins">Head of Admins</option><option value="Event Host">Event Host</option><option value="Developer">Developer</option><option value="Trial Event Host">Trial Event Host</option><option value="Admin">Admin</option><option value="Trial Admin">Trial Admin</option><option value="Moderator">Moderator</option><option value="Trial Moderator">Trial Moderator</option><option value="Support Developer">Support Developer</option>
                         </select><br><br>
@@ -295,13 +308,14 @@
                         <button class="btn-primary" onclick="addFaq()">Dodaj</button>
                     </div>
                     <div id="a-links" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="l-n" placeholder="Nazwa"><br><br>
-                        <input type="text" id="l-d" placeholder="Opis"><br><br>
+                        <input type="text" id="l-n" placeholder="Nazwa Platformy"><br><br>
+                        <input type="text" id="l-d" placeholder="Opis pod spodem"><br><br>
                         <input type="text" id="l-u" placeholder="URL"><br><br>
                         <input type="text" id="l-i" value="fas fa-link"><br><br>
                         <button class="btn-primary" onclick="addLink()">Dodaj</button>
                     </div>
                     <div id="a-tools" class="admin-sub-tab" style="margin-top:20px;">
+                        <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Migracja pobiera lokalne zdjęcia z `assets/plik/...` i wgrywa je na ImgBB + Firebase. Używaj tylko lokalnie!</p>
                         <button class="btn-primary" id="btn-migrate" onclick="migrateLocalImages()">Migracja zdjęć</button>
                     </div>
                 </div>
@@ -311,10 +325,12 @@
 
     <div id="edit-modal">
         <div class="edit-box">
-            <h3>Edycja</h3>
+            <h3>Edycja</h3><br>
             <div id="edit-form-content"></div><br>
-            <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
-            <button class="btn-primary" style="background:#eee; color:#000;" onclick="closeEditModal()">Anuluj</button>
+            <div style="display:flex; gap: 10px;">
+                <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
+                <button class="btn-mini" style="background:#0c0a0a; color:#fff;" onclick="closeEditModal()">Anuluj</button>
+            </div>
         </div>
     </div>
 
@@ -338,7 +354,7 @@
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
         const staffOrder = ["Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers", "Head of Admins", "Event Host", "Developer", "Trial Event Host", "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"];
 
-        // RENDER DATA
+        // RENDER DATA (Uproszczone z admin controls)
         const renderData = (path, elId, tmpl) => {
             onValue(ref(db, path), snap => {
                 const cont = document.getElementById(elId); cont.innerHTML = '';
@@ -348,6 +364,7 @@
             });
         };
 
+        // STAFF
         onValue(ref(db, 'staff'), snap => {
             const cont = document.getElementById('dyn-staff'); cont.innerHTML = '';
             const data = snap.val();
@@ -360,62 +377,125 @@
                 });
                 [...staffOrder, 'Inne'].forEach(r => {
                     if(grp[r].length) {
-                        let html = `<div class="staff-group-title">${r}</div>`;
-                        grp[r].forEach(i => html += `<div class="staff-row"><div class="staff-info"><h4>${i.name}</h4><span>${i.role}</span></div><div class="admin-controls-inline"><button class="btn-mini" onclick="window.openEditModal('staff','${i.k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('staff','${i.k}',event)">Usuń</button></div></div>`);
-                        cont.innerHTML += html;
+                        let html = `<div class="staff-group-title">${r}</div><div class="staff-list">`;
+                        grp[r].forEach(i => html += `
+                            <div class="staff-row">
+                                <div class="staff-info"><h4>${i.name}</h4><span>${i.role}</span></div>
+                                <div class="admin-controls-inline"><button class="btn-mini" onclick="window.openEditModal('staff','${i.k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('staff','${i.k}',event)">Usuń</button></div>
+                            </div>`);
+                        html += `</div>`; cont.innerHTML += html;
                     }
                 });
-            }
+            } else { cont.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px;">Brak członków ekipy.</p>';}
         });
 
+        // MAPA
         onValue(ref(db, 'gameMap'), snap => {
             const cont = document.getElementById('dyn-map');
             const data = snap.val();
-            if(data) cont.innerHTML = `<img src="${data.url}" onclick="window.openLightbox('${data.url}')"><div class="admin-controls"><button class="btn-mini" onclick="window.delMap(event)">Usuń mapę</button></div>`;
+            if(data) cont.innerHTML = `<div class="admin-controls"><button class="btn-mini" onclick="window.delMap(event)">Usuń mapę</button></div><img src="${data.url}" onclick="window.openLightbox('${data.url}')">`;
             else cont.innerHTML = '<p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>';
         });
 
-        renderData('devlog', 'dyn-devlog', (k, i) => `<div class="devlog-post"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('devlog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('devlog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title">${i.title}</h3><div class="devlog-content">${i.content}</div>${i.ytLink ? '<div style="margin-top:20px; border-radius:12px; overflow:hidden;"><iframe width="100%" height="400" src="https://www.youtube.com/embed/'+(i.ytLink.split('v=')[1]||i.ytLink.split('/').pop())+'" frameborder="0" allowfullscreen></iframe></div>':''}</div>`);
-        renderData('gallery', 'dyn-gallery', (k, i) => `<div class="gallery-item"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('gallery','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('gallery','${k}',event)">Usuń</button></div><img src="${i.url}" onclick="window.openLightbox('${i.url}')"></div>`);
-        renderData('announcements', 'dyn-announcements', (k, i) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('announcements','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('announcements','${k}',event)">Usuń</button></div><div class="announcement-date">${i.date}</div><h3>${i.title}</h3><p>${i.desc}</p></div>`);
-        renderData('faq', 'dyn-faq', (k, i) => `<div class="faq-item" id="faq-${k}"><div class="faq-question" onclick="window.toggleFaq('${k}')">${i.question} <i class="fas fa-chevron-down"></i></div><div class="faq-answer">${i.answer}<div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('faq','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('faq','${k}',event)">Usuń</button></div></div></div>`);
+        // LOGIKA SLIDESHOW W TLE
+        let slideshowImages = [];
+        let currentSlide = 0;
+        const slide1 = document.getElementById('bg-slide-1');
+        const slide2 = document.getElementById('bg-slide-2');
+        let activeSlide = slide1;
 
+        const startSlideshow = () => {
+            if (slideshowImages.length < 2) {
+                if (slideshowImages.length === 1) {
+                    slide1.style.backgroundImage = `url(${slideshowImages[0]})`;
+                    slide1.style.opacity = 1;
+                }
+                return;
+            }
+
+            // Załaduj pierwsze dwa zdjęcia
+            slide1.style.backgroundImage = `url(${slideshowImages[0]})`;
+            slide1.style.opacity = 1;
+            currentSlide = 1;
+
+            setInterval(() => {
+                const nextSlide = activeSlide === slide1 ? slide2 : slide1;
+                
+                // Załaduj następne zdjęcie na ukryty slajd
+                nextSlide.style.backgroundImage = `url(${slideshowImages[currentSlide]})`;
+                
+                // Po krótkim czasie na załadowanie (subiektywnie, by uniknąć migotania), zrób cross-fade
+                setTimeout(() => {
+                    nextSlide.style.opacity = 1;
+                    activeSlide.style.opacity = 0;
+                    activeSlide = nextSlide;
+                    currentSlide = (currentSlide + 1) % slideshowImages.length;
+                }, 100); 
+
+            }, 8000); // Zmieniaj co 8 sekund
+        };
+
+        // RENDEROWANIE GALERII I GROMADZENIE ZDJĘĆ DO TŁA
+        renderData('gallery', 'dyn-gallery', (k, i) => {
+            // Dodaj zdjęcie do puli tła, jeśli jeszcze go nie ma (unikalne tła)
+            if(!slideshowImages.includes(i.url)) {
+                slideshowImages.push(i.url);
+                // Jeśli to pierwsze 2 zdjęcia, spróbuj odpalić pokaz slajdów wcześniej
+                if(slideshowImages.length === 2 && currentSlide === 0) startSlideshow();
+            }
+            return `<div class="gallery-item"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('gallery','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('gallery','${k}',event)">Usuń</button></div><img src="${i.url}" onclick="window.openLightbox('${i.url}')"></div>`
+        });
+
+        renderData('devlog', 'dyn-devlog', (k, i) => `<div class="devlog-post"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('devlog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('devlog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title">${i.title}</h3><div class="devlog-content">${i.content}</div>${i.ytLink ? '<div style="margin-top:20px; border-radius:12px; overflow:hidden;"><iframe width="100%" height="400" src="https://www.youtube.com/embed/'+(i.ytLink.split('v=')[1]||i.ytLink.split('/').pop())+'" frameborder="0" allowfullscreen></iframe></div>':''}</div>`);
+        renderData('announcements', 'dyn-announcements', (k, i) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('announcements','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('announcements','${k}',event)">Usuń</button></div><div class="announcement-date">${i.date}</div><h3>${i.title}</h3><p>${i.desc}</p></div>`);
+        renderData('faq', 'dyn-faq', (k, i) => `<div class="faq-item" id="faq-${k}"><div class="faq-question" onclick="window.toggleFaq('${k}')">${i.question} <i class="fas fa-chevron-down chevron"></i></div><div class="faq-answer">${i.answer}<div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('faq','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('faq','${k}',event)">Usuń</button></div></div></div>`);
+        renderData('links', 'dyn-links', (k, i) => `<a href="${i.url}" target="_blank" class="staff-rowLinks" style="text-decoration:none; display:flex; position:relative; margin-bottom:8px; width:100%;"><div class="staff-row"><div class="staff-info"><h4><i class="${i.icon}" style="margin-right:10px; color:var(--accent);"></i>${i.name}</h4><span>${i.desc}</span></div><i class="fas fa-external-link-alt" style="color:var(--border);"></i></div><div class="admin-controls-inline" style="position:absolute; right:15px; top:50%; transform:translateY(-50%);"><button class="btn-mini" onclick="window.openEditModal('links','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('links','${k}',event)">Usuń</button></div></a>`);
+        renderData('changelog', 'dyn-changelog', (k, i) => `<div class="devlog-post" style="padding: 25px; margin-bottom: 15px;"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('changelog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('changelog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title" style="font-size:1.4rem;">${i.title}</h3><p style="color:#ccc; margin-top:10px; line-height:1.6;">${i.desc}</p></div>`);
+
+
+        // AUTH STATE
         onAuthStateChanged(auth, u => {
             document.getElementById('admin-login-form').style.display = u ? 'none' : 'block';
             document.getElementById('admin-dashboard').style.display = u ? 'block' : 'none';
             document.body.classList.toggle('admin-mode', !!u);
         });
 
-        window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value);
+        window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(()=>document.getElementById('login-error').style.display='block');
         window.logoutAdmin = () => signOut(auth);
 
-        // UPLOAD & ADD FUNCTIONS
+        // ADD & UPDATE FUNCTIONS
         window.updateMap = async () => {
-            const file = document.getElementById('m-file').files[0]; if(!file) return;
+            const file = document.getElementById('m-file').files[0]; if(!file) return alert("Wybierz plik!");
             const fd = new FormData(); fd.append('image', file);
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd});
-            const d = await res.json(); if(d.success) set(ref(db, 'gameMap'), {url: d.data.url});
+            fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{
+                if(d.success) { set(ref(db, 'gameMap'), {url: d.data.url}); alert("Mapa wgrana!"); }
+            });
         };
         window.addGallery = async () => {
-            const file = document.getElementById('g-file').files[0]; if(!file) return;
+            const file = document.getElementById('g-file').files[0]; if(!file) return alert("Wybierz plik!");
             const fd = new FormData(); fd.append('image', file);
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd});
-            const d = await res.json(); if(d.success) push(ref(db, 'gallery'), {url: d.data.url, title: document.getElementById('g-title').value});
+            fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{
+                if(d.success) { push(ref(db, 'gallery'), {url: d.data.url, title: document.getElementById('g-title').value}); alert("Zdjęcie wgrane!"); }
+            });
         };
         window.addDevLog = () => push(ref(db, 'devlog'), {date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value});
         window.addStaff = () => push(ref(db, 'staff'), {name: document.getElementById('s-name').value, role: document.getElementById('s-role').value});
         window.addAnnouncement = () => push(ref(db, 'announcements'), {date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value});
         window.addFaq = () => push(ref(db, 'faq'), {question: document.getElementById('f-q').value, answer: document.getElementById('f-a').value});
+        window.addLink = () => push(ref(db, 'links'), {name: document.getElementById('l-n').value, desc: document.getElementById('l-d').value, url: document.getElementById('l-u').value, icon: document.getElementById('l-i').value});
 
-        window.delItem = (p, k, e) => { e.stopPropagation(); if(confirm("Usuń?")) remove(ref(db, `${p}/${k}`)); };
-        window.delMap = () => remove(ref(db, 'gameMap'));
+        // DELETE & EDIT
+        window.delItem = (p, k, e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Usunąć bezpowrotnie?")) remove(ref(db, `${p}/${k}`)); };
+        window.delMap = () => { if(confirm("Usunąć mapę?")) remove(ref(db, 'gameMap')); };
 
         window.openEditModal = (p, k, e) => {
-            e.stopPropagation(); window.currentEdit = {p, k};
+            e.preventDefault(); e.stopPropagation(); window.currentEdit = {p, k};
             const i = window.appData[p][k]; const f = document.getElementById('edit-form-content'); f.innerHTML = '';
-            if(p === 'staff') f.innerHTML = `<input type="text" id="e1" value="${i.name}"><select id="e2">${staffOrder.map(r=>`<option ${r===i.role?'selected':''}>${r}</option>`).join('')}</select>`;
-            else if(p==='faq') f.innerHTML = `<input type="text" id="e1" value="${i.question}"><textarea id="e2">${i.answer}</textarea>`;
-            else f.innerHTML = `<input type="text" id="e1" value="${i.title||i.date}"><textarea id="e2">${i.content||i.desc}</textarea>`;
+            if(p === 'staff') f.innerHTML = `<input type="text" id="e1" value="${i.name}"><select id="e2" style="margin-top:10px;">${staffOrder.map(r=>`<option ${r===i.role?'selected':''}>${r}</option>`).join('')}</select>`;
+            else if(p==='faq') f.innerHTML = `<input type="text" id="e1" value="${i.question}"><textarea id="e2" style="margin-top:10px;">${i.answer}</textarea>`;
+            else if(p==='gallery') f.innerHTML = `<input type="text" id="e1" value="${i.title}" placeholder="Tytuł zdjęcia">`;
+            else if(p==='links') f.innerHTML = `<input type="text" id="e1" value="${i.name}" placeholder="Nazwa"><input type="text" id="e2" value="${i.desc}" placeholder="Opis" style="margin:10px 0;"><input type="text" id="e3" value="${i.url}" placeholder="URL"><input type="text" id="e4" value="${i.icon}" placeholder="Icon Class" style="margin-top:10px;">`;
+            else f.innerHTML = `<input type="text" id="e1" value="${i.title||i.date}" placeholder="Tytuł/Data"><textarea id="e2" style="margin-top:10px;" rows="6" placeholder="Treść/Opis">${i.content||i.desc}</textarea>`;
             document.getElementById('edit-modal').style.display = 'flex';
         };
 
@@ -423,10 +503,601 @@
             const {p, k} = window.currentEdit; const d = {};
             if(p==='staff') {d.name=document.getElementById('e1').value; d.role=document.getElementById('e2').value;}
             else if(p==='faq') {d.question=document.getElementById('e1').value; d.answer=document.getElementById('e2').value;}
-            else { d.title=document.getElementById('e1').value; d.content=document.getElementById('e2').value; d.desc=document.getElementById('e2').value; }
+            else if(p==='gallery') {d.title=document.getElementById('e1').value;}
+            else if(p==='links') {d.name=document.getElementById('e1').value; d.desc=document.getElementById('e2').value; d.url=document.getElementById('e3').value; d.icon=document.getElementById('e4').value;}
+            else { d.title=document.getElementById('e1').value; d.date=document.getElementById('e1').value; d.content=document.getElementById('e2').value; d.desc=document.getElementById('e2').value; }
             update(ref(db, `${p}/${k}`), d); document.getElementById('edit-modal').style.display='none';
         };
         window.closeEditModal = () => document.getElementById('edit-modal').style.display='none';
+
+        // MIGRATOR
+        window.migrateLocalImages = async () => {
+            const localAssets = [
+                { path: 'assets/plik/czarnoszki.png', title: 'Czarnoszki' }, { path: 'assets/plik/czarnoszki1.png', title: 'Czarnoszki 1' },
+                { path: 'assets/plik/kiełpin.png', title: 'Kiełpin' }, { path: 'assets/plik/kiełpin1.png', title: 'Kiełpin 1' },
+                { path: 'assets/plik/krery.png', title: 'Krery' }, { path: 'assets/plik/las.png', title: 'Droga Leśna' },
+                { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' }, { path: 'assets/plik/wyjazd krzyżanki.png', title: 'Wyjazd Krzyżanki' },
+                { path: 'assets/plik/zagórki.png', title: 'Zagórki' }
+            ];
+            if(!confirm("Upewnij się, że używasz środowiska testowego (localhost). Zaczynamy?")) return;
+            const btn = document.getElementById('btn-migrate'); btn.disabled = true; btn.innerText = "Trwa migracja...";
+            let count = 0;
+            for(let asset of localAssets) {
+                try {
+                    const res = await fetch(asset.path); const blob = await res.blob();
+                    const fd = new FormData(); fd.append('image', blob);
+                    const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
+                    const imgbbData = await imgbbRes.json();
+                    if(imgbbData.success) { await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title }); count++; }
+                } catch(e) { console.log("Pomijam: " + asset.path); }
+            }
+            alert(`Zakończono! Wgrano pomyślnie ${count} zdjęć do bazy.`); btn.disabled = false; btn.innerText = "Migracja zdjęć";
+        };
+
+    </script>
+
+    <script>
+        // UI CORE
+        window.addEventListener('DOMContentLoaded', () => {
+            const last = localStorage.getItem('pp_lastVisit');
+            const now = Date.now();
+            const long = !last || (now - parseInt(last)) / 86400000 > 10;
+            localStorage.setItem('pp_lastVisit', now);
+            
+            const intro = document.getElementById('intro');
+            if(long) {
+                intro.innerHTML = `
+                    <div class="intro-slide img-slide" style="animation-delay: 0s;"><img src="assets/plik/las.png"><div class="intro-text">Poczuj ten klimatRobi się! To odważna i bardzo efektowna zmiana. Przekształcenie tła na dynamiczny pokaz zdjęć z Waszej galerii nada stronie autorski i unikalny charakter.
+
+To jednak nie lada wyzwanie, ponieważ:
+1. **Czytelność przede wszystkim:** Umieszczenie tekstu bezpośrednio na zdjęciu sprawia, że jest on nieczytelny. Dlatego **musimy powrócić do ciemnego motywu**. Wasze białe i jasnoszare treści będą świetnie kontrastować z przyciemnionymi zdjęciami w tle, zapewniając idealną czytelność.
+2. **Kompaktowość i Detale:** Połączymy to z kompaktowym wyglądem i poprawionym FAQ, co u sprawi, że strona przestanie wyglądać jak "szablon AI", a zacznie jak profesjonalny, dedykowany projekt Premium.
+
+Oto co zrobiłem w tej wersji:
+* **Pokaz slajdów w tle:** Dodałem skrypt JavaScript, który po załadowaniu galerii automatycznie tworzy w tle płynny pokaz slajdów z Waszych zdjęć (cross-fade).
+* **Ciemny Motyw Premium:** Przyciemniłem zdjęcia w tle specjalnym filtrem (overlay), aby jasny tekst był krystalicznie czytelny. Strona odzyskała prestiżowy, czarno-złoty wygląd flagi Pomorza.
+* **Nowoczesne Detale:** Usunąłem poświaty "AI Glow", zastępując je twardymi cieniami i liniami.
+* **Kompletność:** Zachowałem wszystkie funkcje CMS, poprawione FAQ oraz kompaktową listę ekipy.
+
+Oto kompletny kod – podmień nim cały plik `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt Pomorze | Official</title>
+    
+    <link href="[https://fonts.googleapis.com/icon?family=Material+Icons](https://fonts.googleapis.com/icon?family=Material+Icons)" rel="stylesheet">
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)">
+    <link href="[https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap)" rel="stylesheet">
+    
+    <style>
+        /* --- ZMIENNE: CIEMNY MOTYW PREMIUM POMORSKI --- */
+        :root {
+            --bg-body: #050400; /* Głęboka czerń */
+            --bg-card: #0c0a0a; /* Ciemne karty */
+            --text-main: #ffffff; 
+            --text-muted: #aaaaaa; 
+            --accent: #FFC107; /* Szlachetne złoto Pomorza */
+            --border: #1a1a1a; /* Bardzo subtelne linie */
+            --header-height: 70px;
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 900; }
+
+        /* --- KINOWE INTRO --- */
+        #intro { position: fixed; inset: 0; background: #000; z-index: 9999; overflow: hidden; color: #fff; }
+        .intro-slide { position: absolute; inset: 0; opacity: 0; animation: fadeSlide 4s ease-in-out forwards; }
+        .intro-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); animation: kenBurns 4s linear forwards; }
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: clamp(2rem, 5vw, 4rem); text-align: center; letter-spacing: 4px; text-transform: uppercase; z-index: 2; font-weight: 900; }
+
+        @keyframes fadeSlide { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+
+        /* --- NOWOCZESNY CIEMNY NAVBAR --- */
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
+            z-index: 8000; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background: rgba(5,5,5,0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .nav-brand img { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); }
+        .nav-brand span { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.5px; color: #fff; }
+        .nav-brand span b { color: var(--accent); }
+
+        .nav-menu { display: flex; gap: 3px; }
+        .nav-btn {
+            background: transparent; border: none; color: var(--text-muted); 
+            font-size: 0.9rem; font-weight: 700; padding: 8px 16px; border-radius: 8px;
+            cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 6px;
+        }
+        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-btn.active { color: #000; background: var(--accent); font-weight: 700;}
+
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #fff;}
+
+        /* --- SLIDESHOW W TLE --- */
+        #bg-slideshow { position: fixed; inset: 0; z-index: -2; overflow: hidden; }
+        .bg-slide { position: absolute; inset: 0; background-position: center; background-size: cover; background-repeat: no-repeat; opacity: 0; transition: opacity 2s ease-in-out; }
+        /* Ciemny filtr na tło, by tekst był czytelny */
+        #bg-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.75); z-index: -1; }
+
+        /* --- CONTENT --- */
+        #app { display: none; opacity: 0; transition: 1s ease; padding-top: calc(var(--header-height) + 60px); }
+        .content-area { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .tab { display: none; }
+        .tab.active { display: block; animation: tabEnter 0.6s ease forwards; }
+        @keyframes tabEnter { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- SEKCJA HOME --- */
+        .hero-section { text-align: center; padding: 40px 0 80px 0; }
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; color: #fff; }
+        .hero-title span { color: var(--accent); }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 400; }
+
+        /* --- KARTY I ELEMENTY --- */
+        .card-dark { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; }
+
+        .section-header { margin-bottom: 40px; text-align: center;}
+        .section-header h2 { font-size: 2.5rem; color: #fff; letter-spacing: -1px; }
+        .section-header p { color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; }
+
+        /* --- GALERIA --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #eee; aspect-ratio: 16/10; cursor: pointer; position: relative; transition: var(--transition); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,193,7,0.1); border-color: var(--accent); }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* --- EKIPA (CLEAN LIST) --- */
+        .staff-wrapper { max-width: 700px; margin: 0 auto; }
+        .staff-group-title { font-size: 0.85rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
+        .staff-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .staff-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; transition: 0.2s; }
+        .staff-row:hover { border-color: var(--accent); background: #121010; }
+        .staff-info h4 { font-size: 1.1rem; color: #fff; font-weight: 700; margin: 0; }
+        .staff-info span { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+
+        /* --- KOMUNIKATY --- */
+        .announcement-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 15px; position: relative; border-left: 6px solid var(--accent); }
+        .announcement-card h3 { font-size: 1.2rem; color: #fff; margin-bottom: 8px; }
+        .announcement-date { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+
+        /* --- FAQ --- */
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 20px 25px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; color: #fff; }
+        .faq-question:hover { color: var(--accent); }
+        .faq-answer { max-height: 0; padding: 0 25px; color: var(--text-muted); line-height: 1.6; transition: 0.3s ease; opacity: 0; }
+        .faq-item.active { border-color: var(--accent); }
+        .faq-item.active .faq-answer { max-height: 500px; padding: 10px 25px 25px 25px; opacity: 1; }
+
+        /* --- DEVLOG --- */
+        .devlog-post { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 40px; margin-bottom: 30px; }
+        .devlog-title { font-size: 1.8rem; letter-spacing: -0.5px; margin-bottom: 10px; color: #fff; }
+        .devlog-date { color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
+        .devlog-content { font-size: 1.1rem; line-height: 1.7; color: #ddd; margin-top: 20px; }
+
+        /* --- ADMIN PANEL (CLEAN) --- */
+        #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid var(--border); color: #000; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 9000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .admin-sub-tab { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); display: none; }
+        .admin-sub-tab.active { display: block; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; margin-top: 5px; background: #0c0a0a; color: #fff;}
+        input:focus, textarea:focus { border-color: var(--accent); outline: none;}
+        .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-primary:hover { background: #fff; color: #000; }
+
+        /* --- MODALS & OVERLAYS --- */
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 2px solid var(--accent); }
+        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #fff; }
+
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .edit-box { background: var(--bg-card); padding: 40px; border-radius: 20px; width: 500px; max-width: 95%; border: 1px solid var(--border);}
+        .edit-box h3 { color: #fff;}
+
+        /* --- ADMIN MODE OVERLAY --- */
+        .admin-controls { display: none; gap: 5px; margin-top: 10px; justify-content: flex-end;}
+        .admin-mode .admin-controls { display: flex; }
+        .admin-mode .admin-controls-inline { display: flex; gap: 5px; }
+        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; cursor: pointer; font-weight: 700; text-transform: uppercase; color: #aaa;}
+        .btn-mini:hover { background: #fff; color: #000; border-color: #fff;}
+
+        /* --- MOBILE --- */
+        @media (max-width: 900px) {
+            .nav-menu { position: fixed; top: var(--header-height); left: 0; width: 100%; background: #050400; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); display: none; }
+            .nav-menu.active { display: flex; }
+            .mobile-toggle { display: block; }
+            .top-navbar { padding: 0 20px; }
+            .nav-btn { width: 100%; justify-content: flex-start; }
+            .hero-title { font-size: 3.5rem; }
+            .devlog-post, .staff-row, .faq-item, .announcement-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro"></div>
+
+    <header class="top-navbar">
+        <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
+            <img src="assets/plik/Projekt%20Pomorze.png" alt="PP" onerror="this.src='[https://via.placeholder.com/40?text=P](https://via.placeholder.com/40?text=P)'">
+            <span>Projekt <b>Pomorze</b></span>
+        </div>
+        <nav class="nav-menu" id="nav-menu">
+            <button class="nav-btn active" id="nav-home" onclick="openTab('home', this)">Start</button>
+            <button class="nav-btn" onclick="openTab('devlog', this)">DevLog</button>
+            <button class="nav-btn" onclick="openTab('mapa', this)">Mapa</button>
+            <button class="nav-btn" onclick="openTab('galeria', this)">Galeria</button>
+            <button class="nav-btn" onclick="openTab('komunikaty', this)">Ogłoszenia</button>
+            <button class="nav-btn" onclick="openTab('aktualizacje', this)">Zmiany</button>
+            <button class="nav-btn" onclick="openTab('ekipa', this)">Ekipa</button>
+            <button class="nav-btn" onclick="openTab('faq', this)">FAQ</button>
+            <button class="nav-btn" onclick="openTab('linki', this)">Sociale</button>
+        </nav>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <div id="bg-slideshow">
+        <div id="bg-slide-1" class="bg-slide"></div>
+        <div id="bg-slide-2" class="bg-slide"></div>
+    </div>
+    <div id="bg-overlay"></div>
+
+    <div id="lightbox" onclick="closeLightbox()"><span class="close-lb">&times;</span><img id="lightbox-img" src=""></div>
+
+    <button id="admin-trigger" onclick="openTab('admin', null)"><i class="fas fa-fingerprint"></i></button>
+
+    <main class="content-area" id="app">
+        
+        <div id="home" class="tab active">
+            <section class="hero-section">
+                <h1 class="hero-title">Witaj na<br><span>Pomorzu.</span></h1>
+                <p class="hero-subtitle">Realistyczna jazda, polskie drogi i klimat, którego nie znajdziesz nigdzie indziej w świecie Roblox. Tworzone z pasją na bazie prawdziwych terenów.</p>
+            </section>
+        </div>
+
+        <div id="devlog" class="tab">
+            <div class="section-header"><p>Kulisy</p><h2>Dziennik prac</h2></div>
+            <div id="dyn-devlog"></div>
+        </div>
+
+        <div id="mapa" class="tab">
+            <div class="section-header"><p>Topografia</p><h2>Mapa terenu</h2></div>
+            <div id="dyn-map" class="card-dark" style="padding:10px; overflow:hidden;">
+                <p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>
+            </div>
+        </div>
+
+        <div id="galeria" class="tab">
+            <div class="section-header"><p>Zdjęcia</p><h2>Zrzuty z gry</h2></div>
+            <div class="gallery-grid" id="dyn-gallery"></div>
+        </div>
+
+        <div id="komunikaty" class="tab">
+            <div class="section-header"><p>News</p><h2>Ważne komunikaty</h2></div>
+            <div id="dyn-announcements" style="max-width:800px; margin:0 auto;"></div>
+        </div>
+
+        <div id="aktualizacje" class="tab">
+            <div class="section-header"><p>Historia</p><h2>Lista zmian</h2></div>
+            <div class="update-timeline" id="dyn-changelog"></div>
+        </div>
+
+        <div id="ekipa" class="tab">
+            <div class="section-header"><p>Zespół</p><h2>Nasza ekipa</h2></div>
+            <div class="staff-wrapper" id="dyn-staff"></div>
+        </div>
+
+        <div id="faq" class="tab">
+            <div class="section-header"><p>Pytania</p><h2>FAQ</h2></div>
+            <div id="dyn-faq" style="max-width:800px; margin:0 auto;"></div>
+        </div>
+
+        <div id="linki" class="tab">
+            <div class="section-header"><p>Linki</p><h2>Social Media</h2></div>
+            <div class="links-wrapper" id="dyn-links"></div>
+        </div>
+
+        <div id="admin" class="tab">
+            <div class="section-header"><h2>Panel Admina</h2></div>
+            <div class="card-dark" style="max-width:600px; margin:0 auto;">
+                <div id="admin-login-form">
+                    <input type="email" id="admin-email" placeholder="Email">
+                    <input type="password" id="admin-pass" placeholder="Hasło" style="margin: 10px 0;">
+                    <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">Zaloguj się</button>
+                    <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd logowania!</p>
+                </div>
+                <div id="admin-dashboard">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px; gap: 10px;">
+                        <button class="btn-mini" onclick="logoutAdmin()">Wyloguj</button>
+                        <button class="btn-mini" onclick="openTab('home', null)">Zamknij panel</button>
+                    </div>
+                    <select id="admin-select-tab" onchange="switchAdminTab(this.value)">
+                        <option value="a-devlog">DevLog</option>
+                        <option value="a-map">Mapa</option>
+                        <option value="a-gallery">Galeria</option>
+                        <option value="a-ann">Komunikaty</option>
+                        <option value="a-staff">Ekipa</option>
+                        <option value="a-faq">FAQ</option>
+                        <option value="a-links">Linki</option>
+                        <option value="a-tools">System</option>
+                    </select>
+                    <div id="a-devlog" class="admin-sub-tab active" style="margin-top:20px;">
+                        <input type="text" id="d-date" placeholder="Data"><br>
+                        <input type="text" id="d-title" placeholder="Tytuł" style="margin:10px 0;"><br>
+                        <textarea id="d-content" placeholder="Treść" rows="5"></textarea><br>
+                        <input type="text" id="d-yt" placeholder="Link YT" style="margin-top:10px;"><br>
+                        <button class="btn-primary" style="margin-top:10px;" onclick="addDevLog()">Dodaj</button>
+                    </div>
+                    <div id="a-map" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="file" id="m-file"><br><br>
+                        <button class="btn-primary" onclick="updateMap()">Wgraj mapę</button>
+                    </div>
+                    <div id="a-gallery" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="file" id="g-file"><br><br>
+                        <input type="text" id="g-title" placeholder="Tytuł zdjęcia"><br><br>
+                        <button class="btn-primary" onclick="addGallery()">Wgraj</button>
+                    </div>
+                    <div id="a-ann" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="a-date" placeholder="Etykieta/Data"><br><br>
+                        <input type="text" id="a-title" placeholder="Nagłówek ogłoszenia"><br><br>
+                        <textarea id="a-desc" placeholder="Treść ogłoszenia"></textarea><br><br>
+                        <button class="btn-primary" onclick="addAnnouncement()">Dodaj</button>
+                    </div>
+                    <div id="a-staff" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="s-name" placeholder="Nick w grze"><br><br>
+                        <select id="s-role">
+                            <option value="Owner">Owner</option><option value="Co-Owner">Co-Owner</option><option value="Technik">Technik</option><option value="Head of Staff">Head of Staff</option><option value="Head of Developers">Head of Developers</option><option value="Head of Admins">Head of Admins</option><option value="Event Host">Event Host</option><option value="Developer">Developer</option><option value="Trial Event Host">Trial Event Host</option><option value="Admin">Admin</option><option value="Trial Admin">Trial Admin</option><option value="Moderator">Moderator</option><option value="Trial Moderator">Trial Moderator</option><option value="Support Developer">Support Developer</option>
+                        </select><br><br>
+                        <button class="btn-primary" onclick="addStaff()">Dodaj</button>
+                    </div>
+                    <div id="a-faq" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="f-q" placeholder="Pytanie"><br><br>
+                        <textarea id="f-a" placeholder="Odpowiedź"></textarea><br><br>
+                        <button class="btn-primary" onclick="addFaq()">Dodaj</button>
+                    </div>
+                    <div id="a-links" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="l-n" placeholder="Nazwa Platformy"><br><br>
+                        <input type="text" id="l-d" placeholder="Opis pod spodem"><br><br>
+                        <input type="text" id="l-u" placeholder="URL"><br><br>
+                        <input type="text" id="l-i" value="fas fa-link"><br><br>
+                        <button class="btn-primary" onclick="addLink()">Dodaj</button>
+                    </div>
+                    <div id="a-tools" class="admin-sub-tab" style="margin-top:20px;">
+                        <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Migracja pobiera lokalne zdjęcia z `assets/plik/...` i wgrywa je na ImgBB + Firebase. Używaj tylko lokalnie!</p>
+                        <button class="btn-primary" id="btn-migrate" onclick="migrateLocalImages()">Migracja zdjęć</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="edit-modal">
+        <div class="edit-box">
+            <h3>Edycja</h3><br>
+            <div id="edit-form-content"></div><br>
+            <div style="display:flex; gap: 10px;">
+                <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
+                <button class="btn-mini" style="background:#0c0a0a; color:#fff;" onclick="closeEditModal()">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "[https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js](https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js)";
+        import { getDatabase, ref, onValue, push, remove, update, set } from "[https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js](https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js)";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "[https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js](https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js)";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCb5QmZdwWwa9LafqqGZvGW-6vblkab32M", authDomain: "mzk-by-facio.firebaseapp.com",
+            databaseURL: "[https://mzk-by-facio-default-rtdb.europe-west1.firebasedatabase.app](https://mzk-by-facio-default-rtdb.europe-west1.firebasedatabase.app)",
+            projectId: "mzk-by-facio", storageBucket: "mzk-by-facio.firebasestorage.app",
+            messagingSenderId: "676970411647", appId: "1:676970411647:web:26137e7242c0db7c83714a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
+
+        window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
+        const staffOrder = ["Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers", "Head of Admins", "Event Host", "Developer", "Trial Event Host", "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"];
+
+        // RENDER DATA (Uproszczone z admin controls)
+        const renderData = (path, elId, tmpl) => {
+            onValue(ref(db, path), snap => {
+                const cont = document.getElementById(elId); cont.innerHTML = '';
+                const data = snap.val();
+                if(data) { window.appData[path] = data; Object.keys(data).reverse().forEach(k => cont.innerHTML += tmpl(k, data[k])); }
+                else { cont.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px;">Brak danych.</p>'; }
+            });
+        };
+
+        // STAFF
+        onValue(ref(db, 'staff'), snap => {
+            const cont = document.getElementById('dyn-staff'); cont.innerHTML = '';
+            const data = snap.val();
+            if(data) {
+                window.appData.staff = data;
+                const grp = {}; staffOrder.forEach(r => grp[r] = []); grp['Inne'] = [];
+                Object.keys(data).forEach(k => {
+                    const r = data[k].role;
+                    if(staffOrder.includes(r)) grp[r].push({k, ...data[k]}); else grp['Inne'].push({k, ...data[k]});
+                });
+                [...staffOrder, 'Inne'].forEach(r => {
+                    if(grp[r].length) {
+                        let html = `<div class="staff-group-title">${r}</div><div class="staff-list">`;
+                        grp[r].forEach(i => html += `
+                            <div class="staff-row">
+                                <div class="staff-info"><h4>${i.name}</h4><span>${i.role}</span></div>
+                                <div class="admin-controls-inline"><button class="btn-mini" onclick="window.openEditModal('staff','${i.k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('staff','${i.k}',event)">Usuń</button></div>
+                            </div>`);
+                        html += `</div>`; cont.innerHTML += html;
+                    }
+                });
+            } else { cont.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px;">Brak członków ekipy.</p>';}
+        });
+
+        // MAPA
+        onValue(ref(db, 'gameMap'), snap => {
+            const cont = document.getElementById('dyn-map');
+            const data = snap.val();
+            if(data) cont.innerHTML = `<div class="admin-controls"><button class="btn-mini" onclick="window.delMap(event)">Usuń mapę</button></div><img src="${data.url}" onclick="window.openLightbox('${data.url}')">`;
+            else cont.innerHTML = '<p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>';
+        });
+
+        // LOGIKA SLIDESHOW W TLE
+        let slideshowImages = [];
+        let currentSlide = 0;
+        const slide1 = document.getElementById('bg-slide-1');
+        const slide2 = document.getElementById('bg-slide-2');
+        let activeSlide = slide1;
+
+        const startSlideshow = () => {
+            if (slideshowImages.length < 2) {
+                if (slideshowImages.length === 1) {
+                    slide1.style.backgroundImage = `url(${slideshowImages[0]})`;
+                    slide1.style.opacity = 1;
+                }
+                return;
+            }
+
+            // Załaduj pierwsze dwa zdjęcia
+            slide1.style.backgroundImage = `url(${slideshowImages[0]})`;
+            slide1.style.opacity = 1;
+            currentSlide = 1;
+
+            setInterval(() => {
+                const nextSlide = activeSlide === slide1 ? slide2 : slide1;
+                
+                // Załaduj następne zdjęcie na ukryty slajd
+                nextSlide.style.backgroundImage = `url(${slideshowImages[currentSlide]})`;
+                
+                // Po krótkim czasie na załadowanie (subiektywnie, by uniknąć migotania), zrób cross-fade
+                setTimeout(() => {
+                    nextSlide.style.opacity = 1;
+                    activeSlide.style.opacity = 0;
+                    activeSlide = nextSlide;
+                    currentSlide = (currentSlide + 1) % slideshowImages.length;
+                }, 100); 
+
+            }, 8000); // Zmieniaj co 8 sekund
+        };
+
+        // RENDEROWANIE GALERII I GROMADZENIE ZDJĘĆ DO TŁA
+        renderData('gallery', 'dyn-gallery', (k, i) => {
+            // Dodaj zdjęcie do puli tła, jeśli jeszcze go nie ma (unikalne tła)
+            if(!slideshowImages.includes(i.url)) {
+                slideshowImages.push(i.url);
+                // Jeśli to pierwsze 2 zdjęcia, spróbuj odpalić pokaz slajdów wcześniej
+                if(slideshowImages.length === 2 && currentSlide === 0) startSlideshow();
+            }
+            return `<div class="gallery-item"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('gallery','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('gallery','${k}',event)">Usuń</button></div><img src="${i.url}" onclick="window.openLightbox('${i.url}')"></div>`
+        });
+
+        renderData('devlog', 'dyn-devlog', (k, i) => `<div class="devlog-post"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('devlog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('devlog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title">${i.title}</h3><div class="devlog-content">${i.content}</div>${i.ytLink ? '<div style="margin-top:20px; border-radius:12px; overflow:hidden;"><iframe width="100%" height="400" src="https://www.youtube.com/embed/'+(i.ytLink.split('v=')[1]||i.ytLink.split('/').pop())+'" frameborder="0" allowfullscreen></iframe></div>':''}</div>`);
+        renderData('announcements', 'dyn-announcements', (k, i) => `<div class="announcement-card"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('announcements','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('announcements','${k}',event)">Usuń</button></div><div class="announcement-date">${i.date}</div><h3>${i.title}</h3><p>${i.desc}</p></div>`);
+        renderData('faq', 'dyn-faq', (k, i) => `<div class="faq-item" id="faq-${k}"><div class="faq-question" onclick="window.toggleFaq('${k}')">${i.question} <i class="fas fa-chevron-down chevron"></i></div><div class="faq-answer">${i.answer}<div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('faq','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('faq','${k}',event)">Usuń</button></div></div></div>`);
+        renderData('links', 'dyn-links', (k, i) => `<a href="${i.url}" target="_blank" class="staff-rowLinks" style="text-decoration:none; display:flex; position:relative; margin-bottom:8px; width:100%;"><div class="staff-row"><div class="staff-info"><h4><i class="${i.icon}" style="margin-right:10px; color:var(--accent);"></i>${i.name}</h4><span>${i.desc}</span></div><i class="fas fa-external-link-alt" style="color:var(--border);"></i></div><div class="admin-controls-inline" style="position:absolute; right:15px; top:50%; transform:translateY(-50%);"><button class="btn-mini" onclick="window.openEditModal('links','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('links','${k}',event)">Usuń</button></div></a>`);
+        renderData('changelog', 'dyn-changelog', (k, i) => `<div class="devlog-post" style="padding: 25px; margin-bottom: 15px;"><div class="admin-controls"><button class="btn-mini" onclick="window.openEditModal('changelog','${k}',event)">Edytuj</button><button class="btn-mini" onclick="window.delItem('changelog','${k}',event)">Usuń</button></div><div class="devlog-date">${i.date}</div><h3 class="devlog-title" style="font-size:1.4rem;">${i.title}</h3><p style="color:#ccc; margin-top:10px; line-height:1.6;">${i.desc}</p></div>`);
+
+
+        // AUTH STATE
+        onAuthStateChanged(auth, u => {
+            document.getElementById('admin-login-form').style.display = u ? 'none' : 'block';
+            document.getElementById('admin-dashboard').style.display = u ? 'block' : 'none';
+            document.body.classList.toggle('admin-mode', !!u);
+        });
+
+        window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(()=>document.getElementById('login-error').style.display='block');
+        window.logoutAdmin = () => signOut(auth);
+
+        // ADD & UPDATE FUNCTIONS
+        window.updateMap = async () => {
+            const file = document.getElementById('m-file').files[0]; if(!file) return alert("Wybierz plik!");
+            const fd = new FormData(); fd.append('image', file);
+            fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{
+                if(d.success) { set(ref(db, 'gameMap'), {url: d.data.url}); alert("Mapa wgrana!"); }
+            });
+        };
+        window.addGallery = async () => {
+            const file = document.getElementById('g-file').files[0]; if(!file) return alert("Wybierz plik!");
+            const fd = new FormData(); fd.append('image', file);
+            fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{
+                if(d.success) { push(ref(db, 'gallery'), {url: d.data.url, title: document.getElementById('g-title').value}); alert("Zdjęcie wgrane!"); }
+            });
+        };
+        window.addDevLog = () => push(ref(db, 'devlog'), {date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value});
+        window.addStaff = () => push(ref(db, 'staff'), {name: document.getElementById('s-name').value, role: document.getElementById('s-role').value});
+        window.addAnnouncement = () => push(ref(db, 'announcements'), {date: document.getElementById('a-date').value, title: document.getElementById('a-title').value, desc: document.getElementById('a-desc').value});
+        window.addFaq = () => push(ref(db, 'faq'), {question: document.getElementById('f-q').value, answer: document.getElementById('f-a').value});
+        window.addLink = () => push(ref(db, 'links'), {name: document.getElementById('l-n').value, desc: document.getElementById('l-d').value, url: document.getElementById('l-u').value, icon: document.getElementById('l-i').value});
+
+        // DELETE & EDIT
+        window.delItem = (p, k, e) => { e.preventDefault(); e.stopPropagation(); if(confirm("Usunąć bezpowrotnie?")) remove(ref(db, `${p}/${k}`)); };
+        window.delMap = () => { if(confirm("Usunąć mapę?")) remove(ref(db, 'gameMap')); };
+
+        window.openEditModal = (p, k, e) => {
+            e.preventDefault(); e.stopPropagation(); window.currentEdit = {p, k};
+            const i = window.appData[p][k]; const f = document.getElementById('edit-form-content'); f.innerHTML = '';
+            if(p === 'staff') f.innerHTML = `<input type="text" id="e1" value="${i.name}"><select id="e2" style="margin-top:10px;">${staffOrder.map(r=>`<option ${r===i.role?'selected':''}>${r}</option>`).join('')}</select>`;
+            else if(p==='faq') f.innerHTML = `<input type="text" id="e1" value="${i.question}"><textarea id="e2" style="margin-top:10px;">${i.answer}</textarea>`;
+            else if(p==='gallery') f.innerHTML = `<input type="text" id="e1" value="${i.title}" placeholder="Tytuł zdjęcia">`;
+            else if(p==='links') f.innerHTML = `<input type="text" id="e1" value="${i.name}" placeholder="Nazwa"><input type="text" id="e2" value="${i.desc}" placeholder="Opis" style="margin:10px 0;"><input type="text" id="e3" value="${i.url}" placeholder="URL"><input type="text" id="e4" value="${i.icon}" placeholder="Icon Class" style="margin-top:10px;">`;
+            else f.innerHTML = `<input type="text" id="e1" value="${i.title||i.date}" placeholder="Tytuł/Data"><textarea id="e2" style="margin-top:10px;" rows="6" placeholder="Treść/Opis">${i.content||i.desc}</textarea>`;
+            document.getElementById('edit-modal').style.display = 'flex';
+        };
+
+        window.saveEdit = () => {
+            const {p, k} = window.currentEdit; const d = {};
+            if(p==='staff') {d.name=document.getElementById('e1').value; d.role=document.getElementById('e2').value;}
+            else if(p==='faq') {d.question=document.getElementById('e1').value; d.answer=document.getElementById('e2').value;}
+            else if(p==='gallery') {d.title=document.getElementById('e1').value;}
+            else if(p==='links') {d.name=document.getElementById('e1').value; d.desc=document.getElementById('e2').value; d.url=document.getElementById('e3').value; d.icon=document.getElementById('e4').value;}
+            else { d.title=document.getElementById('e1').value; d.date=document.getElementById('e1').value; d.content=document.getElementById('e2').value; d.desc=document.getElementById('e2').value; }
+            update(ref(db, `${p}/${k}`), d); document.getElementById('edit-modal').style.display='none';
+        };
+        window.closeEditModal = () => document.getElementById('edit-modal').style.display='none';
+
+        // MIGRATOR
+        window.migrateLocalImages = async () => {
+            const localAssets = [
+                { path: 'assets/plik/czarnoszki.png', title: 'Czarnoszki' }, { path: 'assets/plik/czarnoszki1.png', title: 'Czarnoszki 1' },
+                { path: 'assets/plik/kiełpin.png', title: 'Kiełpin' }, { path: 'assets/plik/kiełpin1.png', title: 'Kiełpin 1' },
+                { path: 'assets/plik/krery.png', title: 'Krery' }, { path: 'assets/plik/las.png', title: 'Droga Leśna' },
+                { path: 'assets/plik/rychnowy.png', title: 'Rychnowy' }, { path: 'assets/plik/wyjazd krzyżanki.png', title: 'Wyjazd Krzyżanki' },
+                { path: 'assets/plik/zagórki.png', title: 'Zagórki' }
+            ];
+            if(!confirm("Upewnij się, że używasz środowiska testowego (localhost). Zaczynamy?")) return;
+            const btn = document.getElementById('btn-migrate'); btn.disabled = true; btn.innerText = "Trwa migracja...";
+            let count = 0;
+            for(let asset of localAssets) {
+                try {
+                    const res = await fetch(asset.path); const blob = await res.blob();
+                    const fd = new FormData(); fd.append('image', blob);
+                    const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method: 'POST', body: fd});
+                    const imgbbData = await imgbbRes.json();
+                    if(imgbbData.success) { await push(ref(db, 'gallery'), { url: imgbbData.data.url, title: asset.title }); count++; }
+                } catch(e) { console.log("Pomijam: " + asset.path); }
+            }
+            alert(`Zakończono! Wgrano pomyślnie ${count} zdjęć do bazy.`); btn.disabled = false; btn.innerText = "Migracja zdjęć";
+        };
+
     </script>
 
     <script>
