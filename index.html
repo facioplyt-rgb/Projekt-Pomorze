@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -96,7 +95,7 @@
         .map-container img { width: 100%; height: auto; max-height: 75vh; object-fit: contain; display: block; cursor: zoom-in; transition: transform 0.4s ease; }
         .map-container img:hover { transform: scale(1.02); }
 
-        /* --- GALERIA (Poprawiona responsywność 100%) --- */
+        /* --- GALERIA --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
         .gallery-item { 
             position: relative; 
@@ -108,26 +107,12 @@
             transition: var(--transition);
             width: 100%;
         }
-        
-        /* Fallback na padding zamiast aspect-ratio dla starych i mobilnych przeglądarek */
-        .gallery-item::before {
-            content: "";
-            display: block;
-            padding-top: 62.5%; /* Odtwarza proporcje 16:10 */
-        }
-        
-        .gallery-item img { 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            transition: 0.5s; 
-        }
-        
+        .gallery-item::before { content: ""; display: block; padding-top: 62.5%; }
+        .gallery-item img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,193,7,0.1); border-color: var(--accent); }
         .gallery-item:hover img { transform: scale(1.05); }
 
-        /* --- EKIPA (Poprawiona szerokość) --- */
+        /* --- EKIPA --- */
         .staff-wrapper { max-width: 700px; margin: 0 auto; width: 100%; }
         .staff-group-title { font-size: 0.85rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
         .staff-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
@@ -155,25 +140,8 @@
         .reader-title { font-size: 2rem; color: #fff; margin-bottom: 10px; }
         .reader-date { font-size: 0.9rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
         .reader-content { font-size: 1.1rem; line-height: 1.8; color: #ccc; white-space: pre-wrap; }
-        
-        /* Zabezpieczony układ wideo */
-        .reader-media { 
-            position: relative; 
-            margin-top: 25px; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 1px solid var(--border); 
-            background: #000; 
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-        }
-        .reader-media iframe { 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            border: none; 
-            display: block; 
-        }
+        .reader-media { position: relative; margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #000; width: 100%; padding-top: 56.25%; }
+        .reader-media iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
 
         /* --- FAQ --- */
         .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; position: relative;}
@@ -194,7 +162,33 @@
         #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 11000; display: none; justify-content: center; align-items: center; padding: 20px; }
         .edit-box { background: var(--bg-card); padding: 40px; border-radius: 20px; width: 500px; max-width: 100%; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto;}
 
-        /* --- ADMIN BUTTONS --- */
+        /* --- MODALS & OVERLAYS (NAPRAWIONY LIGHTBOX) --- */
+        #lightbox { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh; 
+            background: rgba(0,0,0,0.95); 
+            z-index: 9999; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: zoom-out; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+        #lightbox img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            width: auto; 
+            height: auto; 
+            border-radius: 12px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            border: 2px solid var(--accent); 
+            object-fit: contain; 
+        }
+        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: #fff; z-index: 10001; }
+
+        /* --- ADMIN CONTROLS --- */
         .admin-controls { display: flex; gap: 8px; margin-top: 15px; }
         .btn-mini { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; cursor: pointer; font-weight: 700; color: #aaa; text-transform: uppercase; }
         .btn-mini:hover { background: #fff; color: #000; }
@@ -206,11 +200,10 @@
             .mobile-toggle { display: block; }
             .top-navbar { padding: 0 20px; }
             
-            .content-area { padding: 0 15px; } /* Mniejsze marginesy boczne */
+            .content-area { padding: 0 15px; }
             .hero-title { font-size: 3rem; }
             .section-header h2 { font-size: 2.2rem; }
             
-            /* Bezwzględne wymuszanie 1 kolumny na telefonach, zero zniekształceń */
             .gallery-grid { grid-template-columns: 1fr !important; }
             .links-wrapper { grid-template-columns: 1fr !important; }
 
@@ -322,7 +315,7 @@
 
         <div id="linki" class="tab">
             <div class="section-header"><p>Linki</p><h2>Social Media</h2></div>
-            <div class="links-wrapper" id="dyn-links"></div>
+            <div class="links-wrapper" id="dyn-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"></div>
         </div>
 
         <!-- ADMIN PANEL -->
@@ -331,7 +324,7 @@
             <div class="card-dark" style="max-width:600px; margin:0 auto; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border);">
                 
                 <div id="admin-login-form">
-                    <input type="email" id="admin-email" placeholder="Email Administratora">
+                    <input type="email" id="admin-email" placeholder="Email">
                     <input type="password" id="admin-pass" placeholder="Hasło" style="margin: 10px 0;">
                     <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">Zaloguj się</button>
                     <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd logowania!</p>
@@ -460,7 +453,7 @@
             if(!data) return;
             Object.keys(data).reverse().forEach(k => {
                 const i = data[k];
-                cont.innerHTML += `<div class="gallery-item">${getAdminBtns('gallery', k)}<img src="${i.url}" onclick="window.openLightbox('${i.url}')"><div class="gallery-overlay" onclick="window.openLightbox('${i.url}')"><div class="gallery-title">${i.title}</div></div></div>`;
+                cont.innerHTML += `<div class="gallery-item">${getAdminBtns('gallery', k)}<img src="${i.url}" onclick="window.openLightbox('${i.url}')"></div>`;
             });
         };
 
@@ -567,10 +560,8 @@
             document.getElementById('admin-dashboard').style.display = u ? 'block' : 'none';
             renderAll(); 
         });
-
         window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(()=>document.getElementById('login-error').style.display='block');
         window.logoutAdmin = () => signOut(auth);
-
         const checkAuth = () => { if(!auth.currentUser) { alert("Brak autoryzacji serwera!"); return false; } return true; };
 
         // --- CZYTNIK (READER MODAL) ---
@@ -682,11 +673,15 @@
             if(slideshowImages.length === 0) return;
             slide1.style.backgroundImage = `url(${slideshowImages[0]})`; slide1.style.opacity = 1;
             if(slideshowImages.length < 2) return;
+            
             currentSlideIdx = 1;
             setInterval(() => {
                 const nextSlide = activeSlide === slide1 ? slide2 : slide1;
                 nextSlide.style.backgroundImage = `url(${slideshowImages[currentSlideIdx]})`;
-                setTimeout(() => { nextSlide.style.opacity = 1; activeSlide.style.opacity = 0; activeSlide = nextSlide; currentSlideIdx = (currentSlideIdx + 1) % slideshowImages.length; }, 100); 
+                setTimeout(() => {
+                    nextSlide.style.opacity = 1; activeSlide.style.opacity = 0;
+                    activeSlide = nextSlide; currentSlideIdx = (currentSlideIdx + 1) % slideshowImages.length;
+                }, 100); 
             }, 8000); 
         };
 
