@@ -83,7 +83,7 @@
         /* --- SEKCJA HOME --- */
         .hero-section { text-align: center; padding: 40px 0 80px 0; }
         .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; color: #fff; }
-        .hero-title span { color: var(--accent); }
+        .hero-title span { color: var(--accent); text-shadow: 0 0 40px var(--accent-glow); }
         .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 400; }
 
         .section-header { margin-bottom: 40px; text-align: center;}
@@ -130,8 +130,8 @@
         .reader-title { font-size: 2rem; color: #fff; margin-bottom: 10px; }
         .reader-date { font-size: 0.9rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
         .reader-content { font-size: 1.1rem; line-height: 1.8; color: #ccc; white-space: pre-wrap; }
-        .reader-media { margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #000; }
-        .reader-media iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .reader-media { margin-top: 25px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 16/9; background: #000; }
+        .reader-media iframe { width: 100%; height: 100%; border: none; display: block; }
 
         /* --- FAQ --- */
         .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; position: relative;}
@@ -145,38 +145,27 @@
         #admin-trigger { position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid var(--border); color: #000; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 9000; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .admin-sub-tab { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); display: none; }
         .admin-sub-tab.active { display: block; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; margin-top: 5px; background: #0c0a0a; color: #fff;}
-        input:focus, textarea:focus { border-color: var(--accent); outline: none;}
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-top: 5px; background: #0c0a0a; color: #fff;}
         .btn-primary { background: var(--accent); color: #000; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .btn-primary:hover { background: #fff; color: #000; }
-
-        /* --- MODALS & OVERLAYS --- */
-        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
-        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 2px solid var(--accent); }
-        .close-lb { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #fff; }
-
-        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 11000; display: none; justify-content: center; align-items: center; }
+        
+        #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 11000; display: none; justify-content: center; align-items: center; }
         .edit-box { background: var(--bg-card); padding: 40px; border-radius: 20px; width: 500px; max-width: 95%; border: 1px solid var(--border);}
-        .edit-box h3 { color: #fff;}
 
-        /* --- ADMIN MODE CONTROLS --- */
-        .admin-controls { display: flex; gap: 5px; margin-top: 10px; justify-content: flex-end; position: absolute; top: 15px; right: 15px; z-index: 10;}
-        .admin-mode .admin-controls { display: flex; }
-        .admin-controls-inline { display: flex; gap: 5px; }
-        .admin-mode .admin-controls-inline { display: flex; }
-        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 4px; border: 1px solid #333; background: #1a1a1a; cursor: pointer; font-weight: 700; text-transform: uppercase; color: #aaa;}
-        .btn-mini:hover { background: #fff; color: #000; border-color: #fff;}
+        /* --- ADMIN BUTTONS --- */
+        .admin-controls { display: flex; gap: 8px; margin-top: 15px; }
+        .btn-mini { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; border: 1px solid #333; background: #1a1a1a; cursor: pointer; font-weight: 700; color: #aaa; text-transform: uppercase; }
+        .btn-mini:hover { background: #fff; color: #000; }
 
-        /* --- MOBILE --- */
         @media (max-width: 900px) {
             .nav-menu { position: fixed; top: var(--header-height); left: 0; width: 100%; background: #050400; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); display: none; }
             .nav-menu.active { display: flex; }
             .mobile-toggle { display: block; }
             .top-navbar { padding: 0 20px; }
-            .nav-btn { width: 100%; justify-content: flex-start; }
             .hero-title { font-size: 3.5rem; }
             .reader-box { padding: 30px 20px; }
+            .reader-title { font-size: 1.8rem; }
             .summary-card { padding: 20px; }
+            .summary-card .title { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -190,6 +179,19 @@
             <div id="reader-container"></div>
         </div>
     </div>
+
+    <div id="edit-modal">
+        <div class="edit-box">
+            <h3 style="color:#fff;">Edycja Treści</h3><br>
+            <div id="edit-form-content"></div><br>
+            <div style="display:flex; gap: 10px;">
+                <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
+                <button class="btn-primary" style="background:#333; color:#fff;" onclick="closeEditModal()">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox" onclick="closeLightbox()"><span class="close-lb">&times;</span><img id="lightbox-img" src=""></div>
 
     <header class="top-navbar">
         <div class="nav-brand" onclick="openTab('home', document.getElementById('nav-home'))">
@@ -210,13 +212,8 @@
         <button class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </header>
 
-    <div id="bg-slideshow">
-        <div id="bg-slide-1" class="bg-slide"></div>
-        <div id="bg-slide-2" class="bg-slide"></div>
-    </div>
+    <div id="bg-slideshow"><div id="bg-slide-1" class="bg-slide"></div><div id="bg-slide-2" class="bg-slide"></div></div>
     <div id="bg-overlay"></div>
-
-    <div id="lightbox" onclick="closeLightbox()"><span class="close-lb">&times;</span><img id="lightbox-img" src=""></div>
 
     <button id="admin-trigger" onclick="openTab('admin', null)"><i class="fas fa-fingerprint"></i></button>
 
@@ -224,46 +221,46 @@
         
         <div id="home" class="tab active">
             <section class="hero-section">
-                <h1 class="hero-title">Witaj na<br><span>Pomorzu.</span></h1>
-                <p class="hero-subtitle">Realistyczna jazda, polskie drogi i klimat, którego nie znajdziesz nigdzie indziej w świecie Roblox. Tworzone z pasją na bazie prawdziwych terenów.</p>
+                <h1 class="hero-title" id="dyn-home-title">Witaj na<br><span>Pomorzu.</span></h1>
+                <p class="hero-subtitle" id="dyn-home-subtitle">Realistyczna jazda, polskie drogi i klimat, którego nie znajdziesz nigdzie indziej w świecie Roblox.</p>
             </section>
         </div>
 
         <div id="devlog" class="tab">
-            <div class="section-header"><p>Kulisy</p><h2>Dziennik prac</h2></div>
+            <div class="section-header"><p>Kulisy</p><h2>Dziennik Prac</h2></div>
             <div id="dyn-devlog" style="max-width: 800px; margin: 0 auto;"></div>
         </div>
 
         <div id="mapa" class="tab">
-            <div class="section-header"><p>Topografia</p><h2>Mapa terenu</h2></div>
+            <div class="section-header"><p>Topografia</p><h2>Mapa Terenu</h2></div>
             <div id="dyn-map" class="map-container">
                 <p style="text-align:center; padding: 40px; color:#999;">Brak wgranej mapy.</p>
             </div>
         </div>
 
         <div id="galeria" class="tab">
-            <div class="section-header"><p>Zdjęcia</p><h2>Zrzuty z gry</h2></div>
+            <div class="section-header"><p>Zdjęcia</p><h2>Zrzuty z Gry</h2></div>
             <div class="gallery-grid" id="dyn-gallery"></div>
         </div>
 
         <div id="komunikaty" class="tab">
-            <div class="section-header"><p>News</p><h2>Ważne komunikaty</h2></div>
-            <div id="dyn-announcements" style="max-width:800px; margin:0 auto;"></div>
+            <div class="section-header"><p>News</p><h2>Ważne Komunikaty</h2></div>
+            <div id="dyn-announcements" style="max-width: 800px; margin: 0 auto;"></div>
         </div>
 
         <div id="aktualizacje" class="tab">
-            <div class="section-header"><p>Historia</p><h2>Lista zmian</h2></div>
-            <div id="dyn-changelog" style="max-width: 800px; margin: 0 auto;"></div>
+            <div class="section-header"><p>Historia</p><h2>Lista Zmian</h2></div>
+            <div id="dyn-changelog" style="max-width: 800px; margin: 0 auto; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 40px;"></div>
         </div>
 
         <div id="ekipa" class="tab">
-            <div class="section-header"><p>Zespół</p><h2>Nasza ekipa</h2></div>
+            <div class="section-header"><p>Zespół</p><h2>Nasza Ekipa</h2></div>
             <div class="staff-wrapper" id="dyn-staff"></div>
         </div>
 
         <div id="faq" class="tab">
             <div class="section-header"><p>Pytania</p><h2>FAQ</h2></div>
-            <div id="dyn-faq" style="max-width:800px; margin:0 auto;"></div>
+            <div id="dyn-faq" style="max-width: 800px; margin: 0 auto;"></div>
         </div>
 
         <div id="linki" class="tab">
@@ -272,20 +269,24 @@
         </div>
 
         <div id="admin" class="tab">
-            <div class="section-header"><h2>Panel Admina</h2></div>
-            <div class="card-dark" style="max-width:600px; margin:0 auto;">
+            <div class="section-header"><h2>System Zarządzania</h2></div>
+            <div class="card-dark" style="max-width:600px; margin:0 auto; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border);">
+                
                 <div id="admin-login-form">
-                    <input type="email" id="admin-email" placeholder="Email Administratora">
+                    <input type="email" id="admin-email" placeholder="Email">
                     <input type="password" id="admin-pass" placeholder="Hasło" style="margin: 10px 0;">
                     <button class="btn-primary" style="width:100%;" onclick="loginAdmin()">Zaloguj się</button>
                     <p id="login-error" style="color:red; display:none; margin-top:10px;">Błąd logowania!</p>
                 </div>
+
                 <div id="admin-dashboard">
                     <div style="display:flex; justify-content:space-between; margin-bottom:20px; gap: 10px;">
                         <button class="btn-mini" onclick="logoutAdmin()">Wyloguj</button>
                         <button class="btn-mini" onclick="openTab('home', null)">Zamknij panel</button>
                     </div>
+                    
                     <select id="admin-select-tab" onchange="switchAdminTab(this.value)">
+                        <option value="a-home">Strona Główna (Start)</option>
                         <option value="a-devlog">DevLog</option>
                         <option value="a-map">Mapa</option>
                         <option value="a-gallery">Galeria</option>
@@ -296,35 +297,27 @@
                         <option value="a-links">Linki</option>
                         <option value="a-tools">System</option>
                     </select>
-                    
-                    <div id="a-devlog" class="admin-sub-tab active" style="margin-top:20px;">
-                        <input type="text" id="d-date" placeholder="Data wpisu"><br>
+
+                    <div id="a-home" class="admin-sub-tab active" style="margin-top:20px;">
+                        <h4 style="margin-bottom: 15px;">Zarządzaj Stroną Główną</h4>
+                        <label style="color:#aaa; font-size:0.85rem;">Możesz użyć &lt;br&gt; dla nowej linii i &lt;span&gt;Twój tekst&lt;/span&gt; dla złotego koloru.</label>
+                        <input type="text" id="h-title" placeholder="Główny Tytuł" style="margin:10px 0;"><br>
+                        <textarea id="h-subtitle" placeholder="Tekst pod tytułem" rows="4"></textarea><br>
+                        <button class="btn-primary" style="margin-top:10px;" onclick="updateHome()"><i class="fas fa-save"></i> Zapisz układ</button>
+                    </div>
+
+                    <div id="a-devlog" class="admin-sub-tab" style="margin-top:20px;">
+                        <input type="text" id="d-date" placeholder="Data (np. 15.05.2026)"><br>
                         <input type="text" id="d-title" placeholder="Tytuł wpisu" style="margin:10px 0;"><br>
-                        <textarea id="d-content" placeholder="Treść wpisu" rows="5"></textarea><br>
-                        <input type="text" id="d-yt" placeholder="Link YT (Opcjonalnie)" style="margin-top:10px;"><br>
-                        <button class="btn-primary" style="margin-top:10px;" onclick="addDevLog()">Dodaj</button>
+                        <textarea id="d-content" placeholder="Pełna treść" rows="5"></textarea><br>
+                        <input type="text" id="d-yt" placeholder="Link YouTube (Opcjonalnie)" style="margin-top:10px;"><br>
+                        <button class="btn-primary" style="margin-top:10px;" onclick="addDevLog()">Opublikuj</button>
                     </div>
-                    <div id="a-map" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="file" id="m-file"><br><br>
-                        <button class="btn-primary" onclick="updateMap()">Wgraj mapę</button>
-                    </div>
-                    <div id="a-gallery" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="file" id="g-file"><br><br>
-                        <input type="text" id="g-title" placeholder="Tytuł zdjęcia"><br><br>
-                        <button class="btn-primary" onclick="addGallery()">Wgraj</button>
-                    </div>
-                    <div id="a-ann" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="a-date" placeholder="Etykieta/Data"><br><br>
-                        <input type="text" id="a-title" placeholder="Tytuł"><br><br>
-                        <textarea id="a-desc" placeholder="Treść"></textarea><br><br>
-                        <button class="btn-primary" onclick="addAnnouncement()">Dodaj</button>
-                    </div>
-                    <div id="a-changelog" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="c-date" placeholder="Wersja/Data"><br><br>
-                        <input type="text" id="c-title" placeholder="Tytuł zmiany"><br><br>
-                        <textarea id="c-desc" placeholder="Szczegóły"></textarea><br><br>
-                        <button class="btn-primary" onclick="addChangelog()">Dodaj</button>
-                    </div>
+                    
+                    <div id="a-map" class="admin-sub-tab" style="margin-top:20px;"><input type="file" id="m-file"><br><br><button class="btn-primary" onclick="updateMap()">Wgraj mapę</button></div>
+                    <div id="a-gallery" class="admin-sub-tab" style="margin-top:20px;"><input type="file" id="g-file"><br><br><input type="text" id="g-title" placeholder="Tytuł"><br><br><button class="btn-primary" onclick="addGallery()">Wgraj</button></div>
+                    <div id="a-ann" class="admin-sub-tab" style="margin-top:20px;"><input type="text" id="a-date" placeholder="Etykieta/Data"><br><br><input type="text" id="a-title" placeholder="Tytuł"><br><br><textarea id="a-desc" placeholder="Treść"></textarea><br><br><button class="btn-primary" onclick="addAnnouncement()">Dodaj</button></div>
+                    <div id="a-changelog" class="admin-sub-tab" style="margin-top:20px;"><input type="text" id="c-date" placeholder="Wersja/Data"><br><br><input type="text" id="c-title" placeholder="Tytuł zmiany"><br><br><textarea id="c-desc" placeholder="Szczegóły"></textarea><br><br><button class="btn-primary" onclick="addChangelog()">Dodaj</button></div>
                     <div id="a-staff" class="admin-sub-tab" style="margin-top:20px;">
                         <input type="text" id="s-name" placeholder="Nick w grze"><br><br>
                         <select id="s-role">
@@ -332,36 +325,13 @@
                         </select><br><br>
                         <button class="btn-primary" onclick="addStaff()">Dodaj</button>
                     </div>
-                    <div id="a-faq" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="f-q" placeholder="Pytanie"><br><br>
-                        <textarea id="f-a" placeholder="Odpowiedź"></textarea><br><br>
-                        <button class="btn-primary" onclick="addFaq()">Dodaj</button>
-                    </div>
-                    <div id="a-links" class="admin-sub-tab" style="margin-top:20px;">
-                        <input type="text" id="l-n" placeholder="Nazwa Platformy"><br><br>
-                        <input type="text" id="l-d" placeholder="Opis pod spodem"><br><br>
-                        <input type="text" id="l-u" placeholder="URL"><br><br>
-                        <input type="text" id="l-i" value="fas fa-link"><br><br>
-                        <button class="btn-primary" onclick="addLink()">Dodaj</button>
-                    </div>
-                    <div id="a-tools" class="admin-sub-tab" style="margin-top:20px;">
-                        <button class="btn-primary" id="btn-migrate" onclick="migrateLocalImages()">Migracja zdjęć</button>
-                    </div>
+                    <div id="a-faq" class="admin-sub-tab" style="margin-top:20px;"><input type="text" id="f-q" placeholder="Pytanie"><br><br><textarea id="f-a" placeholder="Odpowiedź"></textarea><br><br><button class="btn-primary" onclick="addFaq()">Dodaj</button></div>
+                    <div id="a-links" class="admin-sub-tab" style="margin-top:20px;"><input type="text" id="l-n" placeholder="Nazwa Platformy"><br><br><input type="text" id="l-d" placeholder="Opis pod spodem"><br><br><input type="text" id="l-u" placeholder="URL"><br><br><input type="text" id="l-i" value="fas fa-link"><br><br><button class="btn-primary" onclick="addLink()">Dodaj</button></div>
+                    <div id="a-tools" class="admin-sub-tab" style="margin-top:20px;"><button class="btn-primary" id="btn-migrate" onclick="migrateLocalImages()">Migracja zdjęć</button></div>
                 </div>
             </div>
         </div>
     </main>
-
-    <div id="edit-modal">
-        <div class="edit-box">
-            <h3>Edycja</h3><br>
-            <div id="edit-form-content"></div><br>
-            <div style="display:flex; gap: 10px;">
-                <button class="btn-primary" onclick="saveEdit()">Zapisz</button>
-                <button class="btn-primary" style="background:#eee; color:#000;" onclick="closeEditModal()">Anuluj</button>
-            </div>
-        </div>
-    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -381,8 +351,8 @@
         const IMGBB_API_KEY = "19570ba1fa4dc27bd0ba974b4eb2e253";
 
         window.appData = { gallery: {}, staff: {}, changelog: {}, links: {}, announcements: {}, faq: {}, devlog: {} };
+        window.currentEdit = { path: '', key: '' };
         const staffOrder = ["Owner", "Co-Owner", "Technik", "Head of Staff", "Head of Developers", "Head of Admins", "Event Host", "Developer", "Trial Event Host", "Admin", "Trial Admin", "Moderator", "Trial Moderator", "Support Developer"];
-        
         let isAdmin = false;
 
         const getAdminBtns = (path, key, type = 'block') => {
@@ -402,7 +372,7 @@
             renderFaq(window.appData.faq);
         };
 
-        // Nasłuchiwanie zmian w Firebase
+        // --- NASŁUCHIWANIE BAZY ---
         onValue(ref(db, 'gallery'), snap => { window.appData.gallery = snap.val(); renderGallery(snap.val()); });
         onValue(ref(db, 'devlog'), snap => { window.appData.devlog = snap.val(); renderDevlog(snap.val()); });
         onValue(ref(db, 'staff'), snap => { window.appData.staff = snap.val(); renderStaff(snap.val()); });
@@ -412,8 +382,23 @@
         onValue(ref(db, 'announcements'), snap => { window.appData.announcements = snap.val(); renderAnnouncements(snap.val()); });
         onValue(ref(db, 'faq'), snap => { window.appData.faq = snap.val(); renderFaq(snap.val()); });
 
-        // --- RENDEROWANIE DO HTML ---
-        
+        // --- NASŁUCHIWANIE SEKCJI START (HOME) ---
+        onValue(ref(db, 'homeConfig'), snap => {
+            const data = snap.val();
+            if(data) {
+                document.getElementById('dyn-home-title').innerHTML = data.title;
+                document.getElementById('dyn-home-subtitle').innerHTML = data.subtitle;
+                // Update inputs if they are loaded
+                if(document.getElementById('h-title')) document.getElementById('h-title').value = data.title;
+                if(document.getElementById('h-subtitle')) document.getElementById('h-subtitle').value = data.subtitle;
+            } else {
+                // Jeśli baza pusta - załaduj startowe dane do formularza
+                if(document.getElementById('h-title')) document.getElementById('h-title').value = "Witaj na<br><span>Pomorzu.</span>";
+                if(document.getElementById('h-subtitle')) document.getElementById('h-subtitle').value = "Realistyczna jazda, polskie drogi i klimat, którego nie znajdziesz nigdzie indziej w świecie Roblox.";
+            }
+        });
+
+        // --- FUNKCJE RENDERUJĄCE ---
         const renderGallery = (data) => {
             const cont = document.getElementById('dyn-gallery'); cont.innerHTML = '';
             if(!data) return;
@@ -487,18 +472,10 @@
 
         const renderChangelog = (data) => {
             const cont = document.getElementById('dyn-changelog'); cont.innerHTML = '';
-            if(!data) { cont.innerHTML = '<p style="color:#aaa; text-align:center;">Brak wpisów.</p>'; return; }
+            if(!data) { cont.innerHTML = '<p style="color:#aaa; text-align:center;">Brak historii zmian.</p>'; return; }
             Object.keys(data).reverse().forEach(k => {
                 const i = data[k];
-                cont.innerHTML += `
-                <div class="summary-card" onclick="window.openReader('changelog', '${k}')">
-                    ${getAdminBtns('changelog', k)}
-                    <div class="info">
-                        <span class="summary-date"><i class="fas fa-clock"></i> ${i.date}</span>
-                        <h3 class="summary-title">${i.title}</h3>
-                        <span class="summary-hint">Czytaj więcej...</span>
-                    </div>
-                </div>`;
+                cont.innerHTML += `<div class="update-item" style="margin-bottom:40px; position:relative;">${getAdminBtns('changelog', k)}<span class="update-date">${i.date}</span><h3 style="font-size:1.5rem; margin-bottom:10px; color:#fff;">${i.title}</h3><p style="color:#bbb; line-height:1.6;">${i.desc}</p></div>`;
             });
         };
 
@@ -507,14 +484,7 @@
             if(!data) { cont.innerHTML = '<p style="color:#aaa; text-align:center; grid-column:1/-1;">Brak linków.</p>'; return; }
             Object.keys(data).reverse().forEach(k => {
                 const i = data[k];
-                cont.innerHTML += `
-                <div style="position:relative;">
-                    ${getAdminBtns('links', k)}
-                    <a href="${i.url}" target="_blank" style="display:flex; align-items:center; gap:20px; padding:30px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; text-decoration:none; transition:0.3s;">
-                        <div style="width:70px; height:70px; border-radius:18px; background:rgba(255,193,7,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--accent);"><i class="${i.icon}"></i></div>
-                        <div><h3 style="font-size:1.2rem; color:#fff; margin-bottom:5px;">${i.name}</h3><p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase;">${i.desc}</p></div>
-                    </a>
-                </div>`;
+                cont.innerHTML += `<div style="position:relative;">${getAdminBtns('links', k)}<a href="${i.url}" target="_blank" style="display:flex; align-items:center; gap:20px; padding:30px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; text-decoration:none; transition:0.3s;"><div style="width:70px; height:70px; border-radius:18px; background:rgba(255,193,7,0.1); display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--accent);"><i class="${i.icon}"></i></div><div><h3 style="font-size:1.2rem; color:#fff; margin-bottom:5px;">${i.name}</h3><p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase;">${i.desc}</p></div></a></div>`;
             });
         };
 
@@ -527,52 +497,35 @@
             });
         };
 
-        // --- AUTH & ZABEZPIECZENIA ---
+        // --- AUTH ---
         onAuthStateChanged(auth, u => {
             isAdmin = !!u; 
             document.getElementById('admin-login-form').style.display = u ? 'none' : 'block';
             document.getElementById('admin-dashboard').style.display = u ? 'block' : 'none';
             renderAll(); 
         });
-
         window.loginAdmin = () => signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).catch(()=>document.getElementById('login-error').style.display='block');
         window.logoutAdmin = () => signOut(auth);
-
         const checkAuth = () => { if(!auth.currentUser) { alert("Brak autoryzacji serwera!"); return false; } return true; };
 
         // --- CZYTNIK (READER MODAL) ---
         window.openReader = (path, key) => {
-            const item = window.appData[path][key];
-            const cont = document.getElementById('reader-container');
-            let ytHtml = '';
+            const item = window.appData[path][key]; const cont = document.getElementById('reader-container'); let ytHtml = '';
             if(item.ytLink) {
                 let ytId = '';
                 if(item.ytLink.includes('v=')) ytId = item.ytLink.split('v=')[1].split('&')[0];
                 else if(item.ytLink.includes('youtu.be/')) ytId = item.ytLink.split('youtu.be/')[1].split('?')[0];
                 if(ytId) ytHtml = `<div class="reader-media"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen></iframe></div>`;
             }
-            
             let contentText = item.content || item.desc || "";
-            
-            cont.innerHTML = `
-                <div class="reader-header">
-                    <div class="reader-date">${item.date}</div>
-                    <h2 class="reader-title">${item.title}</h2>
-                </div>
-                <div class="reader-content">${contentText}</div>
-                ${ytHtml}
-            `;
-            document.getElementById('reader-modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            cont.innerHTML = `<div class="reader-header"><div class="reader-date">${item.date}</div><h2 class="reader-title">${item.title}</h2></div><div class="reader-content">${contentText}</div>${ytHtml}${getAdminBtns(path, key)}`;
+            document.getElementById('reader-modal').style.display = 'flex'; document.body.style.overflow = 'hidden';
         };
 
-        window.closeReader = () => {
-            document.getElementById('reader-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            document.getElementById('reader-container').innerHTML = ''; // czyszczenie iframe żeby muzyka nie grała
-        };
+        window.closeReader = () => { document.getElementById('reader-modal').style.display = 'none'; document.body.style.overflow = 'auto'; document.getElementById('reader-container').innerHTML = ''; };
 
         // --- CMS AKCJE ---
+        window.updateHome = () => { if(!checkAuth()) return; set(ref(db, 'homeConfig'), {title: document.getElementById('h-title').value, subtitle: document.getElementById('h-subtitle').value}); alert("Start zaktualizowany!"); };
         window.updateMap = async () => { if(!checkAuth()) return; const f = document.getElementById('m-file').files[0]; if(!f) return; const fd = new FormData(); fd.append('image', f); fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{ if(d.success) { set(ref(db, 'gameMap'), {url: d.data.url}); alert("Mapa wgrana!"); }}); };
         window.addGallery = async () => { if(!checkAuth()) return; const f = document.getElementById('g-file').files[0]; if(!f) return; const fd = new FormData(); fd.append('image', f); fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:'POST', body:fd}).then(r=>r.json()).then(d=>{ if(d.success) { push(ref(db, 'gallery'), {url: d.data.url, title: document.getElementById('g-title').value}); alert("Wgrano!"); }}); };
         window.addDevLog = () => { if(checkAuth()) push(ref(db, 'devlog'), {date: document.getElementById('d-date').value, title: document.getElementById('d-title').value, content: document.getElementById('d-content').value, ytLink: document.getElementById('d-yt').value}); };
@@ -586,9 +539,7 @@
         window.delMap = (e) => { if(e) e.stopPropagation(); if(!checkAuth()) return; if(confirm("Usunąć mapę?")) remove(ref(db, 'gameMap')); };
 
         window.openEditModal = (p, k, e) => {
-            e.stopPropagation(); e.preventDefault();
-            if(!checkAuth()) return;
-            window.currentEdit = {p, k};
+            e.stopPropagation(); e.preventDefault(); if(!checkAuth()) return; window.currentEdit = {p, k};
             const i = window.appData[p][k]; const f = document.getElementById('edit-form-content'); f.innerHTML = '';
             if(p === 'staff') f.innerHTML = `<input type="text" id="e1" value="${i.name}"><select id="e2" style="margin-top:10px;">${staffOrder.map(r=>`<option ${r===i.role?'selected':''}>${r}</option>`).join('')}</select>`;
             else if(p==='faq') f.innerHTML = `<input type="text" id="e1" value="${i.question}"><textarea id="e2" rows="4" style="margin-top:10px;">${i.answer}</textarea>`;
@@ -608,8 +559,9 @@
             else if(p==='devlog') { d.title=document.getElementById('e1').value; d.date=document.getElementById('e1').value; d.content=document.getElementById('e2').value; }
             else { d.title=document.getElementById('e1').value; d.date=document.getElementById('e1').value; d.desc=document.getElementById('e2').value; }
             update(ref(db, `${p}/${k}`), d); document.getElementById('edit-modal').style.display='none';
+            if(document.getElementById('reader-modal').style.display === 'flex') closeReader();
         };
-        window.closeEditModal = () => document.getElementById('edit-modal').style.display='none';
+        window.closeEditModal = () => { document.getElementById('edit-modal').style.display='none'; };
 
         // --- MIGRATOR ---
         window.migrateLocalImages = async () => {
@@ -645,18 +597,13 @@
 
         window.startSlideshow = () => {
             if(slideshowImages.length === 0) return;
-            slide1.style.backgroundImage = `url(${slideshowImages[0]})`;
-            slide1.style.opacity = 1;
+            slide1.style.backgroundImage = `url(${slideshowImages[0]})`; slide1.style.opacity = 1;
             if(slideshowImages.length < 2) return;
-            
             currentSlideIdx = 1;
             setInterval(() => {
                 const nextSlide = activeSlide === slide1 ? slide2 : slide1;
                 nextSlide.style.backgroundImage = `url(${slideshowImages[currentSlideIdx]})`;
-                setTimeout(() => {
-                    nextSlide.style.opacity = 1; activeSlide.style.opacity = 0;
-                    activeSlide = nextSlide; currentSlideIdx = (currentSlideIdx + 1) % slideshowImages.length;
-                }, 100); 
+                setTimeout(() => { nextSlide.style.opacity = 1; activeSlide.style.opacity = 0; activeSlide = nextSlide; currentSlideIdx = (currentSlideIdx + 1) % slideshowImages.length; }, 100); 
             }, 8000); 
         };
 
@@ -664,9 +611,7 @@
             const data = snap.val();
             if(data) {
                 let isNew = false;
-                Object.keys(data).forEach(k => {
-                    if(!slideshowImages.includes(data[k].url)) { slideshowImages.push(data[k].url); isNew = true; }
-                });
+                Object.keys(data).forEach(k => { if(!slideshowImages.includes(data[k].url)) { slideshowImages.push(data[k].url); isNew = true; } });
                 if(isNew && slideshowImages.length > 0) window.startSlideshow();
             }
         });
@@ -675,11 +620,8 @@
     <script>
         // --- UI CORE ---
         window.addEventListener('DOMContentLoaded', () => {
-            const last = localStorage.getItem('pp_lastVisit');
-            const now = Date.now();
-            const long = !last || (now - parseInt(last)) / 86400000 > 10;
+            const last = localStorage.getItem('pp_lastVisit'); const now = Date.now(); const long = !last || (now - parseInt(last)) / 86400000 > 10;
             localStorage.setItem('pp_lastVisit', now);
-            
             const intro = document.getElementById('intro');
             if(long) {
                 intro.innerHTML = `
@@ -694,26 +636,13 @@
             }
         });
 
-        function showApp() {
-            const i = document.getElementById('intro'); i.style.opacity = '0';
-            setTimeout(() => { i.style.display='none'; const a = document.getElementById('app'); a.style.display='block'; setTimeout(()=>a.style.opacity='1',50); }, 1000);
-        }
-
-        function openTab(id, btn) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(btn) btn.classList.add('active');
-            document.getElementById('nav-menu').classList.remove('active');
-            window.scrollTo({top:0, behavior:'smooth'});
-        }
-
+        function showApp() { document.getElementById('intro').style.opacity = '0'; setTimeout(() => { document.getElementById('intro').style.display='none'; const a = document.getElementById('app'); a.style.display='block'; setTimeout(()=>a.style.opacity='1',50); }, 1000); }
+        function openTab(id, btn) { document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); if(btn) btn.classList.add('active'); document.getElementById('nav-menu').classList.remove('active'); window.scrollTo({top:0, behavior:'smooth'}); }
         function toggleMobileMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
-        function switchAdminTab(id) { document.querySelectorAll('.admin-sub-tab').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        function switchAdminTab(id) { document.querySelectorAll('.admin-sub-tab').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('#admin-select-tab option').forEach(opt => { if(opt.value === id) opt.selected = true; }); }
         function openLightbox(s) { document.getElementById('lightbox-img').src = s; document.getElementById('lightbox').style.display='flex'; }
         function closeLightbox() { document.getElementById('lightbox').style.display='none'; }
-        function toggleFaq(k) { document.getElementById('faq-'+k).classList.toggle('active'); }
+        function toggleFaq(k) { const el = document.getElementById('faq-'+k); if(el) el.classList.toggle('active'); }
     </script>
 </body>
 </html>
-
